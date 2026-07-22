@@ -587,7 +587,16 @@
               i.classList.remove('active');
               const ans = i.querySelector('.faq-answer');
               if (ans) {
-                ans.style.maxHeight = '0px';
+                // Clear any active transition timeouts
+                if (ans._timeout) clearTimeout(ans._timeout);
+                
+                // Transition back to 0
+                if (ans.style.maxHeight !== '0px') {
+                  const currentHeight = ans.offsetHeight;
+                  ans.style.maxHeight = currentHeight + 'px';
+                  ans.offsetHeight; // force reflow
+                  ans.style.maxHeight = '0px';
+                }
               }
             });
             
@@ -595,13 +604,21 @@
             if (!isActive) {
               item.classList.add('active');
               
-              // Apply active padding temporarily to read correct scrollHeight
-              const targetHeight = answer.scrollHeight;
+              const p = answer.querySelector('p');
+              // Content height + 20px padding-bottom
+              const targetHeight = p ? (p.scrollHeight + 20) : 300;
               
               // Transition smoothly to target height
               answer.style.maxHeight = '0px';
               answer.offsetHeight; // Force browser reflow to register the 0px starting point
               answer.style.maxHeight = targetHeight + 'px';
+              
+              // After transition finishes, clear max-height to allow responsive reflows
+              answer._timeout = setTimeout(() => {
+                if (item.classList.contains('active')) {
+                  answer.style.maxHeight = 'none';
+                }
+              }, 250);
             }
           }, true); // Run in capture phase so we capture and stop events before main.js receives them
         }

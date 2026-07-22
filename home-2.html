@@ -401,6 +401,61 @@
         flex-direction: column;
       }
     }
+
+    /* Flagship Program Cards Equal Height Alignment */
+    .program-card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .program-card .pc-top {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    .program-card .pc-top p {
+      flex-grow: 1;
+    }
+
+    /* Blog Card Equal Height Alignment */
+    .blog-card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .blog-card-body {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    .blog-card-body p {
+      flex-grow: 1;
+      margin-bottom: 20px;
+    }
+
+    /* Newsletter Notification Toast */
+    .newsletter-notification {
+      margin-top: 16px;
+      padding: 12px 24px;
+      border-radius: var(--radius-md);
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--white);
+      background: rgba(16, 185, 129, 0.2); /* Emerald / Success soft bg */
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      z-index: 10;
+    }
+    .newsletter-notification.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
   </style>
 </head>
 <body>
@@ -533,9 +588,9 @@
       <div class="grid grid-2 gap-40" style="align-items: center;">
         <div class="about-video reveal-left">
           <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&h=600&fit=crop&auto=format" alt="Excel Academy classroom" loading="lazy">
-          <div class="play-btn">
+          <a href="https://youtu.be/iv_B-EY8WDg?si=O182kWdUF1S1vgPK" target="_blank" rel="noopener noreferrer" class="play-btn" aria-label="Play introduction video">
             <i class="fas fa-play"></i>
-          </div>
+          </a>
         </div>
         <div class="reveal-right">
           <span class="section-tag"><i class="fas fa-play-circle"></i> Our Story</span>
@@ -579,7 +634,7 @@
         </div>
         <div class="benefit-card reveal-right">
           <div class="bc-number">04</div>
-          <div class="bc-icon" style="background: linear-gradient(135deg, var(--gold), #D97706);"><i class="fas fa-rupee-sign"></i></div>
+          <div class="bc-icon" style="background: linear-gradient(135deg, var(--gold), #D97706);"><i class="fa-solid fa-hand-holding-dollar"></i></div>
           <h3>Affordable Excellence</h3>
           <p>Merit-based scholarships covering up to 100% tuition fees. Flexible payment plans ensuring that financial constraints never hinder quality education.</p>
         </div>
@@ -722,7 +777,7 @@
         </div>
         <div class="blog-card reveal">
           <div class="blog-card-img">
-            <img src="https://images.unsplash.com/photo-1577896851231-70acf694a6f5?w=800&h=600&fit=crop&auto=format" alt="NEET preparation" loading="lazy">
+            <img src="assets/images/neet_preparation.png" alt="NEET preparation" loading="lazy">
             <span class="blog-category">NEET Guide</span>
           </div>
           <div class="blog-card-body">
@@ -764,6 +819,7 @@
           <input type="email" placeholder="Enter your email address" required aria-label="Email address">
           <button type="submit" class="btn btn-secondary btn-lg">Subscribe <i class="fas fa-paper-plane"></i></button>
         </form>
+        <div id="newsletter-notification" class="newsletter-notification"></div>
         <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem; margin-top: 16px;">No spam, ever. Unsubscribe anytime.</p>
       </div>
     </div>
@@ -845,5 +901,57 @@
   <button class="back-to-top" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
 
   <script src="assets/js/main.js"></script>
+  <script>
+    // Optimized newsletter subscription validator and toaster notification
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.querySelector('.newsletter-section .newsletter-form');
+      const input = form ? form.querySelector('input[type="email"]') : null;
+      const notification = document.getElementById('newsletter-notification');
+      
+      if (form && input && notification) {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          
+          const email = input.value.trim();
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          
+          if (!emailRegex.test(email)) {
+            input.setCustomValidity('Please enter a valid email address.');
+            input.reportValidity();
+            return;
+          }
+          
+          input.setCustomValidity('');
+          
+          // Clear any active timeout
+          if (window.newsletterTimeout) clearTimeout(window.newsletterTimeout);
+          if (window.newsletterDismissTimeout) clearTimeout(window.newsletterDismissTimeout);
+          
+          // Show successful subscription notification
+          notification.innerHTML = '<i class="fas fa-check-circle" style="color: #10B981; font-size: 1.1rem;"></i> Thank you! You have successfully subscribed for exam updates and study tips.';
+          notification.style.display = 'inline-flex';
+          
+          // Force layout reflow
+          notification.offsetHeight;
+          
+          notification.classList.add('show');
+          input.value = '';
+          
+          // Smooth fade-out after 4 seconds
+          window.newsletterTimeout = setTimeout(() => {
+            notification.classList.remove('show');
+            window.newsletterDismissTimeout = setTimeout(() => {
+              notification.style.display = 'none';
+            }, 300);
+          }, 4000);
+        });
+        
+        // Reset validity checking on keystroke
+        input.addEventListener('input', () => {
+          input.setCustomValidity('');
+        });
+      }
+    });
+  </script>
 </body>
 </html>
