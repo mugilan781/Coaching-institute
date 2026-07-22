@@ -10,6 +10,29 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    /* Course Card Equal Height Grid & Footer Alignment */
+    .course-card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .course-card-body {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    .course-card-body p {
+      flex-grow: 1;
+    }
+    
+    /* Optimized FAQ Accordion Transitions */
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.22s cubic-bezier(0.4, 0, 0.2, 1), padding 0.22s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+  </style>
 </head>
 <body>
 
@@ -166,7 +189,7 @@
         </div>
         <div class="course-card reveal">
           <div class="course-card-img">
-            <img src="https://images.unsplash.com/photo-1576086213369-97a306d36557?w=800&h=600&fit=crop&auto=format" alt="NEET Course" loading="lazy">
+            <img src="assets/images/neet_preparation.png" alt="NEET Course" loading="lazy">
             <span class="course-badge">Top Rated</span>
           </div>
           <div class="course-card-body">
@@ -184,7 +207,7 @@
         </div>
         <div class="course-card reveal-right">
           <div class="course-card-img">
-            <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=600&fit=crop&auto=format" alt="Foundation Course" loading="lazy">
+            <img src="assets/images/foundation_classroom.png" alt="Foundation Course" loading="lazy">
             <span class="course-badge">Best Value</span>
           </div>
           <div class="course-card-body">
@@ -202,7 +225,7 @@
         </div>
         <div class="course-card reveal-left">
           <div class="course-card-img">
-            <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&h=600&fit=crop&auto=format" alt="JEE Main Course" loading="lazy">
+            <img src="assets/images/jee_preparation.png" alt="JEE Main Course" loading="lazy">
             <span class="course-badge">New</span>
           </div>
           <div class="course-card-body">
@@ -403,7 +426,7 @@
         <p class="section-subtitle">Everything you need to know about our programs, admissions, and teaching methodology.</p>
       </div>
       <div style="max-width: 800px; margin: 0 auto;">
-        <div class="faq-item active reveal-left">
+        <div class="faq-item reveal-left">
           <button class="faq-question">
             <span>What courses does Excel Academy offer?</span>
             <span class="faq-icon"><i class="fas fa-plus"></i></span>
@@ -542,5 +565,48 @@
   <button class="back-to-top" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
 
   <script src="assets/js/main.js"></script>
+  <script>
+    // Optimized Dynamic FAQ Accordion height calculation
+    document.addEventListener('DOMContentLoaded', () => {
+      const faqItems = document.querySelectorAll('.faq-item');
+      faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        const answer = item.querySelector('.faq-answer');
+        if (question && answer) {
+          // Explicitly clear height on load to guarantee starting state
+          answer.style.maxHeight = '0px';
+          
+          question.addEventListener('click', (e) => {
+            // Stop global main.js listener from running to prevent sluggish layout jumps
+            e.stopImmediatePropagation();
+            
+            const isActive = item.classList.contains('active');
+            
+            // Close all items
+            faqItems.forEach(i => {
+              i.classList.remove('active');
+              const ans = i.querySelector('.faq-answer');
+              if (ans) {
+                ans.style.maxHeight = '0px';
+              }
+            });
+            
+            // Open clicked item
+            if (!isActive) {
+              item.classList.add('active');
+              
+              // Apply active padding temporarily to read correct scrollHeight
+              const targetHeight = answer.scrollHeight;
+              
+              // Transition smoothly to target height
+              answer.style.maxHeight = '0px';
+              answer.offsetHeight; // Force browser reflow to register the 0px starting point
+              answer.style.maxHeight = targetHeight + 'px';
+            }
+          }, true); // Run in capture phase so we capture and stop events before main.js receives them
+        }
+      });
+    });
+  </script>
 </body>
 </html>
