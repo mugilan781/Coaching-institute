@@ -1,0 +1,750 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Brilliance Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .nav-user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 16px 6px 6px;
+      border-radius: 50px;
+      background: var(--bg-soft);
+      transition: all var(--transition-fast);
+      cursor: pointer;
+    }
+
+    .nav-user:hover {
+      background: var(--border-color);
+    }
+
+    .nav-user .avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: var(--radius-full);
+      background: linear-gradient(135deg, var(--crimson), var(--crimson-light));
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      font-family: var(--font-display);
+      flex-shrink: 0;
+    }
+
+    .nav-user span {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .dash-section {
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      border: 1px solid var(--border-color);
+      margin-bottom: 28px;
+      transition: all var(--transition);
+    }
+
+    .dash-section:hover {
+      box-shadow: var(--shadow-sm);
+    }
+
+    .dash-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .dash-section-header h3 {
+      font-size: 1.15rem;
+    }
+
+    .dash-section-header a {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--navy);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: gap var(--transition-fast);
+    }
+
+    .dash-section-header a:hover {
+      gap: 12px;
+    }
+
+    .chart-container {
+      position: relative;
+      width: 100%;
+    }
+
+    .chart-container canvas {
+      width: 100%;
+      height: auto;
+    }
+
+    .dash-stat-card .dash-stat-icon.navy {
+      background: rgba(30,58,138,0.1);
+      color: var(--navy);
+    }
+
+    .dash-stat-card .dash-stat-icon.crimson {
+      background: rgba(220,38,38,0.1);
+      color: var(--crimson);
+    }
+
+    .dash-stat-card .dash-stat-icon.emerald {
+      background: rgba(5,150,105,0.1);
+      color: var(--emerald);
+    }
+
+    .dash-stat-card .dash-stat-icon.gold {
+      background: rgba(245,158,11,0.1);
+      color: var(--gold);
+    }
+
+    .sidebar-nav-item .nav-icon {
+      font-size: 1rem;
+      width: 22px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .admin-faculty-mini {
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      border: 1px solid var(--border-color);
+      transition: all var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .admin-faculty-mini:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: transparent;
+    }
+
+    .admin-faculty-mini .faculty-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--white);
+      flex-shrink: 0;
+    }
+
+    .admin-faculty-mini .faculty-info h5 {
+      font-size: 0.95rem;
+      margin-bottom: 2px;
+    }
+
+    .admin-faculty-mini .faculty-info p {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .admin-faculty-mini .faculty-rating {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--gold);
+    }
+
+    .event-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      border: 1px solid var(--border-color);
+      transition: all var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .event-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: transparent;
+    }
+
+    .event-card .event-icon-box {
+      width: 56px;
+      height: 56px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+
+    .event-card .event-info h4 {
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+
+    .event-card .event-info p {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .event-card .event-date-badge {
+      margin-left: auto;
+      text-align: center;
+    }
+
+    .event-card .event-date-badge .day {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.2rem;
+      line-height: 1;
+    }
+
+    .event-card .event-date-badge .mon {
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+    }
+
+    .quick-action-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .quick-action-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      padding: 24px 20px;
+      border: 1px solid var(--border-color);
+      transition: all var(--transition);
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .quick-action-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--navy);
+    }
+
+    .quick-action-card .action-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      margin: 0 auto 14px;
+      transition: all var(--transition);
+    }
+
+    .quick-action-card:hover .action-icon {
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    .quick-action-card h5 {
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+    }
+
+    .quick-action-card p {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+    }
+
+    .notification-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-full);
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      color: var(--text-primary);
+      transition: all var(--transition-fast);
+      position: relative;
+    }
+
+    .notification-btn:hover {
+      background: var(--bg-soft);
+      transform: scale(1.05);
+    }
+
+    .notification-btn .notif-dot {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 8px;
+      height: 8px;
+      background: var(--crimson);
+      border-radius: var(--radius-full);
+      border: 2px solid var(--bg-card);
+    }
+
+    @media (max-width: 1024px) {
+      .quick-action-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .quick-action-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .event-card {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .event-card .event-date-badge {
+        margin-left: 0;
+      }
+
+      .admin-faculty-mini {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .admin-faculty-mini .faculty-rating {
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="nav-logo-icon">
+          <img src="assets/images/logo1.png" alt="Excel Academy Logo">
+        </span>
+        <span>Coaching<span style="color: var(--crimson);">Institute</span></span>
+      </a>
+      <div class="nav-actions">
+        <button class="theme-toggle" aria-label="Toggle theme">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="rtl-toggle" aria-label="Toggle RTL">RTL</button>
+        <a href="dashboard-admin.html" class="nav-user">
+          <span class="avatar">AD</span>
+          <span>Admin</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="dashboard">
+    <aside class="dashboard-sidebar">
+      <div class="sidebar-user">
+        <div style="width:72px;height:72px;border-radius:var(--radius-full);margin:0 auto 12px;background:linear-gradient(135deg,var(--crimson),var(--crimson-light));color:var(--white);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:800;font-size:1.6rem;border:3px solid var(--crimson);">AD</div>
+        <h5>Admin</h5>
+        <p>Institute Management</p>
+      </div>
+      <nav>
+        <a href="dashboard-admin.html" class="sidebar-nav-item active">
+          <span class="nav-icon"><i class="fas fa-chart-pie"></i></span> Dashboard
+        </a>
+        <a href="#" class="sidebar-nav-item">
+          <span class="nav-icon"><i class="fas fa-chalkboard-teacher"></i></span> Faculty
+        </a>
+        <a href="#" class="sidebar-nav-item">
+          <span class="nav-icon"><i class="fas fa-user-graduate"></i></span> Students
+        </a>
+        <a href="#" class="sidebar-nav-item">
+          <span class="nav-icon"><i class="fas fa-book-open"></i></span> Courses
+        </a>
+        <a href="#" class="sidebar-nav-item">
+          <span class="nav-icon"><i class="fas fa-poll"></i></span> Results
+        </a>
+        <a href="#" class="sidebar-nav-item">
+          <span class="nav-icon"><i class="fas fa-bullhorn"></i></span> Announcements
+        </a>
+        <a href="#" class="sidebar-nav-item">
+          <span class="nav-icon"><i class="fas fa-credit-card"></i></span> Payments
+        </a>
+        <a href="#" class="sidebar-nav-item">
+          <span class="nav-icon"><i class="fas fa-cog"></i></span> Settings
+        </a>
+        <a href="login.html" class="sidebar-nav-item">
+          <span class="nav-icon"><i class="fas fa-sign-out-alt"></i></span> Logout
+        </a>
+      </nav>
+    </aside>
+
+    <main class="dashboard-main">
+
+      <div class="dashboard-header reveal">
+        <div>
+          <h2>Admin Dashboard</h2>
+          <p class="body-small" style="color:var(--text-secondary);margin-top:4px;">Manage your institute at a glance</p>
+        </div>
+        <button class="notification-btn" aria-label="Notifications">
+          <i class="fas fa-bell"></i>
+          <span class="notif-dot"></span>
+        </button>
+      </div>
+
+      <div class="dashboard-cards reveal">
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon navy"><i class="fas fa-user-graduate"></i></div>
+          <div class="dash-stat-number">1,240</div>
+          <div class="dash-stat-label">Total Students</div>
+        </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon crimson"><i class="fas fa-chalkboard-teacher"></i></div>
+          <div class="dash-stat-number">48</div>
+          <div class="dash-stat-label">Total Faculty</div>
+        </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon emerald"><i class="fas fa-book-open"></i></div>
+          <div class="dash-stat-number">32</div>
+          <div class="dash-stat-label">Active Courses</div>
+        </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon gold"><i class="fas fa-rupee-sign"></i></div>
+          <div class="dash-stat-number">&#8377;84.5L</div>
+          <div class="dash-stat-label">Total Revenue</div>
+        </div>
+      </div>
+
+      <div class="dash-section reveal">
+        <div class="dash-section-header">
+          <h3><i class="fas fa-chart-line" style="color:var(--navy);margin-right:10px;"></i>Revenue Overview</h3>
+          <span class="badge badge-info">FY 2025-26</span>
+        </div>
+        <div class="chart-container">
+          <canvas id="dashChart" width="900" height="280"></canvas>
+        </div>
+      </div>
+
+      <div class="dash-section reveal">
+        <div class="dash-section-header">
+          <h3><i class="fas fa-user-plus" style="color:var(--navy);margin-right:10px;"></i>Recent Enrollments</h3>
+          <a href="#">View All <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="dash-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Student</th>
+                <th>Course</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Priya Patel</strong></td>
+                <td>JEE Advanced 2026</td>
+                <td>15 Jul 2025</td>
+                <td><span class="badge badge-success">Confirmed</span></td>
+                <td><strong>&#8377;45,000</strong></td>
+              </tr>
+              <tr>
+                <td><strong>Rahul Verma</strong></td>
+                <td>NEET UG 2026</td>
+                <td>14 Jul 2025</td>
+                <td><span class="badge badge-success">Confirmed</span></td>
+                <td><strong>&#8377;52,000</strong></td>
+              </tr>
+              <tr>
+                <td><strong>Sneha Gupta</strong></td>
+                <td>Foundation XI</td>
+                <td>12 Jul 2025</td>
+                <td><span class="badge badge-warning">Pending</span></td>
+                <td><strong>&#8377;28,000</strong></td>
+              </tr>
+              <tr>
+                <td><strong>Arjun Nair</strong></td>
+                <td>Boards X - Science</td>
+                <td>10 Jul 2025</td>
+                <td><span class="badge badge-success">Confirmed</span></td>
+                <td><strong>&#8377;36,000</strong></td>
+              </tr>
+              <tr>
+                <td><strong>Divya Sharma</strong></td>
+                <td>NEET UG 2026</td>
+                <td>08 Jul 2025</td>
+                <td><span class="badge badge-danger">Cancelled</span></td>
+                <td><strong>&#8377;52,000</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-bottom:28px;">
+        <div class="dash-section reveal" style="margin-bottom:0;">
+          <div class="dash-section-header">
+            <h3><i class="fas fa-chalkboard-teacher" style="color:var(--navy);margin-right:10px;"></i>Faculty Overview</h3>
+            <a href="#">All Faculty <i class="fas fa-arrow-right"></i></a>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div class="admin-faculty-mini">
+              <div class="faculty-avatar" style="background:linear-gradient(135deg,var(--navy),var(--navy-light));">DR</div>
+              <div class="faculty-info">
+                <h5>Dr. Rajesh Kumar</h5>
+                <p>Physics - 12 years exp.</p>
+              </div>
+              <div class="faculty-rating"><i class="fas fa-star"></i> 4.9</div>
+            </div>
+            <div class="admin-faculty-mini">
+              <div class="faculty-avatar" style="background:linear-gradient(135deg,var(--crimson),var(--crimson-light));">AM</div>
+              <div class="faculty-info">
+                <h5>Prof. Anika Mehra</h5>
+                <p>Chemistry - 9 years exp.</p>
+              </div>
+              <div class="faculty-rating"><i class="fas fa-star"></i> 4.8</div>
+            </div>
+            <div class="admin-faculty-mini">
+              <div class="faculty-avatar" style="background:linear-gradient(135deg,var(--emerald),var(--emerald-light));">VS</div>
+              <div class="faculty-info">
+                <h5>Mr. Vikram Singh</h5>
+                <p>Mathematics - 15 years exp.</p>
+              </div>
+              <div class="faculty-rating"><i class="fas fa-star"></i> 4.9</div>
+            </div>
+            <div class="admin-faculty-mini">
+              <div class="faculty-avatar" style="background:linear-gradient(135deg,var(--gold),#D97706);">SK</div>
+              <div class="faculty-info">
+                <h5>Ms. Sana Khan</h5>
+                <p>Biology - 8 years exp.</p>
+              </div>
+              <div class="faculty-rating"><i class="fas fa-star"></i> 4.7</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dash-section reveal" style="margin-bottom:0;">
+          <div class="dash-section-header">
+            <h3><i class="fas fa-trophy" style="color:var(--navy);margin-right:10px;"></i>Student Performance</h3>
+            <a href="#">Full Report <i class="fas fa-arrow-right"></i></a>
+          </div>
+          <div class="dash-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Student</th>
+                  <th>Course</th>
+                  <th>Avg Score</th>
+                  <th>Attendance</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Aarav Iyer</strong></td>
+                  <td>JEE Advanced</td>
+                  <td>92%</td>
+                  <td>96%</td>
+                  <td><span class="badge badge-success">Excellent</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Neha Joshi</strong></td>
+                  <td>NEET UG</td>
+                  <td>85%</td>
+                  <td>90%</td>
+                  <td><span class="badge badge-info">Good</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Rohan Desai</strong></td>
+                  <td>Foundation XI</td>
+                  <td>78%</td>
+                  <td>82%</td>
+                  <td><span class="badge badge-info">Good</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Isha Reddy</strong></td>
+                  <td>Boards X</td>
+                  <td>95%</td>
+                  <td>98%</td>
+                  <td><span class="badge badge-success">Excellent</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Karan Kapoor</strong></td>
+                  <td>JEE Advanced</td>
+                  <td>65%</td>
+                  <td>70%</td>
+                  <td><span class="badge badge-warning">Needs Work</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="dash-section reveal">
+        <div class="dash-section-header">
+          <h3><i class="fas fa-calendar-alt" style="color:var(--navy);margin-right:10px;"></i>Upcoming Events</h3>
+          <a href="#">Calendar <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+          <div class="event-card">
+            <div class="event-icon-box" style="background:rgba(30,58,138,0.1);color:var(--navy);">
+              <i class="fas fa-pencil-alt"></i>
+            </div>
+            <div class="event-info">
+              <h4>Mock Test Series</h4>
+              <p><i class="fas fa-clock"></i> 20 Aug 2025</p>
+            </div>
+            <div class="event-date-badge">
+              <div class="day">20</div>
+              <div class="mon">Aug</div>
+            </div>
+          </div>
+          <div class="event-card">
+            <div class="event-icon-box" style="background:rgba(220,38,38,0.1);color:var(--crimson);">
+              <i class="fas fa-users"></i>
+            </div>
+            <div class="event-info">
+              <h4>Parent-Teacher Meeting</h4>
+              <p><i class="fas fa-clock"></i> 25 Aug 2025</p>
+            </div>
+            <div class="event-date-badge">
+              <div class="day">25</div>
+              <div class="mon">Aug</div>
+            </div>
+          </div>
+          <div class="event-card">
+            <div class="event-icon-box" style="background:rgba(5,150,105,0.1);color:var(--emerald);">
+              <i class="fas fa-chalkboard"></i>
+            </div>
+            <div class="event-info">
+              <h4>Faculty Workshop</h4>
+              <p><i class="fas fa-clock"></i> 30 Aug 2025</p>
+            </div>
+            <div class="event-date-badge">
+              <div class="day">30</div>
+              <div class="mon">Aug</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dash-section reveal" style="margin-bottom:0;">
+        <div class="dash-section-header">
+          <h3><i class="fas fa-tasks" style="color:var(--navy);margin-right:10px;"></i>Quick Management</h3>
+        </div>
+        <div class="quick-action-grid">
+          <div class="quick-action-card">
+            <div class="action-icon" style="background:rgba(30,58,138,0.1);color:var(--navy);"><i class="fas fa-user-plus"></i></div>
+            <h5>Add Student</h5>
+            <p>Register new enrollment</p>
+          </div>
+          <div class="quick-action-card">
+            <div class="action-icon" style="background:rgba(220,38,38,0.1);color:var(--crimson);"><i class="fas fa-chalkboard-teacher"></i></div>
+            <h5>Hire Faculty</h5>
+            <p>Add teaching staff</p>
+          </div>
+          <div class="quick-action-card">
+            <div class="action-icon" style="background:rgba(5,150,105,0.1);color:var(--emerald);"><i class="fas fa-bullhorn"></i></div>
+            <h5>New Announcement</h5>
+            <p>Notify students & staff</p>
+          </div>
+          <div class="quick-action-card">
+            <div class="action-icon" style="background:rgba(245,158,11,0.1);color:var(--gold);"><i class="fas fa-file-invoice"></i></div>
+            <h5>Generate Report</h5>
+            <p>Performance analytics</p>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div class="footer-logo">
+              <span class="footer-logo-icon"><img src="assets/images/logo2.png" alt="Excel Academy Logo"></span>
+              CoachingInstitute
+            </div>
+            <p>Empowering students with quality education since 2015. We provide comprehensive coaching for competitive exams and academic excellence.</p>
+            <div class="footer-social">
+              <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+              <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+              <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+              <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+              <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            </div>
+          </div>
+          <div>
+            <h4>Quick Links</h4>
+            <ul class="footer-links">
+              <li><a href="about.html"><i class="fas fa-chevron-right"></i> About Us</a></li>
+              <li><a href="services.html"><i class="fas fa-chevron-right"></i> Our Courses</a></li>
+              <li><a href="blog.html"><i class="fas fa-chevron-right"></i> Blog</a></li>
+              <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+              <li><a href="sitemap.html"><i class="fas fa-chevron-right"></i> Sitemap</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Support</h4>
+            <ul class="footer-links">
+              <li><a href="privacy-policy.html"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
+              <li><a href="terms-conditions.html"><i class="fas fa-chevron-right"></i> Terms & Conditions</a></li>
+              <li><a href="login.html"><i class="fas fa-chevron-right"></i> Student Login</a></li>
+              <li><a href="signup.html"><i class="fas fa-chevron-right"></i> Register Now</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Contact Us</h4>
+            <ul class="footer-contact">
+              <li><span><i class="fas fa-map-marker-alt"></i></span> 123 Education Lane, Knowledge City, KC 10001</li>
+              <li><span><i class="fas fa-phone-alt"></i></span> +1 (555) 123-4567</li>
+              <li><span><i class="fas fa-envelope"></i></span> info@coachinginstitute.com</li>
+              <li><span><i class="fas fa-clock"></i></span> Mon - Sat: 8:00 AM - 7:00 PM</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 CoachingInstitute. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="terms-conditions.html">Terms</a>
+        <a href="sitemap.html">Sitemap</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,843 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Excel Academy - Alternative Home. Premier Coaching Institute for JEE, NEET, and Competitive Exams.">
+  <title>Excel Academy - Home 2</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .hero-banner {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background: var(--navy-dark);
+    }
+    .hero-banner-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero-banner-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(30,42,90,0.93) 0%, rgba(30,58,138,0.75) 40%, rgba(220,38,38,0.25) 100%);
+    }
+    .hero-banner-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .hero-banner-content {
+      position: relative;
+      z-index: 1;
+      padding: 140px 24px 80px;
+      max-width: var(--container-width);
+      margin: 0 auto;
+      width: 100%;
+    }
+    .hero-banner-content .hero-badge-group {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+    .hero-banner-content .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 20px;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 50px;
+      color: var(--white);
+      font-size: 0.82rem;
+      font-weight: 500;
+    }
+    .hero-banner-content h1 {
+      font-size: clamp(2.8rem, 6vw, 4.8rem);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.05;
+      margin-bottom: 24px;
+      max-width: 800px;
+      letter-spacing: -0.03em;
+    }
+    .hero-banner-content h1 span {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-banner-content p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.8);
+      max-width: 580px;
+      margin-bottom: 40px;
+      line-height: 1.9;
+    }
+    .hero-banner-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 600px;
+      margin-top: 48px;
+    }
+    .hero-banner-stats .hbs-item {
+      padding: 16px 24px;
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(10px);
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255,255,255,0.08);
+      text-align: center;
+    }
+    .hero-banner-stats .hbs-item .hbs-number {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.8rem;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .hero-banner-stats .hbs-item .hbs-label {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.6);
+      font-weight: 500;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .feature-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 36px 28px;
+      border: 1px solid var(--border-color);
+      transition: all var(--transition);
+      position: relative;
+    }
+    .feature-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-xl);
+      border-color: transparent;
+    }
+    .feature-card .fc-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      color: var(--white);
+    }
+    .feature-card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 10px;
+    }
+    .feature-card p {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    .about-video {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .about-video img {
+      width: 100%;
+      height: 450px;
+      object-fit: cover;
+    }
+    .about-video .play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80px;
+      height: 80px;
+      border-radius: var(--radius-full);
+      background: rgba(220,38,38,0.9);
+      color: var(--white);
+      font-size: 1.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--transition);
+      box-shadow: 0 0 0 15px rgba(220,38,38,0.2);
+    }
+    .about-video .play-btn:hover {
+      transform: translate(-50%, -50%) scale(1.1);
+      box-shadow: 0 0 0 25px rgba(220,38,38,0.15);
+    }
+    .benefit-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 32px 28px;
+      border: 1px solid var(--border-color);
+      transition: all var(--transition);
+      position: relative;
+    }
+    .benefit-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+      border-color: transparent;
+    }
+    .benefit-card .bc-number {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 2.5rem;
+      color: var(--navy);
+      opacity: 0.1;
+      line-height: 1;
+      position: absolute;
+      top: 16px;
+      right: 20px;
+    }
+    .benefit-card .bc-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      margin-bottom: 18px;
+      color: var(--white);
+    }
+    .benefit-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
+    .benefit-card p {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    .program-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      transition: all var(--transition);
+    }
+    .program-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-xl);
+    }
+    .program-card .pc-top {
+      padding: 32px 28px 24px;
+      position: relative;
+    }
+    .program-card .pc-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 16px;
+      color: var(--white);
+    }
+    .program-card .pc-top h3 {
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+    }
+    .program-card .pc-top p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    .program-card .pc-footer {
+      padding: 16px 28px;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .program-card .pc-footer .pc-meta {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .testimonial-alt-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      border: 1px solid var(--border-color);
+      transition: all var(--transition);
+    }
+    .testimonial-alt-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+    .testimonial-alt-card .tac-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .testimonial-alt-card .tac-header img {
+      width: 56px;
+      height: 56px;
+      border-radius: var(--radius-full);
+      object-fit: cover;
+      border: 3px solid var(--navy);
+    }
+    .testimonial-alt-card .tac-header h5 {
+      font-size: 1rem;
+      margin-bottom: 2px;
+    }
+    .testimonial-alt-card .tac-header span {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+    }
+    .testimonial-alt-card .tac-stars {
+      display: flex;
+      gap: 4px;
+      color: var(--gold);
+      font-size: 0.85rem;
+      margin-bottom: 16px;
+    }
+    .testimonial-alt-card blockquote {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      font-style: italic;
+    }
+    .testimonial-alt-card .tac-result {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+      padding: 6px 16px;
+      background: rgba(5,150,105,0.1);
+      color: var(--emerald);
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .newsletter-section {
+      background: linear-gradient(135deg, var(--navy-dark), var(--navy));
+      position: relative;
+      overflow: hidden;
+    }
+    .newsletter-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .newsletter-form {
+      display: flex;
+      gap: 12px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .newsletter-form input {
+      flex: 1;
+      padding: 16px 20px;
+      border-radius: 50px;
+      border: 2px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.08);
+      color: var(--white);
+      font-size: 0.95rem;
+    }
+    .newsletter-form input::placeholder {
+      color: rgba(255,255,255,0.5);
+    }
+    .newsletter-form input:focus {
+      border-color: var(--white);
+      background: rgba(255,255,255,0.12);
+    }
+    .newsletter-form .btn {
+      flex-shrink: 0;
+    }
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 1024px) {
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .hero-banner-stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 768px) {
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+      .benefits-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero-banner-stats {
+        grid-template-columns: 1fr;
+      }
+      .newsletter-form {
+        flex-direction: column;
+      }
+      .hero-banner-content {
+        padding: 120px 24px 60px;
+      }
+      .hero-banner-content .hero-badge-group {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="Excel Academy Home">
+        <span class="nav-logo-icon">
+          <img src="assets/images/logo1.png" alt="Excel Academy Logo">
+        </span>
+        Excel Academy
+      </a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="home-2.html" class="nav-link active">Home 2</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="blog.html" class="nav-link">Blog</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <button class="theme-toggle" aria-label="Toggle theme">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="rtl-toggle" aria-label="Toggle RTL">RTL</button>
+        <div class="profile-dropdown">
+          <button class="profile-btn" aria-label="Account menu" aria-haspopup="true">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </button>
+          <div class="profile-menu" role="menu">
+            <a href="login.html" role="menuitem">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+              Login / Signup
+            </a>
+            <a href="dashboard-student.html" role="menuitem">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+              User Dashboard
+            </a>
+            <a href="dashboard-admin.html" role="menuitem">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              Admin Dashboard
+            </a>
+          </div>
+        </div>
+        <button class="nav-toggle" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero-banner">
+    <div class="hero-banner-bg">
+      <img src="https://images.unsplash.com/photo-1535982330050-f1c2fb79ff78?w=1600&h=1000&fit=crop&auto=format" alt="Students achieving success" loading="lazy">
+    </div>
+    <div class="hero-banner-content">
+      <div class="hero-badge-group reveal">
+        <span class="hero-badge"><i class="fas fa-trophy"></i> 5000+ Selections</span>
+        <span class="hero-badge"><i class="fas fa-star"></i> 4.9 Rating</span>
+        <span class="hero-badge"><i class="fas fa-building"></i> 45 Branches</span>
+      </div>
+      <h1 class="reveal">Build Your Future With <span>India's Best</span> Coaching</h1>
+      <p class="reveal">Join the institution that has consistently produced top rankers in JEE Advanced, NEET, and other competitive examinations through innovative teaching methodologies and personalized mentorship.</p>
+      <div class="flex gap-16" style="flex-wrap: wrap;">
+        <a href="signup.html" class="btn btn-white btn-lg reveal">Enroll Today <i class="fas fa-arrow-right"></i></a>
+        <a href="services.html" class="btn btn-outline btn-lg reveal" style="color: white; border-color: rgba(255,255,255,0.5);">Explore Programs <i class="fas fa-play-circle"></i></a>
+      </div>
+      <div class="hero-banner-stats reveal">
+        <div class="hbs-item">
+          <div class="hbs-number">15,000+</div>
+          <div class="hbs-label">Students Enrolled</div>
+        </div>
+        <div class="hbs-item">
+          <div class="hbs-number">98%</div>
+          <div class="hbs-label">Success Rate</div>
+        </div>
+        <div class="hbs-item">
+          <div class="hbs-number">250+</div>
+          <div class="hbs-label">Expert Faculty</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag"><i class="fas fa-gem"></i> Why Excel Academy</span>
+        <h2 class="section-title">The Excel Advantage</h2>
+        <p class="section-subtitle">What sets us apart from other coaching institutes across the country.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card reveal-left">
+          <div class="fc-icon" style="background: linear-gradient(135deg, var(--navy), var(--navy-light));"><i class="fas fa-chalkboard-teacher"></i></div>
+          <h3>Expert Faculty Panel</h3>
+          <p>Learn from IIT, NIT, and AIIMS alumni with 10+ years of teaching experience. Our faculty are subject matter experts and published authors.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="fc-icon" style="background: linear-gradient(135deg, var(--crimson), var(--crimson-light));"><i class="fas fa-video"></i></div>
+          <h3>Live & Recorded Classes</h3>
+          <p>Flexible learning with live interactive sessions and recorded lectures available 24/7. Never miss a class with our hybrid model.</p>
+        </div>
+        <div class="feature-card reveal-right">
+          <div class="fc-icon" style="background: linear-gradient(135deg, var(--emerald), var(--emerald-light));"><i class="fas fa-clipboard-check"></i></div>
+          <h3>Regular Mock Tests</h3>
+          <p>Weekly tests with AI-powered performance analytics. Detailed feedback and personalized improvement plans for every student.</p>
+        </div>
+        <div class="feature-card reveal-left">
+          <div class="fc-icon" style="background: linear-gradient(135deg, var(--gold), #D97706);"><i class="fas fa-users"></i></div>
+          <h3>Small Batch Sizes</h3>
+          <p>Maximum 40 students per batch ensuring individual attention. Dedicated mentors for doubt-clearing and academic guidance.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="fc-icon" style="background: linear-gradient(135deg, #7C3AED, #A78BFA);"><i class="fas fa-book-open"></i></div>
+          <h3>Comprehensive Study Material</h3>
+          <p>Well-researched study material, question banks, and previous year papers curated by subject experts for deep conceptual understanding.</p>
+        </div>
+        <div class="feature-card reveal-right">
+          <div class="fc-icon" style="background: linear-gradient(135deg, #0891B2, #22D3EE);"><i class="fas fa-brain"></i></div>
+          <h3>Personality Development</h3>
+          <p>Holistic development with communication skills workshops, stress management sessions, and career counseling programs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-soft">
+    <div class="container">
+      <div class="grid grid-2 gap-40" style="align-items: center;">
+        <div class="about-video reveal-left">
+          <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&h=600&fit=crop&auto=format" alt="Excel Academy classroom" loading="lazy">
+          <div class="play-btn">
+            <i class="fas fa-play"></i>
+          </div>
+        </div>
+        <div class="reveal-right">
+          <span class="section-tag"><i class="fas fa-play-circle"></i> Our Story</span>
+          <h2 class="section-title" style="text-align: left;">More Than a Coaching Institute, We're a Launchpad</h2>
+          <p class="body-text" style="margin-bottom: 16px;">Excel Academy was born from a vision to make quality education accessible to every aspiring student in India. What started with 40 students in a small classroom has now transformed into a nationwide movement.</p>
+          <p class="body-text" style="margin-bottom: 24px;">Our teaching philosophy revolves around three pillars: conceptual clarity, consistent practice, and personalized mentorship. This approach has helped thousands of students secure admissions to premier institutions.</p>
+          <div class="flex gap-20" style="flex-wrap: wrap;">
+            <a href="about.html" class="btn btn-primary">Learn Our Story <i class="fas fa-arrow-right"></i></a>
+            <a href="contact.html" class="btn btn-ghost">Schedule a Visit <i class="fas fa-calendar-alt"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag"><i class="fas fa-thumbs-up"></i> Why Choose Us</span>
+        <h2 class="section-title">Four Reasons Students Trust Us</h2>
+        <p class="section-subtitle">Decades of experience have taught us what works best for exam preparation.</p>
+      </div>
+      <div class="benefits-grid">
+        <div class="benefit-card reveal-left">
+          <div class="bc-number">01</div>
+          <div class="bc-icon" style="background: linear-gradient(135deg, var(--navy), var(--navy-light));"><i class="fas fa-chart-line"></i></div>
+          <h3>Proven Track Record</h3>
+          <p>13+ years of excellence with 5000+ selections in IITs, NITs, AIIMS, and other top colleges. Our students consistently rank in the top 100 across India.</p>
+        </div>
+        <div class="benefit-card reveal-right">
+          <div class="bc-number">02</div>
+          <div class="bc-icon" style="background: linear-gradient(135deg, var(--crimson), var(--crimson-light));"><i class="fas fa-microchip"></i></div>
+          <h3>Tech-Enabled Learning</h3>
+          <p>AI-powered performance tracking, digital doubt-solving platforms, and interactive smart classrooms that make learning engaging and effective.</p>
+        </div>
+        <div class="benefit-card reveal-left">
+          <div class="bc-number">03</div>
+          <div class="bc-icon" style="background: linear-gradient(135deg, var(--emerald), var(--emerald-light));"><i class="fas fa-hand-holding-heart"></i></div>
+          <h3>Personalized Mentorship</h3>
+          <p>Each student gets a dedicated mentor who tracks academic progress, provides guidance, and ensures mental well-being throughout the preparation journey.</p>
+        </div>
+        <div class="benefit-card reveal-right">
+          <div class="bc-number">04</div>
+          <div class="bc-icon" style="background: linear-gradient(135deg, var(--gold), #D97706);"><i class="fas fa-rupee-sign"></i></div>
+          <h3>Affordable Excellence</h3>
+          <p>Merit-based scholarships covering up to 100% tuition fees. Flexible payment plans ensuring that financial constraints never hinder quality education.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-soft">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag"><i class="fas fa-layer-group"></i> Programs</span>
+        <h2 class="section-title">Our Flagship Programs</h2>
+        <p class="section-subtitle">Specialized programs designed for different academic goals and timelines.</p>
+      </div>
+      <div class="grid grid-4 gap-30">
+        <div class="program-card reveal-left">
+          <div class="pc-top">
+            <div class="pc-icon" style="background: linear-gradient(135deg, var(--navy), var(--navy-light));"><i class="fas fa-rocket"></i></div>
+            <h3>JEE Advanced</h3>
+            <p>Intensive 2-year program covering Physics, Chemistry, and Mathematics with advanced problem-solving techniques.</p>
+          </div>
+          <div class="pc-footer">
+            <span class="pc-meta"><i class="far fa-clock"></i> 24 Months</span>
+            <a href="services.html" class="btn btn-primary btn-sm">View</a>
+          </div>
+        </div>
+        <div class="program-card reveal">
+          <div class="pc-top">
+            <div class="pc-icon" style="background: linear-gradient(135deg, var(--crimson), var(--crimson-light));"><i class="fas fa-heartbeat"></i></div>
+            <h3>NEET UG</h3>
+            <p>Comprehensive medical entrance preparation with focus on Biology, Physics, and Chemistry fundamentals.</p>
+          </div>
+          <div class="pc-footer">
+            <span class="pc-meta"><i class="far fa-clock"></i> 22 Months</span>
+            <a href="services.html" class="btn btn-primary btn-sm">View</a>
+          </div>
+        </div>
+        <div class="program-card reveal">
+          <div class="pc-top">
+            <div class="pc-icon" style="background: linear-gradient(135deg, var(--emerald), var(--emerald-light));"><i class="fas fa-seedling"></i></div>
+            <h3>Foundation</h3>
+            <p>Early preparation program for Class 9-10 students aiming for Olympiads and competitive exams.</p>
+          </div>
+          <div class="pc-footer">
+            <span class="pc-meta"><i class="far fa-clock"></i> 36 Months</span>
+            <a href="services.html" class="btn btn-primary btn-sm">View</a>
+          </div>
+        </div>
+        <div class="program-card reveal-right">
+          <div class="pc-top">
+            <div class="pc-icon" style="background: linear-gradient(135deg, var(--gold), #D97706);"><i class="fas fa-bolt"></i></div>
+            <h3>Crash Course</h3>
+            <p>High-intensity 6-month program for quick revision, mock tests, and last-minute exam strategies.</p>
+          </div>
+          <div class="pc-footer">
+            <span class="pc-meta"><i class="far fa-clock"></i> 6 Months</span>
+            <a href="services.html" class="btn btn-primary btn-sm">View</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag"><i class="fas fa-quote-left"></i> Success Stories</span>
+        <h2 class="section-title">Words From Our Achievers</h2>
+        <p class="section-subtitle">Real stories from real students who turned their aspirations into achievements.</p>
+      </div>
+      <div class="grid grid-3 gap-30">
+        <div class="testimonial-alt-card reveal-left">
+          <div class="tac-header">
+            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&h=200&fit=crop&auto=format" alt="Karan Joshi" loading="lazy">
+            <div>
+              <h5>Karan Joshi</h5>
+              <span>IIT Bombay, CSE</span>
+            </div>
+          </div>
+          <div class="tac-stars">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+          <blockquote>The faculty at Excel Academy don't just teach, they inspire. The way Dr. Sharma explains electromagnetism made me fall in love with Physics. Grateful for this incredible journey.</blockquote>
+          <div class="tac-result"><i class="fas fa-trophy"></i> JEE Advanced AIR 37 - 2024</div>
+        </div>
+        <div class="testimonial-alt-card reveal">
+          <div class="tac-header">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop&auto=format" alt="Priya Sharma" loading="lazy">
+            <div>
+              <h5>Priya Sharma</h5>
+              <span>AIIMS Delhi, MBBS</span>
+            </div>
+          </div>
+          <div class="tac-stars">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+          <blockquote>From struggling with Biology diagrams to securing AIR 89 in NEET, my journey at Excel Academy has been nothing short of transformative. The mentorship program was a blessing.</blockquote>
+          <div class="tac-result"><i class="fas fa-trophy"></i> NEET AIR 89 - 2024</div>
+        </div>
+        <div class="testimonial-alt-card reveal-right">
+          <div class="tac-header">
+            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&auto=format" alt="Rohit Mehta" loading="lazy">
+            <div>
+              <h5>Rohit Mehta</h5>
+              <span>IIT Delhi, Electrical</span>
+            </div>
+          </div>
+          <div class="tac-stars">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+          <blockquote>The foundation program in Class 9 gave me a massive advantage. By the time JEE prep started, I was already solving advanced problems. Excel Academy builds strong fundamentals.</blockquote>
+          <div class="tac-result"><i class="fas fa-trophy"></i> JEE Advanced AIR 124 - 2024</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-soft">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag"><i class="fas fa-newspaper"></i> Our Blog</span>
+        <h2 class="section-title">Latest From Our Blog</h2>
+        <p class="section-subtitle">Expert insights, study tips, exam strategies, and success stories from the Excel Academy community.</p>
+      </div>
+      <div class="grid grid-3 gap-30">
+        <div class="blog-card reveal-left">
+          <div class="blog-card-img">
+            <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&h=600&fit=crop&auto=format" alt="Study tips" loading="lazy">
+            <span class="blog-category">Study Tips</span>
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-meta">
+              <span><i class="far fa-user"></i> Dr. Arvind Sharma</span>
+              <span><i class="far fa-calendar-alt"></i> June 15, 2026</span>
+            </div>
+            <h3>10 Proven Study Techniques for JEE Advanced 2026</h3>
+            <p>Discover the most effective study strategies used by top rankers including active recall, spaced repetition, and problem-based learning.</p>
+            <a href="blog.html" class="read-more">Read Article <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+        <div class="blog-card reveal">
+          <div class="blog-card-img">
+            <img src="https://images.unsplash.com/photo-1577896851231-70acf694a6f5?w=800&h=600&fit=crop&auto=format" alt="NEET preparation" loading="lazy">
+            <span class="blog-category">NEET Guide</span>
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-meta">
+              <span><i class="far fa-user"></i> Dr. Sunita Reddy</span>
+              <span><i class="far fa-calendar-alt"></i> June 10, 2026</span>
+            </div>
+            <h3>How to Score 680+ in NEET UG: A Strategic Guide</h3>
+            <p>A comprehensive breakdown of the subject-wise preparation strategy, time management, and test-taking techniques for NEET.</p>
+            <a href="blog.html" class="read-more">Read Article <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+        <div class="blog-card reveal-right">
+          <div class="blog-card-img">
+            <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=600&fit=crop&auto=format" alt="Students studying" loading="lazy">
+            <span class="blog-category">Motivation</span>
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-meta">
+              <span><i class="far fa-user"></i> Prof. Meera Iyer</span>
+              <span><i class="far fa-calendar-alt"></i> June 5, 2026</span>
+            </div>
+            <h3>From Average Student to IIT Topper: A Success Story</h3>
+            <p>Inspiring journey of a student who overcame academic struggles and secured AIR 156 in JEE Advanced through sheer determination.</p>
+            <a href="blog.html" class="read-more">Read Article <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section newsletter-section">
+    <div class="container">
+      <div class="reveal-scale" style="text-align: center; max-width: 650px; margin: 0 auto; position: relative; z-index: 1;">
+        <span class="section-tag" style="background: rgba(255,255,255,0.1); color: var(--white);"><i class="fas fa-envelope-open-text"></i> Stay Updated</span>
+        <h2 class="section-title" style="color: var(--white);">Subscribe for Exam Updates & Study Tips</h2>
+        <p style="color: rgba(255,255,255,0.8); margin-bottom: 32px; font-size: 1rem; line-height: 1.8;">Get the latest exam notifications, study strategies, and success tips delivered straight to your inbox every week.</p>
+        <form class="newsletter-form" action="#" method="post">
+          <input type="email" placeholder="Enter your email address" required aria-label="Email address">
+          <button type="submit" class="btn btn-secondary btn-lg">Subscribe <i class="fas fa-paper-plane"></i></button>
+        </form>
+        <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem; margin-top: 16px;">No spam, ever. Unsubscribe anytime.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div class="footer-logo">
+              <span class="footer-logo-icon"><img src="assets/images/logo2.png" alt="Excel Academy Logo"></span>
+              Excel Academy
+            </div>
+            <p>India's most trusted coaching institute for JEE, NEET, and competitive exam preparation. Empowering students to achieve academic excellence since 2012.</p>
+            <div class="footer-social">
+              <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+              <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+              <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+              <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+              <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            </div>
+          </div>
+          <div>
+            <h4>Quick Links</h4>
+            <ul class="footer-links">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="home-2.html">Home 2</a></li>
+              <li><a href="about.html">About Us</a></li>
+              <li><a href="services.html">Courses</a></li>
+              <li><a href="blog.html">Blog</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Student Corner</h4>
+            <ul class="footer-links">
+              <li><a href="login.html">Student Login</a></li>
+              <li><a href="signup.html">New Registration</a></li>
+              <li><a href="dashboard-student.html">Student Dashboard</a></li>
+              <li><a href="dashboard-admin.html">Admin Dashboard</a></li>
+              <li><a href="sitemap.html">Sitemap</a></li>
+              <li><a href="privacy-policy.html">Privacy Policy</a></li>
+              <li><a href="terms-conditions.html">Terms & Conditions</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Get In Touch</h4>
+            <ul class="footer-contact">
+              <li>
+                <span><i class="fas fa-map-marker-alt"></i></span>
+                <span>Excel Tower, Sector 14, Rohini, New Delhi - 110085</span>
+              </li>
+              <li>
+                <span><i class="fas fa-phone"></i></span>
+                <span>+91 1800-123-EXCEL<br>+91 98765 43210</span>
+              </li>
+              <li>
+                <span><i class="fas fa-envelope"></i></span>
+                <span>info@excelacademy.in<br>admissions@excelacademy.in</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Excel Academy. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="terms-conditions.html">Terms of Service</a>
+        <a href="sitemap.html">Sitemap</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
