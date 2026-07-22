@@ -411,6 +411,60 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: var(--shadow-sm);
 }
 
+/* Home Page Hero Transparent Navbar (Unscrolled Top State) */
+.nav.nav-hero-transparent:not(.scrolled) {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: none !important;
+}
+
+.nav.nav-hero-transparent:not(.scrolled) .nav-logo {
+  color: #ffffff !important;
+}
+
+.nav.nav-hero-transparent:not(.scrolled) .nav-link {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+.nav.nav-hero-transparent:not(.scrolled) .nav-link:hover,
+.nav.nav-hero-transparent:not(.scrolled) .nav-link.active {
+  color: #ffffff !important;
+}
+
+.nav.nav-hero-transparent:not(.scrolled) .nav-link.active::after {
+  background: var(--crimson) !important;
+}
+
+.nav.nav-hero-transparent:not(.scrolled) .theme-toggle,
+.nav.nav-hero-transparent:not(.scrolled) .rtl-toggle {
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.nav.nav-hero-transparent:not(.scrolled) .theme-toggle svg,
+.nav.nav-hero-transparent:not(.scrolled) .theme-toggle path {
+  fill: #ffffff !important;
+}
+
+.nav.nav-hero-transparent:not(.scrolled) .profile-btn {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  color: #ffffff !important;
+}
+
+.nav.nav-hero-transparent:not(.scrolled) .profile-btn svg,
+.nav.nav-hero-transparent:not(.scrolled) .profile-btn path,
+.nav.nav-hero-transparent:not(.scrolled) .profile-btn circle {
+  stroke: #ffffff !important;
+}
+
+.nav.nav-hero-transparent:not(.scrolled) .nav-toggle span {
+  background-color: #ffffff !important;
+}
+
 .nav-inner {
   display: flex;
   align-items: center;
