@@ -1313,8 +1313,14 @@ h1, h2, h3, h4, h5, h6 {
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1.5fr;
-  gap: 50px;
+  grid-template-columns: 1.5fr 0.8fr 1.2fr 1.5fr;
+  gap: 40px;
+}
+
+@media (min-width: 1025px) {
+  .footer-grid > div:nth-child(2) {
+    padding-left: 30px;
+  }
 }
 
 .footer-brand p {
@@ -2468,3 +2474,48 @@ h1, h2, h3, h4, h5, h6 {
 .overflow-hidden { overflow: hidden; }
 .z-1 { z-index: 1; }
 .z-2 { z-index: 2; }
+
+/* ============================================
+   BACK TO TOP BUTTON
+   ============================================ */
+.back-to-top {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  background: var(--navy);
+  color: var(--white);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(16px);
+  transition: all var(--transition);
+  z-index: 999;
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.back-to-top:hover {
+  background: var(--crimson);
+  color: var(--white);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(220, 38, 38, 0.4);
+}
+
+[dir="rtl"] .back-to-top {
+  right: auto;
+  left: 32px;
+}
+

@@ -397,4 +397,38 @@ document.addEventListener('DOMContentLoaded', () => {
     a.addEventListener('click', e => e.preventDefault());
   });
 
+  // ============================================
+  // FOOTER NEWSLETTER SUBSCRIPTION
+  // ============================================
+  document.querySelectorAll('.footer-newsletter-form').forEach(form => {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const input = form.querySelector('input[type="email"]');
+      const button = form.querySelector('button[type="submit"]');
+      if (input && button) {
+        input.disabled = true;
+        button.disabled = true;
+        button.textContent = 'Subscribed!';
+        
+        const successMsg = document.createElement('p');
+        successMsg.className = 'newsletter-success';
+        successMsg.textContent = 'Thank you! You have subscribed successfully.';
+        successMsg.style.color = '#10B981'; // Emerald/Green color
+        successMsg.style.fontSize = '0.85rem';
+        successMsg.style.marginTop = '10px';
+        successMsg.style.fontWeight = '500';
+        
+        const existing = form.parentElement.querySelector('.newsletter-success');
+        if (existing) existing.remove();
+        
+        form.parentElement.appendChild(successMsg);
+        
+        successMsg.style.opacity = '0';
+        successMsg.style.transition = 'opacity 0.3s ease';
+        setTimeout(() => successMsg.style.opacity = '1', 50);
+      }
+    });
+  });
+
 });
+
