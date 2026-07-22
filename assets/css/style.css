@@ -677,7 +677,6 @@ h1, h2, h3, h4, h5, h6 {
   overflow: hidden;
   background: var(--navy-dark);
 }
-
 .hero-slide {
   position: absolute;
   inset: 0;
@@ -715,11 +714,9 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 1;
   max-width: var(--container-width);
   margin: 0 auto;
-  padding: var(--container-padding);
+  padding: 50px var(--container-padding) 110px;
   width: 100%;
 }
-
-
 
 .hero-slide-content .hero-tag {
   display: inline-flex;
@@ -1570,8 +1567,33 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 12px;
 }
 
-.text-gradient {
+.text-gradient,
+.text-gradient-blue {
   background: linear-gradient(90deg, #60A5FA 0%, #22D3EE 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+}
+
+.text-gradient-emerald {
+  background: linear-gradient(90deg, #34D399 0%, #059669 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+}
+
+.text-gradient-gold {
+  background: linear-gradient(90deg, #FBBF24 0%, #F59E0B 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+}
+
+.text-gradient-indigo {
+  background: linear-gradient(90deg, #818CF8 0%, #C084FC 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
