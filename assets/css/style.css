@@ -701,7 +701,7 @@ h1, h2, h3, h4, h5, h6 {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(30,42,90,0.92) 0%, rgba(30,58,138,0.7) 50%, rgba(220,38,38,0.3) 100%);
+  background: linear-gradient(135deg, rgba(11, 17, 32, 0.9) 0%, rgba(15, 32, 90, 0.75) 60%, rgba(220, 38, 38, 0.15) 100%);
 }
 
 .hero-slide-bg img {
@@ -718,6 +718,8 @@ h1, h2, h3, h4, h5, h6 {
   padding: var(--container-padding);
   width: 100%;
 }
+
+
 
 .hero-slide-content .hero-tag {
   display: inline-flex;
@@ -1496,10 +1498,22 @@ h1, h2, h3, h4, h5, h6 {
    PAGE HEADER
    ============================================ */
 .page-header {
-  padding: 160px 0 80px;
-  background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 50%, rgba(220,38,38,0.15) 100%);
+  padding: 160px 0 100px;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
   position: relative;
   overflow: hidden;
+  background-color: var(--navy-dark);
+}
+
+.page-header::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(11, 17, 32, 0.9) 0%, rgba(15, 32, 90, 0.75) 60%, rgba(220, 38, 38, 0.15) 100%);
+  z-index: 1;
+  pointer-events: none;
 }
 
 .page-header::before {
@@ -1507,18 +1521,25 @@ h1, h2, h3, h4, h5, h6 {
   position: absolute;
   inset: 0;
   background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  z-index: 2;
+  pointer-events: none;
 }
 
 .page-header-content {
   position: relative;
-  z-index: 1;
+  z-index: 3;
   text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
 }
 
 .page-header-content h1 {
   font-size: clamp(2rem, 4vw, 3.2rem);
   color: var(--white);
   margin-bottom: 16px;
+  font-weight: 800;
+  line-height: 1.2;
 }
 
 .page-header-content .breadcrumb {
@@ -1528,6 +1549,7 @@ h1, h2, h3, h4, h5, h6 {
   gap: 8px;
   font-size: 0.9rem;
   color: rgba(255,255,255,0.6);
+  margin-top: 16px;
 }
 
 .page-header-content .breadcrumb a {
@@ -1537,6 +1559,33 @@ h1, h2, h3, h4, h5, h6 {
 .page-header-content .breadcrumb a:hover {
   color: var(--white);
 }
+
+.hero-label {
+  color: var(--crimson);
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+
+.text-gradient {
+  background: linear-gradient(90deg, #60A5FA 0%, #22D3EE 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+}
+
+.hero-desc {
+  color: rgba(255, 255, 255, 0.75) !important;
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  line-height: 1.8;
+  max-width: 700px;
+  margin: 16px auto 0;
+}
+
 
 /* ============================================
    SCROLL REVEAL
