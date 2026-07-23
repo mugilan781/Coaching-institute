@@ -96,6 +96,10 @@ document.addEventListener('DOMContentLoaded', () => {
     navLinks.classList.toggle('open', open);
     navOverlay.classList.toggle('open', open);
     document.body.style.overflow = open ? 'hidden' : '';
+    const navEl = document.querySelector('.nav');
+    if (navEl) {
+      navEl.classList.toggle('menu-open', open);
+    }
   }
 
   if (navToggle && navLinks) {
