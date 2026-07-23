@@ -374,10 +374,123 @@
       .quick-grid { grid-template-columns: repeat(2,1fr); }
       .score-card-grid { grid-template-columns: 1fr 1fr; }
     }
+    @media (max-width: 576px) {
+      .dash-stats-grid { grid-template-columns: repeat(2,1fr); }
+      .section-page-header { flex-direction: column; }
+      .section-page-header h2 { font-size: 1.2rem; }
+      .dash-header { padding: 0 12px; }
+      .dash-header-logo { font-size: 0.95rem; }
+      .dash-header-logo img { width: 28px; height: 28px; }
+      .dash-main { padding: 14px; }
+      .dash-stat-card { padding: 14px 16px; }
+      .dash-stat-number { font-size: 1.3rem; }
+      .dash-stat-icon { width: 36px; height: 36px; font-size: 0.95rem; }
+      .panel { padding: 16px; }
+      .panel-header h3 { font-size: 0.88rem; }
+      .quick-grid { grid-template-columns: repeat(2,1fr); gap: 10px; }
+      .quick-card { padding: 16px 12px; }
+      .quick-icon { width: 40px; height: 40px; font-size: 1rem; }
+      .score-card-grid { grid-template-columns: repeat(2,1fr); gap: 10px; }
+      .score-card { padding: 14px; }
+      .score-card .score { font-size: 1.5rem; }
+      .exam-card { padding: 12px 14px; gap: 10px; }
+      .exam-date-box { width: 44px; height: 44px; }
+      .exam-date-box .d { font-size: 1rem; }
+      .exam-date-box .m { font-size: 0.5rem; }
+      .nav-user span:last-child { display: none; }
+      /* Table controls stack vertically */
+      .table-controls { flex-direction: column; align-items: stretch; }
+      .table-search { min-width: 0; width: 100%; font-size: 0.8rem; box-sizing: border-box; }
+      .table-filter { width: 100%; font-size: 0.8rem; }
+      .dash-table tbody td { padding: 8px 10px; font-size: 0.78rem; }
+      .dash-table thead th { padding: 8px 10px; font-size: 0.68rem; }
+      /* Action buttons in table */
+      .dash-table tbody td .btn-sm { padding: 5px 10px; font-size: 0.72rem; }
+      .dash-table tbody td[style*="display:flex"] { gap: 4px !important; }
+      .info-box { padding: 10px 14px; font-size: 0.78rem; }
+      .absent-chip { font-size: 0.72rem; padding: 4px 10px; }
+      .ring-wrap { width: 64px; height: 64px; }
+      .ring-wrap svg { width: 64px; height: 64px; }
+      .ring-pct { font-size: 0.78rem; }
+      .attendance-ring-card { padding: 14px 8px; }
+      .attendance-ring-grid { grid-template-columns: repeat(auto-fill, minmax(100px,1fr)); gap: 10px; }
+      .att-subject { font-size: 0.78rem; min-width: 80px; }
+      .att-pct { font-size: 0.8rem; min-width: 34px; }
+      .form-actions { flex-direction: column; }
+      .form-actions .btn { width: 100%; }
+      .dash-modal { padding: 20px; margin: 10px; }
+      .settings-row { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .profile-grid { grid-template-columns: 1fr; }
+      .photo-upload-area { width: 80px; height: 80px; }
+      /* Score card special card */
+      .score-card[style*="background:linear-gradient"] { padding: 14px; }
+      .score-card[style*="background:linear-gradient"] div[style*="font-size:2.4rem"] { font-size: 1.8rem !important; }
+      /* Override the inline 2-column grid in performance overview */
+      .dash-section.active > div[style*="display:grid"] {
+        grid-template-columns: 1fr !important;
+      }
+    }
     @media (max-width: 480px) {
-      .dash-stats-grid { grid-template-columns: 1fr 1fr; }
+      .dash-stats-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .quick-grid { grid-template-columns: 1fr; }
       .score-card-grid { grid-template-columns: 1fr; }
-      .quick-grid { grid-template-columns: 1fr 1fr; }
+      .dash-main { padding: 12px; }
+      .section-page-header h2 { font-size: 1.1rem; }
+      .dash-stat-number { font-size: 1.15rem; }
+    }
+    @media (max-width: 390px) {
+      .dash-header { padding: 0 8px; height: 56px; }
+      .dash-header-logo { font-size: 0.85rem; gap: 6px; }
+      .dash-header-logo img { width: 24px; height: 24px; }
+      .dash-main { padding: 10px; }
+      .dash-stat-card { padding: 12px; }
+      .dash-stat-number { font-size: 1.1rem; }
+      .dash-stat-label { font-size: 0.72rem; }
+      .dash-stats-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .panel { padding: 14px; }
+      .dash-sidebar { width: 100%; }
+      .quick-card { padding: 12px 8px; }
+      .quick-card h5 { font-size: 0.78rem; }
+      .quick-card p { font-size: 0.68rem; }
+      .score-card .score { font-size: 1.3rem; }
+      .score-card .subject { font-size: 0.72rem; }
+      .attendance-ring-grid { grid-template-columns: repeat(auto-fill, minmax(80px,1fr)); gap: 8px; }
+      .attendance-ring-card { padding: 10px 6px; }
+      .ring-wrap { width: 56px; height: 56px; }
+      .ring-wrap svg { width: 56px; height: 56px; }
+      .ring-pct { font-size: 0.7rem; }
+      .ring-subject { font-size: 0.7rem; }
+      .ring-detail { font-size: 0.65rem; }
+      .exam-card { flex-direction: column; align-items: flex-start; }
+      .dash-table tbody td { padding: 6px 8px; font-size: 0.72rem; }
+      .dash-table thead th { padding: 6px 8px; font-size: 0.62rem; }
+      .dash-table tbody td .btn-sm { padding: 4px 8px; font-size: 0.65rem; }
+      .dash-table tbody td[style*="display:flex"] { flex-direction: column; gap: 4px !important; }
+      .score-card[style*="background:linear-gradient"] div[style*="font-size:2.4rem"] { font-size: 1.5rem !important; }
+      .score-card[style*="background:linear-gradient"] div[style*="font-size:0.82rem"] { font-size: 0.72rem !important; }
+      .score-card[style*="background:linear-gradient"] div[style*="font-size:0.78rem"] { font-size: 0.65rem !important; }
+    }
+    @media (max-width: 360px) {
+      .dash-header { padding: 0 6px; height: 52px; }
+      .dash-header-logo { font-size: 0.78rem; }
+      .dash-header-logo img { width: 22px; height: 22px; }
+      .dash-main { padding: 8px; }
+      .dash-stats-grid { grid-template-columns: 1fr; gap: 8px; }
+      .dash-stat-card { padding: 10px 12px; flex-direction: row; align-items: center; gap: 12px; }
+      .dash-stat-icon { width: 32px; height: 32px; font-size: 0.85rem; margin-bottom: 0; }
+      .dash-stat-number { font-size: 1rem; }
+      .dash-stat-label { font-size: 0.7rem; }
+      .panel { padding: 12px; margin-bottom: 12px; }
+      .quick-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .quick-card { padding: 10px 6px; }
+      .quick-icon { width: 34px; height: 34px; font-size: 0.85rem; }
+      .score-card-grid { grid-template-columns: 1fr; gap: 8px; }
+      .score-card { padding: 12px; }
+      .score-card .score { font-size: 1.2rem; }
+      .sidebar-item { padding: 9px 14px; font-size: 0.8rem; }
+      .section-page-header { margin-bottom: 14px; }
+      .section-page-header h2 { font-size: 1rem; }
+      .section-page-header p { font-size: 0.75rem; }
     }
     [dir="rtl"] .sidebar-item.active::before { left: auto; right: 0; border-radius: 3px 0 0 3px; }
     [dir="rtl"] .dash-sidebar { left: auto; right: 0; border-right: none; border-left: 1px solid var(--border-color); transform: translateX(100%); }

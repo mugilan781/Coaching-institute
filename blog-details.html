@@ -157,6 +157,81 @@
       color: var(--white);
       transform: translateY(-2px);
     }
+
+    /* ── Responsive overrides ── */
+    @media (max-width: 1024px) {
+      .blog-details-content .featured-image {
+        height: 380px !important;
+      }
+    }
+    @media (max-width: 768px) {
+      .blog-details-content .featured-image {
+        height: 280px !important;
+      }
+      .blog-details-content h2 {
+        font-size: 1.4rem !important;
+      }
+      .blog-details-content p {
+        font-size: 0.92rem !important;
+      }
+    }
+    @media (max-width: 576px) {
+      .blog-details-content .featured-image {
+        height: 220px !important;
+      }
+      .blog-details-content h2 {
+        font-size: 1.2rem !important;
+      }
+      .blog-details-layout {
+        gap: 24px !important;
+      }
+    }
+    @media (max-width: 390px) {
+      .blog-details-content .featured-image {
+        height: 180px !important;
+      }
+      .blog-details-content h2 {
+        font-size: 1.1rem !important;
+      }
+    }
+    @media (max-width: 768px) {
+      .page-header {
+        padding: 120px 0 50px !important;
+      }
+      .section {
+        padding: 50px 0 !important;
+      }
+      .blog-details-content h2 {
+        font-size: 1.3rem !important;
+      }
+      .blog-details-content p {
+        font-size: 0.92rem !important;
+      }
+    }
+    @media (max-width: 576px) {
+      .page-header {
+        padding: 100px 0 40px !important;
+      }
+      .page-header-content h1 {
+        font-size: clamp(1.4rem, 6vw, 1.8rem) !important;
+      }
+      .section {
+        padding: 40px 0 !important;
+      }
+      .blog-details-layout {
+        padding: 0 16px !important;
+      }
+    }
+    @media (max-width: 390px) {
+      .page-header {
+        padding: 90px 0 36px !important;
+      }
+    }
+    @media (max-width: 360px) {
+      .page-header {
+        padding: 80px 0 30px !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -227,7 +302,7 @@
     </section>
 
     <!-- Article Content -->
-    <section class="section" style="padding: 60px 0 !important;">
+    <section class="section" style="padding: 60px 0;">
       <div class="container">
         <div class="blog-details-layout">
           <div class="blog-details-content">
@@ -359,7 +434,7 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="section" style="background: linear-gradient(135deg, var(--navy-dark), var(--navy)); position: relative; overflow: hidden; padding: 60px 0 !important;">
+    <section class="section" style="background: linear-gradient(135deg, var(--navy-dark), var(--navy)); position: relative; overflow: hidden; padding: 60px 0;">
       <div style="position: absolute; inset: 0; background: url('data:image/svg+xml,%3Csvg width=%2260%22 height=%2260%22 viewBox=%220 0 60 60%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22none%22 fill-rule=%22evenodd%22%3E%3Cg fill=%22%23ffffff%22 fill-opacity=%220.03%22%3E%3Cpath d=%22M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E'); opacity: 0.5;"></div>
       <div class="container" style="position: relative; z-index: 1; text-align: center;">
         <div class="reveal">

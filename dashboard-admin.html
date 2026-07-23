@@ -235,6 +235,9 @@
     .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 299; }
     .sidebar-overlay.open { display: block; }
 
+    /* ─── Results Section Grid (3 items) ─── */
+    #sec-results .dash-stats-grid { grid-template-columns: repeat(3,1fr); }
+
     /* ─── Responsive ─── */
     @media (max-width: 1100px) { .dash-stats-grid { grid-template-columns: repeat(2,1fr); } .quick-grid { grid-template-columns: repeat(2,1fr); } .payment-summary-grid { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 768px) {
@@ -248,6 +251,40 @@
       .dash-stats-grid { grid-template-columns: 1fr 1fr; }
       .quick-grid { grid-template-columns: 1fr 1fr; }
       .payment-summary-grid { grid-template-columns: 1fr; }
+      .table-controls { flex-direction: column; align-items: stretch; }
+      .table-search { min-width: 0; width: 100%; box-sizing: border-box; }
+      .table-filter { width: 100%; }
+      .dash-table tbody td .btn-sm { padding: 4px 8px; font-size: 0.72rem; }
+      .dash-table tbody td[style*="display:flex"] { gap: 4px !important; }
+      .dash-header { padding: 0 12px; }
+      .dash-header-logo { font-size: 0.9rem; }
+      .dash-header-logo img { width: 26px; height: 26px; }
+      .panel { padding: 14px; }
+      .dash-table tbody td { padding: 8px 10px; font-size: 0.78rem; }
+      .dash-table thead th { padding: 8px 10px; font-size: 0.68rem; }
+      .nav-user span:last-child { display: none; }
+      .faculty-grid { grid-template-columns: 1fr; }
+      .course-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 360px) {
+      .dash-stats-grid { grid-template-columns: 1fr; }
+      .quick-grid { grid-template-columns: 1fr; }
+      .dash-main { padding: 10px; }
+      .dash-header { padding: 0 8px; height: 56px; }
+      .dash-header-logo { font-size: 0.82rem; gap: 6px; }
+      .dash-header-logo img { width: 22px; height: 22px; }
+      .dash-stat-card { padding: 10px 12px; flex-direction: row; align-items: center; gap: 12px; }
+      .dash-stat-icon { width: 32px; height: 32px; font-size: 0.85rem; margin-bottom: 0; }
+      .dash-stat-number { font-size: 1rem; }
+      .dash-stat-label { font-size: 0.7rem; }
+      .panel { padding: 10px; margin-bottom: 12px; }
+      .dash-table tbody td { padding: 6px 8px; font-size: 0.72rem; }
+      .dash-table thead th { padding: 6px 8px; font-size: 0.62rem; }
+      .dash-table tbody td .btn-sm { padding: 3px 6px; font-size: 0.65rem; }
+      .dash-table tbody td[style*="display:flex"] { flex-direction: column; gap: 3px !important; }
+      .section-page-header h2 { font-size: 1rem; }
+      .section-page-header p { font-size: 0.75rem; }
+      .modal-content { padding: 16px; margin: 8px; }
     }
     [dir="rtl"] .sidebar-item.active::before { left: auto; right: 0; border-radius: 3px 0 0 3px; }
     [dir="rtl"] .dash-sidebar { left: auto; right: 0; border-right: none; border-left: 1px solid var(--border-color); transform: translateX(100%); }
@@ -413,7 +450,7 @@
             <button class="btn btn-primary" data-action="export"><i class="fas fa-file-export"></i> Export Report</button>
           </div>
         </div>
-        <div class="dash-stats-grid" style="grid-template-columns:repeat(3,1fr);">
+        <div class="dash-stats-grid">
           <div class="dash-stat-card"><div class="dash-stat-icon emerald"><i class="fas fa-check-circle"></i></div><div class="dash-stat-number">87%</div><div class="dash-stat-label">Overall Pass Rate</div></div>
           <div class="dash-stat-card"><div class="dash-stat-icon gold"><i class="fas fa-star"></i></div><div class="dash-stat-number">342</div><div class="dash-stat-label">Top Performers</div></div>
           <div class="dash-stat-card"><div class="dash-stat-icon crimson"><i class="fas fa-exclamation-circle"></i></div><div class="dash-stat-number">58</div><div class="dash-stat-label">Need Improvement</div></div>
