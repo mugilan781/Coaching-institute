@@ -82,19 +82,35 @@ document.addEventListener('DOMContentLoaded', () => {
   // ============================================
   const navToggle = document.querySelector('.nav-toggle');
   const navLinks = document.querySelector('.nav-links');
+  let navOverlay = document.querySelector('.nav-overlay');
+
+  // Create backdrop overlay if it doesn't exist
+  if (!navOverlay) {
+    navOverlay = document.createElement('div');
+    navOverlay.className = 'nav-overlay';
+    document.body.appendChild(navOverlay);
+  }
+
+  function toggleNav(open) {
+    navToggle.classList.toggle('active', open);
+    navLinks.classList.toggle('open', open);
+    navOverlay.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
 
   if (navToggle && navLinks) {
     navToggle.addEventListener('click', () => {
-      navToggle.classList.toggle('active');
-      navLinks.classList.toggle('open');
-      document.body.style.overflow = navLinks.classList.contains('open') ? 'hidden' : '';
+      const isOpen = navLinks.classList.contains('open');
+      toggleNav(!isOpen);
+    });
+
+    navOverlay.addEventListener('click', () => {
+      toggleNav(false);
     });
 
     navLinks.querySelectorAll('.nav-link').forEach(link => {
       link.addEventListener('click', () => {
-        navToggle.classList.remove('active');
-        navLinks.classList.remove('open');
-        document.body.style.overflow = '';
+        toggleNav(false);
       });
     });
   }

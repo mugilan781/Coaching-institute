@@ -85,6 +85,8 @@ html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
   font-size: 16px;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 body {
@@ -400,6 +402,7 @@ h1, h2, h3, h4, h5, h6 {
   border-bottom: 1px solid transparent;
   z-index: 1000;
   transition: all var(--transition);
+  box-sizing: border-box;
 }
 
 [data-theme="dark"] .nav {
@@ -554,7 +557,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .nav-toggle {
-  display: none;
+  display: flex;
   width: 40px;
   height: 40px;
   flex-direction: column;
@@ -562,6 +565,12 @@ h1, h2, h3, h4, h5, h6 {
   justify-content: center;
   gap: 5px;
   z-index: 1001;
+  cursor: pointer;
+  padding: 0;
+  border: none;
+  background: transparent;
+  outline: none;
+  flex-shrink: 0;
 }
 
 .nav-toggle span {
@@ -584,6 +593,11 @@ h1, h2, h3, h4, h5, h6 {
 
 .nav-toggle.active span:nth-child(3) {
   transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Contrast fix: override transparent nav white spans when hamburger is open */
+.nav.nav-hero-transparent .nav-toggle.active span {
+  background: var(--text-primary) !important;
 }
 
 .theme-toggle,
@@ -1373,6 +1387,13 @@ h1, h2, h3, h4, h5, h6 {
 @media (min-width: 1025px) {
   .footer-grid > div:nth-child(2) {
     padding-left: 30px;
+  }
+}
+
+/* Hide hamburger at desktop and tablet-landscape where full nav is visible */
+@media (min-width: 769px) {
+  .nav-toggle {
+    display: none !important;
   }
 }
 
@@ -2437,17 +2458,18 @@ h1, h2, h3, h4, h5, h6 {
   .nav-links {
     position: fixed;
     top: 0;
-    right: -100%;
+    right: 0;
     width: 300px;
     height: 100vh;
     background: var(--bg-card);
     flex-direction: column;
     padding: 100px 32px 40px;
     gap: 8px;
-    transition: right var(--transition);
+    transition: transform var(--transition);
     box-shadow: var(--shadow-xl);
     z-index: 1000;
     overflow-y: auto;
+    transform: translateX(100%);
   }
 
   [data-theme="dark"] .nav-links {
@@ -2455,7 +2477,7 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .nav-links.open {
-    right: 0;
+    transform: translateX(0);
   }
 
   .nav-links .nav-link {
@@ -2471,6 +2493,24 @@ h1, h2, h3, h4, h5, h6 {
 
   .nav-toggle {
     display: flex;
+  }
+
+  /* Mobile menu backdrop overlay */
+  .nav-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-fast), visibility var(--transition-fast);
+  }
+
+  .nav-overlay.open {
+    opacity: 1;
+    visibility: visible;
   }
 
   .hero-arrow {
@@ -3242,7 +3282,7 @@ h1, h2, h3, h4, h5, h6 {
   .blog-details-content h2 { font-size: 1.5rem; }
   .blog-details-sidebar { grid-template-columns: 1fr; gap: 24px; }
 
-  /* Dashboard sidebars - override the inline styles with improved behavior */
+  /* Dashboard sidebars - mobile with proper slide behavior */
   .dash-sidebar {
     position: fixed; top: 64px; left: 0; bottom: 0; z-index: 300;
     transform: translateX(-100%); width: 260px;
@@ -3252,9 +3292,26 @@ h1, h2, h3, h4, h5, h6 {
   .dash-hamburger { display: flex; }
   .dash-main { padding: 16px; }
 
+  /* Dashboard sidebar backdrop */
+  .sidebar-overlay {
+    position: fixed; inset: 0; z-index: 299;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  .sidebar-overlay.open { opacity: 1; visibility: visible; }
+
   /* RTL dashboard sidebar */
   [dir="rtl"] .dash-sidebar { left: auto; right: 0; transform: translateX(100%); }
   [dir="rtl"] .dash-sidebar.open { transform: translateX(0); }
+
+  /* Header responsive at tablet */
+  .nav-logo { font-size: 1.2rem; }
+  .nav-logo-icon { width: 36px; height: 36px; }
+  .nav-actions { gap: 8px; }
+  .theme-toggle, .rtl-toggle, .profile-btn { width: 36px; height: 36px; }
 
   /* Stats counter on about page */
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
@@ -3276,6 +3333,14 @@ h1, h2, h3, h4, h5, h6 {
   .hero-slide-content p { font-size: 0.95rem; }
   .hero-indicators { gap: 8px; }
   .hero-indicator { width: 10px; height: 10px; }
+
+  .nav-logo { font-size: 1.1rem; }
+  .nav-logo-icon { width: 32px; height: 32px; }
+  .nav-actions { gap: 6px; }
+  .theme-toggle, .rtl-toggle, .profile-btn { width: 34px; height: 34px; }
+  .theme-toggle svg { width: 16px; height: 16px; }
+  .rtl-toggle { font-size: 0.65rem; min-width: 34px; padding: 0 6px; }
+  .nav-toggle { width: 36px; height: 36px; }
 
   .page-header { padding: 100px 0 40px; }
   .page-header-content h1 { font-size: clamp(1.4rem, 6vw, 1.8rem); }
@@ -3420,6 +3485,9 @@ h1, h2, h3, h4, h5, h6 {
   .modal-close-btn { top: 10px; right: 10px; width: 32px; height: 32px; font-size: 1.2rem; }
 
   .auth-card { padding: 20px; border-radius: 16px; }
+
+  .nav-links { width: 100%; }
+  .nav-links .nav-link { font-size: 0.95rem; padding: 10px 14px; }
 }
 
 /* ── Extra Small Phone (≤ 390px) ── */
@@ -3436,8 +3504,9 @@ h1, h2, h3, h4, h5, h6 {
   .page-header { padding: 90px 0 36px; }
   .breadcrumb { font-size: 0.8rem; }
 
-  .nav-logo { font-size: 1.15rem; }
-  .nav-links { width: 100%; }
+  .nav-logo { font-size: 1.1rem; }
+  .nav-logo-icon { width: 30px; height: 30px; }
+  .nav-links { width: 100%; padding: 80px 20px 32px; }
 
   .course-card-img { height: 140px; }
   .course-card-body { padding: 14px; }
@@ -3521,9 +3590,20 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ── Tiny Phone (≤ 360px) ── */
 @media (max-width: 360px) {
+  .nav-inner { padding: 0 12px; }
   .nav-links { width: 100%; }
   .nav-links .nav-link { font-size: 0.9rem; padding: 10px 14px; }
-  .nav-actions { gap: 6px; }
+  .nav-actions { gap: 4px; }
+  .nav-logo { font-size: 0.95rem; gap: 8px; }
+  .nav-logo-icon { width: 28px; height: 28px; }
+  .nav-toggle { width: 32px; height: 32px; gap: 4px; }
+  .nav-toggle span { width: 20px; height: 2px; }
+  .nav-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); }
+  .nav-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); }
+  .theme-toggle, .rtl-toggle, .profile-btn { width: 30px; height: 30px; min-width: 30px; }
+  .theme-toggle svg { width: 14px; height: 14px; }
+  .rtl-toggle { font-size: 0.6rem; min-width: 30px; padding: 0 4px; }
+  .profile-btn svg { width: 16px; height: 16px; }
 
   .hero-slide-content { padding: 80px 12px 40px; }
   .hero-slide-content .hero-btns .btn { padding: 12px 20px; font-size: 0.85rem; }
@@ -3567,6 +3647,29 @@ h1, h2, h3, h4, h5, h6 {
   .dash-sidebar { display: none; }
   .dash-body { display: block; }
   .dash-main { overflow: visible; }
+}
+
+/* ── Ultra small screens (≤ 320px) ── */
+@media (max-width: 320px) {
+  .nav-inner { padding: 0 8px; }
+  .nav-logo { font-size: 0.85rem; gap: 6px; }
+  .nav-logo-icon { width: 24px; height: 24px; }
+  .nav-actions { gap: 2px; }
+  .nav-toggle { width: 28px; height: 28px; gap: 3px; }
+  .nav-toggle span { width: 18px; height: 2px; }
+  .nav-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(3px, 3px); }
+  .nav-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(3px, -3px); }
+  .theme-toggle, .rtl-toggle, .profile-btn { width: 28px; height: 28px; min-width: 28px; border-radius: 8px; }
+  .theme-toggle svg { width: 13px; height: 13px; }
+  .rtl-toggle { font-size: 0.55rem; min-width: 28px; padding: 0 3px; }
+  .profile-btn svg { width: 14px; height: 14px; }
+}
+
+/* ── Force hamburger visible on mobile ── */
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: flex !important;
+  }
 }
 
 
