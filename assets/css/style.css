@@ -1039,12 +1039,22 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ----- Faculty Card ----- */
+.educators-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+}
+
 .faculty-card {
   background: var(--bg-card);
-  border-radius: var(--radius-lg);
+  border-radius: 20px;
   overflow: hidden;
   border: 1px solid var(--border-color);
   transition: all var(--transition);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-shadow: var(--shadow-md);
   text-align: center;
 }
 
@@ -1054,44 +1064,90 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .faculty-card-img {
-  width: 120px;
-  height: 120px;
-  border-radius: var(--radius-full);
+  height: 310px;
+  width: 100%;
+  padding: 16px 16px 0;
+  box-sizing: border-box;
   overflow: hidden;
-  margin: 32px auto 20px;
-  border: 4px solid var(--platinum);
-  transition: border-color var(--transition);
+  border-radius: 0;
+  border: none;
+  margin: 0;
 }
 
 .faculty-card:hover .faculty-card-img {
-  border-color: var(--navy);
+  border-color: transparent;
 }
 
 .faculty-card-img img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 15%;
+  border-radius: 12px;
+  background: var(--bg-soft);
+}
+
+.faculty-img-arvind {
+  object-position: center 10%;
+}
+.faculty-img-meera {
+  object-position: center 15%;
+}
+.faculty-img-rohan {
+  object-position: center 15%;
+}
+.faculty-img-sneha {
+  object-position: center 10%;
 }
 
 .faculty-card-body {
-  padding: 0 24px 32px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .faculty-card-body h4 {
-  font-size: 1.1rem;
-  margin-bottom: 4px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--text-primary);
 }
 
 .faculty-card-body .role {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   color: var(--crimson);
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: 12px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
 .faculty-card-body p {
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Responsive Faculty Grid */
+@media (max-width: 1024px) {
+  .educators-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+}
+
+@media (max-width: 576px) {
+  .educators-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .faculty-card-img {
+    height: 260px;
+  }
 }
 
 /* ----- Testimonial Card ----- */
@@ -3249,8 +3305,7 @@ h1, h2, h3, h4, h5, h6 {
   .course-card-body { padding: 18px; }
   .course-card-footer { padding: 14px 18px; flex-direction: column; gap: 12px; align-items: flex-start; }
 
-  .faculty-card-img { width: 100px; height: 100px; margin-top: 24px; }
-  .faculty-card-body { padding: 0 20px 24px; }
+
 
   .testimonial-card { padding: 28px; }
   .testimonial-card blockquote { font-size: 0.9rem; }
