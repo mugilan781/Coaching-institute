@@ -1,766 +1,1143 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" data-theme="light" dir="ltr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard - Brilliance Academy</title>
+  <meta name="description" content="Excel Academy Admin Dashboard - Manage students, faculty, courses, results, and institute operations.">
+  <title>Admin Dashboard – Excel Academy</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="assets/css/style.css">
   <style>
+    html, body { height: 100%; margin: 0; }
+    body { display: flex; flex-direction: column; min-height: 100vh; }
+    .dash-shell { display: flex; flex-direction: column; min-height: 100vh; }
+
+    /* ─── Header ─── */
+    .dash-header {
+      position: sticky; top: 0; z-index: 200;
+      height: 64px; background: var(--bg-card);
+      border-bottom: 1px solid var(--border-color);
+      display: flex; align-items: center;
+      padding: 0 24px; justify-content: space-between; gap: 16px;
+    }
+    .dash-header-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-display); font-weight: 800; font-size: 1.15rem;
+      color: var(--text-primary); text-decoration: none; flex-shrink: 0;
+    }
+    .dash-header-logo img { width: 34px; height: 34px; object-fit: contain; }
+    .dash-header-logo span { color: var(--crimson); }
+    .dash-header-actions { display: flex; align-items: center; gap: 10px; }
+    .dash-hamburger {
+      display: none; background: none; border: none; cursor: pointer;
+      color: var(--text-primary); font-size: 1.2rem; padding: 6px;
+      border-radius: var(--radius-md); transition: background 0.2s;
+    }
+    .dash-hamburger:hover { background: var(--bg-soft); }
     .nav-user {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 6px 16px 6px 6px;
-      border-radius: 50px;
-      background: var(--bg-soft);
-      transition: all var(--transition-fast);
-      cursor: pointer;
+      display: flex; align-items: center; gap: 8px;
+      padding: 5px 14px 5px 5px; border-radius: 50px;
+      background: var(--bg-soft); transition: background 0.2s; cursor: pointer; text-decoration: none;
     }
-
-    .nav-user:hover {
-      background: var(--border-color);
-    }
-
+    .nav-user:hover { background: var(--border-color); }
     .nav-user .avatar {
-      width: 34px;
-      height: 34px;
-      border-radius: var(--radius-full);
-      background: linear-gradient(135deg, var(--crimson), var(--crimson-light));
-      color: var(--white);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.85rem;
-      font-weight: 700;
-      font-family: var(--font-display);
-      flex-shrink: 0;
+      width: 32px; height: 32px; border-radius: 50%;
+      background: linear-gradient(135deg,var(--crimson),var(--crimson-light));
+      color: var(--white); display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 700; font-family: var(--font-display); flex-shrink: 0;
     }
-
-    .nav-user span {
-      font-size: 0.88rem;
-      font-weight: 600;
-      color: var(--text-primary);
+    .nav-user span:last-child { font-size: 0.85rem; font-weight: 600; color: var(--text-primary); }
+    .notif-btn {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: var(--bg-soft); border: 1px solid var(--border-color);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-primary); font-size: 1rem; cursor: pointer; position: relative;
     }
+    .notif-dot { position: absolute; top: 8px; right: 8px; width: 7px; height: 7px; background: var(--crimson); border-radius: 50%; border: 2px solid var(--bg-card); }
 
-    .dash-section {
-      background: var(--bg-card);
-      border-radius: var(--radius-md);
-      padding: 28px;
-      border: 1px solid var(--border-color);
-      margin-bottom: 28px;
-      transition: all var(--transition);
+    /* ─── Layout ─── */
+    .dash-body { display: flex; flex: 1; overflow: hidden; }
+
+    /* ─── Sidebar ─── */
+    .dash-sidebar {
+      width: 240px; flex-shrink: 0;
+      background: var(--bg-card); border-right: 1px solid var(--border-color);
+      display: flex; flex-direction: column;
+      overflow-y: auto; transition: transform 0.3s ease;
     }
-
-    .dash-section:hover {
-      box-shadow: var(--shadow-sm);
+    .sidebar-profile { padding: 24px 20px 16px; text-align: center; border-bottom: 1px solid var(--border-color); }
+    .sidebar-avatar {
+      width: 68px; height: 68px; border-radius: 50%; margin: 0 auto 12px;
+      background: linear-gradient(135deg,var(--crimson),var(--crimson-light));
+      color: var(--white); display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-weight: 800; font-size: 1.5rem;
+      border: 3px solid var(--crimson);
     }
-
-    .dash-section-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 20px;
+    .sidebar-profile h5 { font-size: 0.95rem; font-weight: 700; margin-bottom: 3px; }
+    .sidebar-profile p { font-size: 0.78rem; color: var(--text-secondary); }
+    .sidebar-nav { padding: 12px 0; flex: 1; }
+    .sidebar-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 11px 20px; font-size: 0.88rem; font-weight: 500; color: var(--text-secondary);
+      cursor: pointer; border: none; background: none; width: 100%; text-align: left;
+      transition: background 0.18s, color 0.18s; position: relative;
     }
-
-    .dash-section-header h3 {
-      font-size: 1.15rem;
+    .sidebar-item:hover { background: var(--bg-soft); color: var(--text-primary); }
+    .sidebar-item.active { color: var(--crimson); font-weight: 600; background: rgba(220,38,38,0.07); }
+    .sidebar-item.active::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+      width: 3px; background: var(--crimson); border-radius: 0 3px 3px 0;
     }
+    .sidebar-item .s-icon { width: 20px; text-align: center; font-size: 0.95rem; flex-shrink: 0; }
+    .sidebar-item.danger { color: var(--crimson); }
+    .sidebar-item.danger:hover { background: rgba(220,38,38,0.06); }
 
-    .dash-section-header a {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--navy);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: gap var(--transition-fast);
+    /* ─── Main ─── */
+    .dash-main { flex: 1; overflow-y: auto; padding: 28px; }
+
+    /* ─── Sections ─── */
+    .dash-section { display: none; animation: fadeInSection 0.22s ease; }
+    .dash-section.active { display: block; }
+    @keyframes fadeInSection { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+    /* ─── Section Header ─── */
+    .section-page-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+    .section-page-header h2 { font-size: 1.5rem; font-weight: 800; margin-bottom: 4px; }
+    .section-page-header p { font-size: 0.875rem; color: var(--text-secondary); }
+    .section-page-header-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+
+    /* ─── Stat Cards ─── */
+    .dash-stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-bottom: 24px; }
+    .dash-stat-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 20px 22px; display: flex; flex-direction: column; gap: 8px; }
+    .dash-stat-icon { width: 44px; height: 44px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 1.15rem; }
+    .dash-stat-icon.navy { background: rgba(30,58,138,0.1); color: var(--navy); }
+    .dash-stat-icon.crimson { background: rgba(220,38,38,0.1); color: var(--crimson); }
+    .dash-stat-icon.emerald { background: rgba(5,150,105,0.1); color: var(--emerald); }
+    .dash-stat-icon.gold { background: rgba(245,158,11,0.1); color: var(--gold); }
+    .dash-stat-number { font-family: var(--font-display); font-size: 1.7rem; font-weight: 800; line-height: 1; }
+    .dash-stat-label { font-size: 0.8rem; color: var(--text-secondary); font-weight: 500; }
+
+    /* ─── Panel ─── */
+    .panel { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 22px; margin-bottom: 20px; }
+    .panel:last-child { margin-bottom: 0; }
+    .panel-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; flex-wrap: wrap; gap: 10px; }
+    .panel-header h3 { font-size: 1rem; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+    .panel-header h3 i { color: var(--crimson); }
+
+    /* ─── Table ─── */
+    .dash-table-wrap { overflow-x: auto; }
+    .dash-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+    .dash-table thead th { padding: 10px 14px; text-align: left; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-secondary); border-bottom: 1px solid var(--border-color); white-space: nowrap; }
+    .dash-table tbody tr { transition: background 0.15s; }
+    .dash-table tbody tr:hover { background: var(--bg-soft); }
+    .dash-table tbody td { padding: 12px 14px; border-bottom: 1px solid var(--border-color); vertical-align: middle; color: var(--text-primary); }
+    .dash-table tbody tr:last-child td { border-bottom: none; }
+    .table-controls { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+    .table-search { flex: 1; min-width: 180px; padding: 8px 14px; border-radius: var(--radius-md); border: 1px solid var(--border-color); background: var(--bg-soft); color: var(--text-primary); font-size: 0.875rem; outline: none; transition: border-color 0.2s; }
+    .table-search:focus { border-color: var(--crimson); }
+    .table-filter { padding: 8px 14px; border-radius: var(--radius-md); border: 1px solid var(--border-color); background: var(--bg-soft); color: var(--text-primary); font-size: 0.875rem; outline: none; cursor: pointer; }
+
+    /* ─── Faculty Cards ─── */
+    .faculty-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); gap: 16px; }
+    .faculty-card {
+      background: var(--bg-soft); border: 1px solid var(--border-color);
+      border-radius: var(--radius-md); padding: 20px; display: flex; flex-direction: column; gap: 12px;
+      transition: transform 0.22s, box-shadow 0.22s;
     }
+    .faculty-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+    .faculty-card-header { display: flex; align-items: center; gap: 14px; }
+    .faculty-avatar { width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 800; font-size: 1.1rem; color: var(--white); flex-shrink: 0; }
+    .faculty-name { font-size: 0.95rem; font-weight: 700; margin-bottom: 2px; }
+    .faculty-dept { font-size: 0.78rem; color: var(--text-secondary); }
+    .faculty-meta { display: flex; gap: 10px; flex-wrap: wrap; }
+    .faculty-chip { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 50px; padding: 3px 12px; font-size: 0.75rem; font-weight: 600; color: var(--text-secondary); }
+    .faculty-rating { display: flex; align-items: center; gap: 6px; font-family: var(--font-display); font-weight: 700; font-size: 0.95rem; color: var(--gold); }
 
-    .dash-section-header a:hover {
-      gap: 12px;
-    }
+    /* ─── Course Cards ─── */
+    .course-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 16px; }
+    .course-card { background: var(--bg-soft); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 20px; transition: transform 0.22s, box-shadow 0.22s; }
+    .course-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+    .course-code { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--crimson); margin-bottom: 6px; }
+    .course-title { font-size: 1rem; font-weight: 700; margin-bottom: 10px; }
+    .course-meta { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .course-meta-row { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--text-secondary); }
+    .course-meta-row i { color: var(--crimson); width: 14px; text-align: center; }
 
-    .chart-container {
-      position: relative;
-      width: 100%;
-    }
+    /* ─── Announcement Form ─── */
+    .ann-char-count { font-size: 0.75rem; color: var(--text-secondary); text-align: right; margin-top: 4px; }
+    .ann-item { background: var(--bg-soft); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 16px; margin-bottom: 12px; }
+    .ann-item:last-child { margin-bottom: 0; }
+    .ann-item-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 8px; gap: 8px; }
+    .ann-item-title { font-size: 0.95rem; font-weight: 700; }
+    .ann-item-actions { display: flex; gap: 8px; flex-shrink: 0; }
+    .ann-item-body { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
+    .ann-item-meta { font-size: 0.75rem; color: var(--text-secondary); margin-top: 8px; }
 
-    .chart-container canvas {
-      width: 100%;
-      height: auto;
-    }
+    /* ─── Payment ─── */
+    .payment-summary-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 20px; }
+    .pay-stat { background: var(--bg-soft); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 18px 20px; }
+    .pay-stat-label { font-size: 0.78rem; color: var(--text-secondary); font-weight: 600; margin-bottom: 6px; }
+    .pay-stat-value { font-family: var(--font-display); font-size: 1.5rem; font-weight: 800; }
 
-    .dash-stat-card .dash-stat-icon.navy {
-      background: rgba(30,58,138,0.1);
-      color: var(--navy);
-    }
+    /* ─── Settings ─── */
+    .settings-group { margin-bottom: 24px; }
+    .settings-group-label { font-size: 0.72rem; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; color: var(--text-secondary); margin-bottom: 10px; }
+    .settings-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid var(--border-color); }
+    .settings-row:last-child { border-bottom: none; }
+    .settings-row-info h5 { font-size: 0.9rem; font-weight: 600; margin-bottom: 2px; }
+    .settings-row-info p { font-size: 0.78rem; color: var(--text-secondary); }
+    .toggle-switch { position: relative; width: 42px; height: 24px; flex-shrink: 0; }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider { position: absolute; inset: 0; border-radius: 50px; cursor: pointer; background: var(--border-color); transition: background 0.2s; }
+    .toggle-slider::before { content: ''; position: absolute; width: 18px; height: 18px; left: 3px; bottom: 3px; border-radius: 50%; background: var(--white); transition: transform 0.2s; }
+    .toggle-switch input:checked + .toggle-slider { background: var(--crimson); }
+    .toggle-switch input:checked + .toggle-slider::before { transform: translateX(18px); }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label { font-size: 0.8rem; font-weight: 600; color: var(--text-secondary); }
+    .form-group input, .form-group select, .form-group textarea { padding: 10px 14px; border-radius: var(--radius-md); border: 1px solid var(--border-color); background: var(--bg-soft); color: var(--text-primary); font-size: 0.875rem; outline: none; transition: border-color 0.2s; font-family: inherit; }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--crimson); }
+    .profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-actions { display: flex; gap: 12px; margin-top: 8px; }
 
-    .dash-stat-card .dash-stat-icon.crimson {
-      background: rgba(220,38,38,0.1);
-      color: var(--crimson);
-    }
+    /* ─── Quick Action ─── */
+    .quick-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; }
+    .quick-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 22px 16px; text-align: center; cursor: pointer; transition: transform 0.22s, box-shadow 0.22s, border-color 0.22s; }
+    .quick-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--crimson); }
+    .quick-icon { width: 50px; height: 50px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin: 0 auto 12px; transition: background 0.22s, color 0.22s; }
+    .quick-card:hover .quick-icon { background: var(--crimson) !important; color: var(--white) !important; }
+    .quick-card h5 { font-size: 0.875rem; font-weight: 700; margin-bottom: 4px; }
+    .quick-card p { font-size: 0.75rem; color: var(--text-secondary); }
 
-    .dash-stat-card .dash-stat-icon.emerald {
-      background: rgba(5,150,105,0.1);
-      color: var(--emerald);
-    }
+    /* ─── Modal ─── */
+    .dash-modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.45); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 500; display: none; align-items: center; justify-content: center; padding: 20px; opacity: 0; transition: opacity 0.25s; }
+    .dash-modal-backdrop.open { display: flex; }
+    .dash-modal-backdrop.visible { opacity: 1; }
+    .dash-modal { background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border-color); max-width: 580px; width: 100%; padding: 32px; position: relative; transform: scale(0.9); transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1); box-shadow: 0 20px 60px rgba(0,0,0,0.15); max-height: 90vh; overflow-y: auto; }
+    .dash-modal-backdrop.visible .dash-modal { transform: scale(1); }
+    .dash-modal-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 8px; }
+    .dash-modal-subtitle { font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 20px; line-height: 1.6; }
+    .dash-modal-close { position: absolute; top: 16px; right: 16px; background: var(--bg-soft); border: 1px solid var(--border-color); color: var(--text-primary); font-size: 1.1rem; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s, color 0.2s; }
+    .dash-modal-close:hover { background: var(--crimson); color: var(--white); border-color: var(--crimson); }
+    .modal-actions { display: flex; gap: 12px; margin-top: 20px; justify-content: flex-end; flex-wrap: wrap; }
 
-    .dash-stat-card .dash-stat-icon.gold {
-      background: rgba(245,158,11,0.1);
-      color: var(--gold);
-    }
+    /* ─── Info Box ─── */
+    .info-box { background: rgba(220,38,38,0.05); border: 1px solid rgba(220,38,38,0.15); border-radius: var(--radius-md); padding: 14px 18px; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 16px; display: flex; align-items: flex-start; gap: 10px; }
+    .info-box i { color: var(--crimson); margin-top: 2px; flex-shrink: 0; }
 
-    .sidebar-nav-item .nav-icon {
-      font-size: 1rem;
-      width: 22px;
-      text-align: center;
-      flex-shrink: 0;
-    }
+    /* ─── Chart ─── */
+    .chart-wrap { position: relative; width: 100%; }
+    .chart-wrap canvas { width: 100% !important; }
 
-    .admin-faculty-mini {
-      background: var(--bg-card);
-      border-radius: var(--radius-md);
-      padding: 20px;
-      border: 1px solid var(--border-color);
-      transition: all var(--transition);
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
+    /* ─── Sidebar Overlay ─── */
+    .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 299; }
+    .sidebar-overlay.open { display: block; }
 
-    .admin-faculty-mini:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-md);
-      border-color: transparent;
-    }
-
-    .admin-faculty-mini .faculty-avatar {
-      width: 48px;
-      height: 48px;
-      border-radius: var(--radius-full);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-display);
-      font-weight: 800;
-      font-size: 1.1rem;
-      color: var(--white);
-      flex-shrink: 0;
-    }
-
-    .admin-faculty-mini .faculty-info h5 {
-      font-size: 0.95rem;
-      margin-bottom: 2px;
-    }
-
-    .admin-faculty-mini .faculty-info p {
-      font-size: 0.8rem;
-      color: var(--text-secondary);
-    }
-
-    .admin-faculty-mini .faculty-rating {
-      margin-left: auto;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 1rem;
-      color: var(--gold);
-    }
-
-    .event-card {
-      background: var(--bg-card);
-      border-radius: var(--radius-md);
-      padding: 20px;
-      border: 1px solid var(--border-color);
-      transition: all var(--transition);
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .event-card:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-md);
-      border-color: transparent;
-    }
-
-    .event-card .event-icon-box {
-      width: 56px;
-      height: 56px;
-      border-radius: var(--radius-md);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.4rem;
-      flex-shrink: 0;
-    }
-
-    .event-card .event-info h4 {
-      font-size: 1rem;
-      margin-bottom: 4px;
-    }
-
-    .event-card .event-info p {
-      font-size: 0.82rem;
-      color: var(--text-secondary);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .event-card .event-date-badge {
-      margin-left: auto;
-      text-align: center;
-    }
-
-    .event-card .event-date-badge .day {
-      font-family: var(--font-display);
-      font-weight: 800;
-      font-size: 1.2rem;
-      line-height: 1;
-    }
-
-    .event-card .event-date-badge .mon {
-      font-size: 0.7rem;
-      color: var(--text-secondary);
-      text-transform: uppercase;
-    }
-
-    .quick-action-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-    }
-
-    .quick-action-card {
-      background: var(--bg-card);
-      border-radius: var(--radius-md);
-      padding: 24px 20px;
-      border: 1px solid var(--border-color);
-      transition: all var(--transition);
-      text-align: center;
-      cursor: pointer;
-    }
-
-    .quick-action-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-md);
-      border-color: var(--navy);
-    }
-
-    .quick-action-card .action-icon {
-      width: 52px;
-      height: 52px;
-      border-radius: var(--radius-md);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.3rem;
-      margin: 0 auto 14px;
-      transition: all var(--transition);
-    }
-
-    .quick-action-card:hover .action-icon {
-      background: var(--navy);
-      color: var(--white);
-    }
-
-    .quick-action-card h5 {
-      font-size: 0.9rem;
-      margin-bottom: 4px;
-    }
-
-    .quick-action-card p {
-      font-size: 0.78rem;
-      color: var(--text-secondary);
-    }
-
-    .notification-btn {
-      width: 44px;
-      height: 44px;
-      border-radius: var(--radius-full);
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-      color: var(--text-primary);
-      transition: all var(--transition-fast);
-      position: relative;
-    }
-
-    .notification-btn:hover {
-      background: var(--bg-soft);
-      transform: scale(1.05);
-    }
-
-    .notification-btn .notif-dot {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      width: 8px;
-      height: 8px;
-      background: var(--crimson);
-      border-radius: var(--radius-full);
-      border: 2px solid var(--bg-card);
-    }
-
-    @media (max-width: 1024px) {
-      .quick-action-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
+    /* ─── Responsive ─── */
+    @media (max-width: 1100px) { .dash-stats-grid { grid-template-columns: repeat(2,1fr); } .quick-grid { grid-template-columns: repeat(2,1fr); } .payment-summary-grid { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 768px) {
-      .quick-action-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .event-card {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .event-card .event-date-badge {
-        margin-left: 0;
-      }
-
-      .admin-faculty-mini {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .admin-faculty-mini .faculty-rating {
-        margin-left: 0;
-      }
+      .dash-sidebar { position: fixed; top: 64px; left: 0; bottom: 0; z-index: 300; transform: translateX(-100%); width: 240px; }
+      .dash-sidebar.open { transform: translateX(0); }
+      .dash-hamburger { display: flex; }
+      .dash-main { padding: 16px; }
+      .profile-grid { grid-template-columns: 1fr; }
     }
+    @media (max-width: 480px) {
+      .dash-stats-grid { grid-template-columns: 1fr 1fr; }
+      .quick-grid { grid-template-columns: 1fr 1fr; }
+      .payment-summary-grid { grid-template-columns: 1fr; }
+    }
+    [dir="rtl"] .sidebar-item.active::before { left: auto; right: 0; border-radius: 3px 0 0 3px; }
+    [dir="rtl"] .dash-sidebar { left: auto; right: 0; border-right: none; border-left: 1px solid var(--border-color); transform: translateX(100%); }
+    [dir="rtl"] .dash-sidebar.open { transform: translateX(0); }
   </style>
 </head>
 <body>
+<div class="dash-shell">
 
-  <nav class="nav">
-    <div class="nav-inner">
-      <a href="index.html" class="nav-logo">
-        <span class="nav-logo-icon">
-          <img src="assets/images/logo1.png" alt="Excel Academy Logo">
-        </span>
-        <span>Coaching<span style="color: var(--crimson);">Institute</span></span>
+  <!-- ── HEADER ── -->
+  <header class="dash-header">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <button class="dash-hamburger" id="sidebarToggle" aria-label="Toggle sidebar"><i class="fas fa-bars"></i></button>
+      <a href="index.html" class="dash-header-logo">
+        <img src="assets/images/logo2.png" alt="Excel Academy">
+        <span>Excel Academy</span>
       </a>
-      <div class="nav-actions">
-        <button class="theme-toggle" aria-label="Toggle theme">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        </button>
-        <button class="rtl-toggle" aria-label="Toggle RTL">RTL</button>
-        <a href="dashboard-admin.html" class="nav-user">
-          <span class="avatar">AD</span>
-          <span>Admin</span>
-        </a>
+    </div>
+    <div class="dash-header-actions">
+      <button class="theme-toggle" aria-label="Toggle theme">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="rtl-toggle" aria-label="Toggle RTL">RTL</button>
+      <div class="nav-user">
+        <span class="avatar">AD</span>
+        <span>Admin</span>
       </div>
     </div>
-  </nav>
+  </header>
 
-  <div class="dashboard">
-    <aside class="dashboard-sidebar">
-      <div class="sidebar-user">
-        <div style="width:72px;height:72px;border-radius:var(--radius-full);margin:0 auto 12px;background:linear-gradient(135deg,var(--crimson),var(--crimson-light));color:var(--white);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:800;font-size:1.6rem;border:3px solid var(--crimson);">AD</div>
+  <div class="dash-body">
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- ── SIDEBAR ── -->
+    <aside class="dash-sidebar" id="dashSidebar">
+      <div class="sidebar-profile">
+        <div class="sidebar-avatar">AD</div>
         <h5>Admin</h5>
         <p>Institute Management</p>
       </div>
-      <nav>
-        <a href="dashboard-admin.html" class="sidebar-nav-item active">
-          <span class="nav-icon"><i class="fas fa-chart-pie"></i></span> Dashboard
-        </a>
-        <a href="#" class="sidebar-nav-item">
-          <span class="nav-icon"><i class="fas fa-chalkboard-teacher"></i></span> Faculty
-        </a>
-        <a href="#" class="sidebar-nav-item">
-          <span class="nav-icon"><i class="fas fa-user-graduate"></i></span> Students
-        </a>
-        <a href="#" class="sidebar-nav-item">
-          <span class="nav-icon"><i class="fas fa-book-open"></i></span> Courses
-        </a>
-        <a href="#" class="sidebar-nav-item">
-          <span class="nav-icon"><i class="fas fa-poll"></i></span> Results
-        </a>
-        <a href="#" class="sidebar-nav-item">
-          <span class="nav-icon"><i class="fas fa-bullhorn"></i></span> Announcements
-        </a>
-        <a href="#" class="sidebar-nav-item">
-          <span class="nav-icon"><i class="fas fa-credit-card"></i></span> Payments
-        </a>
-        <a href="#" class="sidebar-nav-item">
-          <span class="nav-icon"><i class="fas fa-cog"></i></span> Settings
-        </a>
-        <a href="login.html" class="sidebar-nav-item">
-          <span class="nav-icon"><i class="fas fa-sign-out-alt"></i></span> Logout
-        </a>
+      <nav class="sidebar-nav">
+        <button class="sidebar-item active" data-section="overview"><span class="s-icon"><i class="fas fa-chart-pie"></i></span> Dashboard</button>
+        <button class="sidebar-item" data-section="faculty"><span class="s-icon"><i class="fas fa-chalkboard-teacher"></i></span> Faculty</button>
+        <button class="sidebar-item" data-section="students"><span class="s-icon"><i class="fas fa-user-graduate"></i></span> Students</button>
+        <button class="sidebar-item" data-section="courses"><span class="s-icon"><i class="fas fa-book-open"></i></span> Courses</button>
+        <button class="sidebar-item" data-section="results"><span class="s-icon"><i class="fas fa-poll"></i></span> Results</button>
+        <button class="sidebar-item" data-section="announcements"><span class="s-icon"><i class="fas fa-bullhorn"></i></span> Announcements</button>
+        <button class="sidebar-item" data-section="payments"><span class="s-icon"><i class="fas fa-credit-card"></i></span> Payments</button>
+        <button class="sidebar-item" data-section="settings"><span class="s-icon"><i class="fas fa-cog"></i></span> Settings</button>
+        <button class="sidebar-item danger" id="logoutBtn"><span class="s-icon"><i class="fas fa-sign-out-alt"></i></span> Logout</button>
       </nav>
     </aside>
 
-    <main class="dashboard-main">
+    <!-- ── MAIN ── -->
+    <main class="dash-main" id="dashMain">
 
-      <div class="dashboard-header reveal">
-        <div>
-          <h2>Admin Dashboard</h2>
-          <p class="body-small" style="color:var(--text-secondary);margin-top:4px;">Manage your institute at a glance</p>
+      <!-- ══ OVERVIEW ══ -->
+      <section class="dash-section active" id="sec-overview">
+        <div class="section-page-header">
+          <div><h2>Admin Dashboard</h2><p>Manage your institute at a glance</p></div>
+          <span class="badge badge-info" style="font-size:0.8rem;padding:6px 18px;align-self:flex-start;">FY 2025‑26</span>
         </div>
-        <button class="notification-btn" aria-label="Notifications">
-          <i class="fas fa-bell"></i>
-          <span class="notif-dot"></span>
-        </button>
-      </div>
-
-      <div class="dashboard-cards reveal">
-        <div class="dash-stat-card">
-          <div class="dash-stat-icon navy"><i class="fas fa-user-graduate"></i></div>
-          <div class="dash-stat-number">1,240</div>
-          <div class="dash-stat-label">Total Students</div>
+        <div class="dash-stats-grid">
+          <div class="dash-stat-card"><div class="dash-stat-icon navy"><i class="fas fa-user-graduate"></i></div><div class="dash-stat-number">1,240</div><div class="dash-stat-label">Total Students</div></div>
+          <div class="dash-stat-card"><div class="dash-stat-icon crimson"><i class="fas fa-chalkboard-teacher"></i></div><div class="dash-stat-number">48</div><div class="dash-stat-label">Total Faculty</div></div>
+          <div class="dash-stat-card"><div class="dash-stat-icon emerald"><i class="fas fa-book-open"></i></div><div class="dash-stat-number">32</div><div class="dash-stat-label">Active Courses</div></div>
+          <div class="dash-stat-card"><div class="dash-stat-icon gold"><i class="fas fa-rupee-sign"></i></div><div class="dash-stat-number">₹84.5L</div><div class="dash-stat-label">Total Revenue</div></div>
         </div>
-        <div class="dash-stat-card">
-          <div class="dash-stat-icon crimson"><i class="fas fa-chalkboard-teacher"></i></div>
-          <div class="dash-stat-number">48</div>
-          <div class="dash-stat-label">Total Faculty</div>
+        <div class="panel">
+          <div class="panel-header"><h3><i class="fas fa-chart-line"></i> Revenue Overview</h3><span class="badge badge-info">FY 2025-26</span></div>
+          <div class="chart-wrap"><canvas id="dashChart" width="900" height="260"></canvas></div>
         </div>
-        <div class="dash-stat-card">
-          <div class="dash-stat-icon emerald"><i class="fas fa-book-open"></i></div>
-          <div class="dash-stat-number">32</div>
-          <div class="dash-stat-label">Active Courses</div>
-        </div>
-        <div class="dash-stat-card">
-          <div class="dash-stat-icon gold"><i class="fas fa-rupee-sign"></i></div>
-          <div class="dash-stat-number">&#8377;84.5L</div>
-          <div class="dash-stat-label">Total Revenue</div>
-        </div>
-      </div>
-
-      <div class="dash-section reveal">
-        <div class="dash-section-header">
-          <h3><i class="fas fa-chart-line" style="color:var(--navy);margin-right:10px;"></i>Revenue Overview</h3>
-          <span class="badge badge-info">FY 2025-26</span>
-        </div>
-        <div class="chart-container">
-          <canvas id="dashChart" width="900" height="280"></canvas>
-        </div>
-      </div>
-
-      <div class="dash-section reveal">
-        <div class="dash-section-header">
-          <h3><i class="fas fa-user-plus" style="color:var(--navy);margin-right:10px;"></i>Recent Enrollments</h3>
-          <a href="#">View All <i class="fas fa-arrow-right"></i></a>
-        </div>
-        <div class="dash-table">
-          <table>
-            <thead>
-              <tr>
-                <th>Student</th>
-                <th>Course</th>
-                <th>Date</th>
-                <th>Status</th>
-                <th>Amount</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Priya Patel</strong></td>
-                <td>JEE Advanced 2026</td>
-                <td>15 Jul 2025</td>
-                <td><span class="badge badge-success">Confirmed</span></td>
-                <td><strong>&#8377;45,000</strong></td>
-              </tr>
-              <tr>
-                <td><strong>Rahul Verma</strong></td>
-                <td>NEET UG 2026</td>
-                <td>14 Jul 2025</td>
-                <td><span class="badge badge-success">Confirmed</span></td>
-                <td><strong>&#8377;52,000</strong></td>
-              </tr>
-              <tr>
-                <td><strong>Sneha Gupta</strong></td>
-                <td>Foundation XI</td>
-                <td>12 Jul 2025</td>
-                <td><span class="badge badge-warning">Pending</span></td>
-                <td><strong>&#8377;28,000</strong></td>
-              </tr>
-              <tr>
-                <td><strong>Arjun Nair</strong></td>
-                <td>Boards X - Science</td>
-                <td>10 Jul 2025</td>
-                <td><span class="badge badge-success">Confirmed</span></td>
-                <td><strong>&#8377;36,000</strong></td>
-              </tr>
-              <tr>
-                <td><strong>Divya Sharma</strong></td>
-                <td>NEET UG 2026</td>
-                <td>08 Jul 2025</td>
-                <td><span class="badge badge-danger">Cancelled</span></td>
-                <td><strong>&#8377;52,000</strong></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-bottom:28px;">
-        <div class="dash-section reveal" style="margin-bottom:0;">
-          <div class="dash-section-header">
-            <h3><i class="fas fa-chalkboard-teacher" style="color:var(--navy);margin-right:10px;"></i>Faculty Overview</h3>
-            <a href="#">All Faculty <i class="fas fa-arrow-right"></i></a>
-          </div>
-          <div style="display:flex;flex-direction:column;gap:12px;">
-            <div class="admin-faculty-mini">
-              <div class="faculty-avatar" style="background:linear-gradient(135deg,var(--navy),var(--navy-light));">DR</div>
-              <div class="faculty-info">
-                <h5>Dr. Rajesh Kumar</h5>
-                <p>Physics - 12 years exp.</p>
-              </div>
-              <div class="faculty-rating"><i class="fas fa-star"></i> 4.9</div>
-            </div>
-            <div class="admin-faculty-mini">
-              <div class="faculty-avatar" style="background:linear-gradient(135deg,var(--crimson),var(--crimson-light));">AM</div>
-              <div class="faculty-info">
-                <h5>Prof. Anika Mehra</h5>
-                <p>Chemistry - 9 years exp.</p>
-              </div>
-              <div class="faculty-rating"><i class="fas fa-star"></i> 4.8</div>
-            </div>
-            <div class="admin-faculty-mini">
-              <div class="faculty-avatar" style="background:linear-gradient(135deg,var(--emerald),var(--emerald-light));">VS</div>
-              <div class="faculty-info">
-                <h5>Mr. Vikram Singh</h5>
-                <p>Mathematics - 15 years exp.</p>
-              </div>
-              <div class="faculty-rating"><i class="fas fa-star"></i> 4.9</div>
-            </div>
-            <div class="admin-faculty-mini">
-              <div class="faculty-avatar" style="background:linear-gradient(135deg,var(--gold),#D97706);">SK</div>
-              <div class="faculty-info">
-                <h5>Ms. Sana Khan</h5>
-                <p>Biology - 8 years exp.</p>
-              </div>
-              <div class="faculty-rating"><i class="fas fa-star"></i> 4.7</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="dash-section reveal" style="margin-bottom:0;">
-          <div class="dash-section-header">
-            <h3><i class="fas fa-trophy" style="color:var(--navy);margin-right:10px;"></i>Student Performance</h3>
-            <a href="#">Full Report <i class="fas fa-arrow-right"></i></a>
-          </div>
-          <div class="dash-table">
-            <table>
-              <thead>
-                <tr>
-                  <th>Student</th>
-                  <th>Course</th>
-                  <th>Avg Score</th>
-                  <th>Attendance</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
+        <div class="panel">
+          <div class="panel-header"><h3><i class="fas fa-user-plus"></i> Recent Enrollments</h3></div>
+          <div class="dash-table-wrap">
+            <table class="dash-table">
+              <thead><tr><th>Student</th><th>Course</th><th>Date</th><th>Status</th><th>Amount</th></tr></thead>
               <tbody>
-                <tr>
-                  <td><strong>Aarav Iyer</strong></td>
-                  <td>JEE Advanced</td>
-                  <td>92%</td>
-                  <td>96%</td>
-                  <td><span class="badge badge-success">Excellent</span></td>
-                </tr>
-                <tr>
-                  <td><strong>Neha Joshi</strong></td>
-                  <td>NEET UG</td>
-                  <td>85%</td>
-                  <td>90%</td>
-                  <td><span class="badge badge-info">Good</span></td>
-                </tr>
-                <tr>
-                  <td><strong>Rohan Desai</strong></td>
-                  <td>Foundation XI</td>
-                  <td>78%</td>
-                  <td>82%</td>
-                  <td><span class="badge badge-info">Good</span></td>
-                </tr>
-                <tr>
-                  <td><strong>Isha Reddy</strong></td>
-                  <td>Boards X</td>
-                  <td>95%</td>
-                  <td>98%</td>
-                  <td><span class="badge badge-success">Excellent</span></td>
-                </tr>
-                <tr>
-                  <td><strong>Karan Kapoor</strong></td>
-                  <td>JEE Advanced</td>
-                  <td>65%</td>
-                  <td>70%</td>
-                  <td><span class="badge badge-warning">Needs Work</span></td>
-                </tr>
+                <tr><td><strong>Priya Patel</strong></td><td>JEE Advanced 2026</td><td>15 Jul 2025</td><td><span class="badge badge-success">Confirmed</span></td><td><strong>₹45,000</strong></td></tr>
+                <tr><td><strong>Rahul Verma</strong></td><td>NEET UG 2026</td><td>14 Jul 2025</td><td><span class="badge badge-success">Confirmed</span></td><td><strong>₹52,000</strong></td></tr>
+                <tr><td><strong>Sneha Gupta</strong></td><td>Foundation XI</td><td>12 Jul 2025</td><td><span class="badge badge-warning">Pending</span></td><td><strong>₹28,000</strong></td></tr>
+                <tr><td><strong>Arjun Nair</strong></td><td>Boards X – Science</td><td>10 Jul 2025</td><td><span class="badge badge-success">Confirmed</span></td><td><strong>₹36,000</strong></td></tr>
+                <tr><td><strong>Divya Sharma</strong></td><td>NEET UG 2026</td><td>08 Jul 2025</td><td><span class="badge badge-danger">Cancelled</span></td><td><strong>₹52,000</strong></td></tr>
               </tbody>
             </table>
           </div>
         </div>
-      </div>
+        <div class="panel">
+          <div class="panel-header"><h3><i class="fas fa-tasks"></i> Quick Management</h3></div>
+          <div class="quick-grid">
+            <div class="quick-card" data-action="addStudent"><div class="quick-icon" style="background:rgba(30,58,138,0.1);color:var(--navy);"><i class="fas fa-user-plus"></i></div><h5>Add Student</h5><p>Register new enrollment</p></div>
+            <div class="quick-card" data-action="addFaculty"><div class="quick-icon" style="background:rgba(220,38,38,0.1);color:var(--crimson);"><i class="fas fa-chalkboard-teacher"></i></div><h5>Hire Faculty</h5><p>Add teaching staff</p></div>
+            <div class="quick-card" data-section="announcements" data-action="switch"><div class="quick-icon" style="background:rgba(5,150,105,0.1);color:var(--emerald);"><i class="fas fa-bullhorn"></i></div><h5>New Announcement</h5><p>Notify students & staff</p></div>
+            <div class="quick-card" data-action="report"><div class="quick-icon" style="background:rgba(245,158,11,0.1);color:var(--gold);"><i class="fas fa-file-invoice"></i></div><h5>Generate Report</h5><p>Performance analytics</p></div>
+          </div>
+        </div>
+      </section>
 
-      <div class="dash-section reveal">
-        <div class="dash-section-header">
-          <h3><i class="fas fa-calendar-alt" style="color:var(--navy);margin-right:10px;"></i>Upcoming Events</h3>
-          <a href="#">Calendar <i class="fas fa-arrow-right"></i></a>
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
-          <div class="event-card">
-            <div class="event-icon-box" style="background:rgba(30,58,138,0.1);color:var(--navy);">
-              <i class="fas fa-pencil-alt"></i>
-            </div>
-            <div class="event-info">
-              <h4>Mock Test Series</h4>
-              <p><i class="fas fa-clock"></i> 20 Aug 2025</p>
-            </div>
-            <div class="event-date-badge">
-              <div class="day">20</div>
-              <div class="mon">Aug</div>
-            </div>
-          </div>
-          <div class="event-card">
-            <div class="event-icon-box" style="background:rgba(220,38,38,0.1);color:var(--crimson);">
-              <i class="fas fa-users"></i>
-            </div>
-            <div class="event-info">
-              <h4>Parent-Teacher Meeting</h4>
-              <p><i class="fas fa-clock"></i> 25 Aug 2025</p>
-            </div>
-            <div class="event-date-badge">
-              <div class="day">25</div>
-              <div class="mon">Aug</div>
-            </div>
-          </div>
-          <div class="event-card">
-            <div class="event-icon-box" style="background:rgba(5,150,105,0.1);color:var(--emerald);">
-              <i class="fas fa-chalkboard"></i>
-            </div>
-            <div class="event-info">
-              <h4>Faculty Workshop</h4>
-              <p><i class="fas fa-clock"></i> 30 Aug 2025</p>
-            </div>
-            <div class="event-date-badge">
-              <div class="day">30</div>
-              <div class="mon">Aug</div>
-            </div>
+      <!-- ══ FACULTY ══ -->
+      <section class="dash-section" id="sec-faculty">
+        <div class="section-page-header">
+          <div><h2>Faculty Management</h2><p>Manage teaching staff across all departments</p></div>
+          <div class="section-page-header-actions">
+            <button class="btn btn-primary" data-action="addFaculty"><i class="fas fa-plus"></i> Add Faculty</button>
           </div>
         </div>
-      </div>
+        <div class="panel">
+          <div class="table-controls">
+            <input type="text" class="table-search" id="facultySearch" placeholder="Search faculty by name…">
+            <select class="table-filter" id="facultyFilter"><option value="">All Departments</option><option>Physics</option><option>Chemistry</option><option>Mathematics</option><option>Biology</option><option>English</option></select>
+          </div>
+          <div class="faculty-grid" id="facultyGrid">
+            <!-- JS populated -->
+          </div>
+        </div>
+      </section>
 
-      <div class="dash-section reveal" style="margin-bottom:0;">
-        <div class="dash-section-header">
-          <h3><i class="fas fa-tasks" style="color:var(--navy);margin-right:10px;"></i>Quick Management</h3>
-        </div>
-        <div class="quick-action-grid">
-          <div class="quick-action-card">
-            <div class="action-icon" style="background:rgba(30,58,138,0.1);color:var(--navy);"><i class="fas fa-user-plus"></i></div>
-            <h5>Add Student</h5>
-            <p>Register new enrollment</p>
-          </div>
-          <div class="quick-action-card">
-            <div class="action-icon" style="background:rgba(220,38,38,0.1);color:var(--crimson);"><i class="fas fa-chalkboard-teacher"></i></div>
-            <h5>Hire Faculty</h5>
-            <p>Add teaching staff</p>
-          </div>
-          <div class="quick-action-card">
-            <div class="action-icon" style="background:rgba(5,150,105,0.1);color:var(--emerald);"><i class="fas fa-bullhorn"></i></div>
-            <h5>New Announcement</h5>
-            <p>Notify students & staff</p>
-          </div>
-          <div class="quick-action-card">
-            <div class="action-icon" style="background:rgba(245,158,11,0.1);color:var(--gold);"><i class="fas fa-file-invoice"></i></div>
-            <h5>Generate Report</h5>
-            <p>Performance analytics</p>
+      <!-- ══ STUDENTS ══ -->
+      <section class="dash-section" id="sec-students">
+        <div class="section-page-header">
+          <div><h2>Students</h2><p>View and manage all enrolled students</p></div>
+          <div class="section-page-header-actions">
+            <button class="btn btn-primary" data-action="addStudent"><i class="fas fa-user-plus"></i> Add Student</button>
           </div>
         </div>
-      </div>
+        <div class="panel">
+          <div class="table-controls">
+            <input type="text" class="table-search" id="studentSearch" placeholder="Search by student name or ID…">
+            <select class="table-filter" id="studentClassFilter"><option value="">All Classes</option><option>Class X</option><option>Class XI</option><option>Class XII</option><option>JEE</option><option>NEET</option></select>
+            <select class="table-filter" id="studentStatusFilter"><option value="">All Status</option><option>Active</option><option>Inactive</option><option>Pending</option></select>
+          </div>
+          <div class="dash-table-wrap">
+            <table class="dash-table" id="studentTable">
+              <thead><tr><th>Student</th><th>ID</th><th>Class / Course</th><th>Status</th><th>Joined</th><th>Actions</th></tr></thead>
+              <tbody id="studentTbody">
+                <!-- JS populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ COURSES ══ -->
+      <section class="dash-section" id="sec-courses">
+        <div class="section-page-header">
+          <div><h2>Courses</h2><p>All active and upcoming coaching programs</p></div>
+          <div class="section-page-header-actions">
+            <button class="btn btn-primary" data-action="addCourse"><i class="fas fa-plus"></i> Add Course</button>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="course-grid" id="courseGrid">
+            <!-- JS populated -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ RESULTS ══ -->
+      <section class="dash-section" id="sec-results">
+        <div class="section-page-header">
+          <div><h2>Results &amp; Analytics</h2><p>Student performance, pass rates, and rankings</p></div>
+          <div class="section-page-header-actions">
+            <button class="btn btn-primary" data-action="export"><i class="fas fa-file-export"></i> Export Report</button>
+          </div>
+        </div>
+        <div class="dash-stats-grid" style="grid-template-columns:repeat(3,1fr);">
+          <div class="dash-stat-card"><div class="dash-stat-icon emerald"><i class="fas fa-check-circle"></i></div><div class="dash-stat-number">87%</div><div class="dash-stat-label">Overall Pass Rate</div></div>
+          <div class="dash-stat-card"><div class="dash-stat-icon gold"><i class="fas fa-star"></i></div><div class="dash-stat-number">342</div><div class="dash-stat-label">Top Performers</div></div>
+          <div class="dash-stat-card"><div class="dash-stat-icon crimson"><i class="fas fa-exclamation-circle"></i></div><div class="dash-stat-number">58</div><div class="dash-stat-label">Need Improvement</div></div>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><h3><i class="fas fa-chart-bar"></i> Subject-wise Pass Percentage</h3></div>
+          <div class="chart-wrap"><canvas id="resultsChart" width="900" height="260"></canvas></div>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><h3><i class="fas fa-trophy"></i> Top Performers</h3></div>
+          <div class="dash-table-wrap">
+            <table class="dash-table">
+              <thead><tr><th>Rank</th><th>Student</th><th>Course</th><th>Avg Score</th><th>Attendance</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td><strong>#1</strong></td><td><strong>Isha Reddy</strong></td><td>Boards X</td><td>95%</td><td>98%</td><td><span class="badge badge-success">Excellent</span></td></tr>
+                <tr><td><strong>#2</strong></td><td><strong>Aarav Iyer</strong></td><td>JEE Advanced</td><td>92%</td><td>96%</td><td><span class="badge badge-success">Excellent</span></td></tr>
+                <tr><td><strong>#3</strong></td><td><strong>Neha Joshi</strong></td><td>NEET UG</td><td>85%</td><td>90%</td><td><span class="badge badge-info">Good</span></td></tr>
+                <tr><td><strong>#4</strong></td><td><strong>Rohan Desai</strong></td><td>Foundation XI</td><td>78%</td><td>82%</td><td><span class="badge badge-info">Good</span></td></tr>
+                <tr><td><strong>#5</strong></td><td><strong>Karan Kapoor</strong></td><td>JEE Advanced</td><td>65%</td><td>70%</td><td><span class="badge badge-warning">Needs Work</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ ANNOUNCEMENTS ══ -->
+      <section class="dash-section" id="sec-announcements">
+        <div class="section-page-header">
+          <div><h2>Announcements</h2><p>Notify students and faculty about important updates</p></div>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><h3><i class="fas fa-pen"></i> Create Announcement</h3></div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div class="form-group"><label>Title</label><input type="text" id="annTitle" placeholder="Announcement title…" maxlength="100"></div>
+            <div class="form-group">
+              <label>Message <span style="color:var(--text-secondary);font-weight:400;">(max 500 chars)</span></label>
+              <textarea id="annBody" rows="4" placeholder="Write your announcement here…" maxlength="500"></textarea>
+              <div class="ann-char-count" id="annCharCount">0 / 500</div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+              <select class="table-filter"><option>All Students & Faculty</option><option>Students Only</option><option>Faculty Only</option><option>JEE Batch</option><option>NEET Batch</option></select>
+              <button class="btn btn-outline" onclick="saveDraftAnn()"><i class="fas fa-save"></i> Save Draft</button>
+              <button class="btn btn-primary" onclick="publishAnn()"><i class="fas fa-paper-plane"></i> Publish</button>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><h3><i class="fas fa-list"></i> Published Announcements</h3></div>
+          <div id="annList">
+            <div class="ann-item">
+              <div class="ann-item-header">
+                <div><div class="ann-item-title">Half-Yearly Exam Schedule Released</div></div>
+                <div class="ann-item-actions">
+                  <button class="btn btn-sm btn-outline" onclick="editAnn(this)"><i class="fas fa-edit"></i> Edit</button>
+                  <button class="btn btn-sm btn-outline" style="color:var(--crimson);" onclick="deleteAnn(this)"><i class="fas fa-trash"></i></button>
+                </div>
+              </div>
+              <div class="ann-item-body">Half-yearly examinations will commence from September 12, 2025. Detailed timetable has been shared with class teachers. Students are advised to prepare accordingly.</div>
+              <div class="ann-item-meta"><i class="fas fa-clock"></i> Published on 18 Jul 2025 · <span class="badge badge-success" style="font-size:0.7rem;">Published</span></div>
+            </div>
+            <div class="ann-item">
+              <div class="ann-item-header">
+                <div><div class="ann-item-title">New Study Material Available – JEE Physics</div></div>
+                <div class="ann-item-actions">
+                  <button class="btn btn-sm btn-outline" onclick="editAnn(this)"><i class="fas fa-edit"></i> Edit</button>
+                  <button class="btn btn-sm btn-outline" style="color:var(--crimson);" onclick="deleteAnn(this)"><i class="fas fa-trash"></i></button>
+                </div>
+              </div>
+              <div class="ann-item-body">Updated Thermodynamics notes and Optics practice sheets have been uploaded to the student portal. JEE Advanced 2026 batch students can download immediately.</div>
+              <div class="ann-item-meta"><i class="fas fa-clock"></i> Published on 15 Jul 2025 · <span class="badge badge-success" style="font-size:0.7rem;">Published</span></div>
+            </div>
+            <div class="ann-item">
+              <div class="ann-item-header">
+                <div><div class="ann-item-title">Parent-Teacher Meeting – August 25</div></div>
+                <div class="ann-item-actions">
+                  <button class="btn btn-sm btn-outline" onclick="editAnn(this)"><i class="fas fa-edit"></i> Edit</button>
+                  <button class="btn btn-sm btn-outline" style="color:var(--crimson);" onclick="deleteAnn(this)"><i class="fas fa-trash"></i></button>
+                  <button class="btn btn-sm btn-primary" onclick="publishExistingAnn(this)"><i class="fas fa-paper-plane"></i> Publish</button>
+                </div>
+              </div>
+              <div class="ann-item-body">PTM is scheduled for August 25, 2025 from 9 AM to 5 PM at the Main Campus. All parents are requested to attend without fail.</div>
+              <div class="ann-item-meta"><i class="fas fa-clock"></i> Draft created on 12 Jul 2025 · <span class="badge badge-warning" style="font-size:0.7rem;">Draft</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ PAYMENTS ══ -->
+      <section class="dash-section" id="sec-payments">
+        <div class="section-page-header">
+          <div><h2>Payments</h2><p>Fee management, revenue tracking, and transaction history</p></div>
+          <div class="section-page-header-actions">
+            <button class="btn btn-primary" data-action="export"><i class="fas fa-file-export"></i> Export CSV</button>
+          </div>
+        </div>
+        <div class="payment-summary-grid">
+          <div class="pay-stat"><div class="pay-stat-label">Total Revenue (FY)</div><div class="pay-stat-value" style="color:var(--emerald);">₹84.5L</div></div>
+          <div class="pay-stat"><div class="pay-stat-label">Pending Collections</div><div class="pay-stat-value" style="color:var(--gold);">₹12.2L</div></div>
+          <div class="pay-stat"><div class="pay-stat-label">Overdue Payments</div><div class="pay-stat-value" style="color:var(--crimson);">₹3.8L</div></div>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><h3><i class="fas fa-list-alt"></i> Recent Transactions</h3></div>
+          <div class="table-controls">
+            <input type="text" class="table-search" id="paySearch" placeholder="Search by student name…">
+            <select class="table-filter"><option>All Status</option><option>Paid</option><option>Pending</option><option>Overdue</option></select>
+          </div>
+          <div class="dash-table-wrap">
+            <table class="dash-table" id="payTable">
+              <thead><tr><th>Student</th><th>Course</th><th>Amount</th><th>Date</th><th>Status</th><th>Receipt</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Priya Patel</strong></td><td>JEE Advanced 2026</td><td>₹45,000</td><td>15 Jul 2025</td><td><span class="badge badge-success">Paid</span></td><td><button class="btn btn-sm btn-outline" onclick="viewReceipt('Priya Patel','JEE Advanced 2026','₹45,000','15 Jul 2025')"><i class="fas fa-receipt"></i> View</button></td></tr>
+                <tr><td><strong>Rahul Verma</strong></td><td>NEET UG 2026</td><td>₹52,000</td><td>14 Jul 2025</td><td><span class="badge badge-success">Paid</span></td><td><button class="btn btn-sm btn-outline" onclick="viewReceipt('Rahul Verma','NEET UG 2026','₹52,000','14 Jul 2025')"><i class="fas fa-receipt"></i> View</button></td></tr>
+                <tr><td><strong>Sneha Gupta</strong></td><td>Foundation XI</td><td>₹28,000</td><td>12 Jul 2025</td><td><span class="badge badge-warning">Pending</span></td><td><button class="btn btn-sm btn-outline" onclick="viewReceipt('Sneha Gupta','Foundation XI','₹28,000','12 Jul 2025')"><i class="fas fa-receipt"></i> View</button></td></tr>
+                <tr><td><strong>Arjun Nair</strong></td><td>Boards X – Science</td><td>₹36,000</td><td>10 Jul 2025</td><td><span class="badge badge-success">Paid</span></td><td><button class="btn btn-sm btn-outline" onclick="viewReceipt('Arjun Nair','Boards X – Science','₹36,000','10 Jul 2025')"><i class="fas fa-receipt"></i> View</button></td></tr>
+                <tr><td><strong>Meera Pillai</strong></td><td>NEET UG 2026</td><td>₹52,000</td><td>05 Jul 2025</td><td><span class="badge badge-danger">Overdue</span></td><td><button class="btn btn-sm btn-outline" onclick="viewReceipt('Meera Pillai','NEET UG 2026','₹52,000','05 Jul 2025')"><i class="fas fa-receipt"></i> View</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ SETTINGS ══ -->
+      <section class="dash-section" id="sec-settings">
+        <div class="section-page-header"><div><h2>Settings</h2><p>Configure institute information and admin preferences</p></div></div>
+        <div class="panel">
+          <div class="settings-group">
+            <div class="settings-group-label">Institute Information</div>
+            <div class="profile-grid" style="gap:14px;">
+              <div class="form-group"><label>Institute Name</label><input type="text" value="Excel Academy"></div>
+              <div class="form-group"><label>Registration No.</label><input type="text" value="EA-REG-2015-001"></div>
+              <div class="form-group"><label>Email</label><input type="email" value="info@excelacademy.in"></div>
+              <div class="form-group"><label>Phone</label><input type="tel" value="+91 1800-123-EXCEL"></div>
+              <div class="form-group" style="grid-column:1/-1;"><label>Address</label><textarea rows="2">Excel Tower, Sector 14, Rohini, New Delhi – 110085</textarea></div>
+            </div>
+            <div style="margin-top:14px;">
+              <div class="settings-group-label">Logo Upload</div>
+              <div style="display:flex;align-items:center;gap:16px;">
+                <img src="assets/images/logo1.png" alt="Logo" style="width:56px;height:56px;object-fit:contain;border:1px solid var(--border-color);border-radius:var(--radius-md);padding:6px;background:var(--bg-soft);">
+                <button class="btn btn-outline" onclick="openModal('Upload Logo','Select a new PNG/SVG logo file. Max size: 2MB.','<div style=\'background:var(--bg-soft);border:2px dashed var(--border-color);border-radius:var(--radius-md);padding:32px;text-align:center;color:var(--text-secondary);\'><i class=\'fas fa-upload\' style=\'font-size:2rem;margin-bottom:10px;display:block;\'></i><p style=\'margin:0;font-size:0.85rem;\'>Drag &amp; drop or click to browse</p></div>','<button class=\'btn btn-outline\' onclick=\'closeModal()\'>Cancel</button><button class=\'btn btn-primary\' onclick=\'closeModal()\'>Upload</button>')"><i class="fas fa-upload"></i> Change Logo</button>
+              </div>
+            </div>
+          </div>
+          <div class="settings-group">
+            <div class="settings-group-label">Appearance</div>
+            <div class="settings-row">
+              <div class="settings-row-info"><h5>Dark Mode</h5><p>Switch between light and dark theme</p></div>
+              <label class="toggle-switch"><input type="checkbox" id="settingsDarkMode"><span class="toggle-slider"></span></label>
+            </div>
+            <div class="settings-row">
+              <div class="settings-row-info"><h5>RTL Layout</h5><p>Right-to-left direction for Arabic/Urdu support</p></div>
+              <label class="toggle-switch"><input type="checkbox" id="settingsRTL"><span class="toggle-slider"></span></label>
+            </div>
+          </div>
+          <div class="settings-group">
+            <div class="settings-group-label">Notifications</div>
+            <div class="settings-row"><div class="settings-row-info"><h5>New Enrollment Alerts</h5><p>Get notified for every new student enrollment</p></div><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+            <div class="settings-row"><div class="settings-row-info"><h5>Payment Reminders</h5><p>Automated overdue fee reminders</p></div><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+            <div class="settings-row"><div class="settings-row-info"><h5>Performance Reports</h5><p>Monthly analytics digest via email</p></div><label class="toggle-switch"><input type="checkbox"><span class="toggle-slider"></span></label></div>
+          </div>
+          <div class="settings-group">
+            <div class="settings-group-label">Change Admin Password</div>
+            <div class="profile-grid">
+              <div class="form-group"><label>Current Password</label><input type="password" placeholder="••••••••"></div>
+              <div class="form-group"><label>New Password</label><input type="password" placeholder="••••••••"></div>
+              <div class="form-group"><label>Confirm Password</label><input type="password" placeholder="••••••••"></div>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-primary" onclick="saveSettings()"><i class="fas fa-save"></i> Save Settings</button>
+            <button class="btn btn-outline" onclick="cancelSettings()">Cancel</button>
+          </div>
+        </div>
+      </section>
 
     </main>
   </div>
+</div>
 
-    <footer class="footer">
-    <div class="container">
-      <div class="footer-top">
-        <div class="footer-grid">
-          <div class="footer-brand">
-            <div class="footer-logo">
-              <span class="footer-logo-icon">
-                <img src="assets/images/logo2.png" alt="Excel Academy Logo">
-              </span>
-              Excel Academy
-            </div>
-            <p>Excel Academy was founded with a vision to democratize quality education and make competitive exam preparation accessible to every student, empowering them to achieve academic excellence.</p>
-            <div class="footer-social">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-              <a href="https://x.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-            </div>
-          </div>
-          <div>
-            <h4>Quick Links</h4>
-            <ul class="footer-links">
-              <li><a href="index.html">Home</a></li>
-              <li><a href="home-2.html">Home 2</a></li>
-              <li><a href="about.html">About</a></li>
-              <li><a href="services.html">Services</a></li>
-              <li><a href="blog.html">Blog</a></li>
-              <li><a href="contact.html">Contact</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4>Contact Details</h4>
-            <ul class="footer-contact">
-              <li>
-                <span><i class="fas fa-map-marker-alt"></i></span>
-                <span>Excel Tower, Sector 14, Rohini, New Delhi - 110085</span>
-              </li>
-              <li>
-                <span><i class="fas fa-phone"></i></span>
-                <span>+91 1800-123-EXCEL<br>+91 98765 43210</span>
-              </li>
-              <li>
-                <span><i class="fas fa-envelope"></i></span>
-                <span>info@excelacademy.in<br>admissions@excelacademy.in</span>
-              </li>
-              <li>
-                <span><i class="fas fa-clock"></i></span>
-                <span>Mon - Sat: 9:00 AM - 7:00 PM<br>Sun: Closed</span>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h4>Newsletter</h4>
-            <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 16px; color: rgba(255,255,255,0.6);">Subscribe to our newsletter for the latest updates, study materials, and exam notifications.</p>
-            <form class="footer-newsletter-form" action="#" method="post" style="display: flex; flex-direction: column; gap: 10px;">
-              <input type="email" placeholder="Your Email Address" required style="width: 100%; padding: 12px 16px; border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-md); background: rgba(255,255,255,0.05); color: var(--white); font-size: 0.88rem; outline: none; transition: border-color 0.3s ease;">
-              <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 0.88rem; font-weight: 600; border-radius: var(--radius-md); cursor: pointer;">Subscribe</button>
-            </form>
-          </div>
+<!-- ══ MODAL ══ -->
+<div class="dash-modal-backdrop" id="dashModal" role="dialog" aria-modal="true">
+  <div class="dash-modal">
+    <button class="dash-modal-close" id="dashModalClose">&times;</button>
+    <div class="dash-modal-title" id="dashModalTitle">Title</div>
+    <div class="dash-modal-subtitle" id="dashModalSubtitle"></div>
+    <div id="dashModalBody"></div>
+    <div class="modal-actions" id="dashModalActions"></div>
+  </div>
+</div>
+
+<script src="assets/js/main.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  // ── Sidebar Navigation ──
+  const sidebarItems = document.querySelectorAll('.sidebar-item[data-section]');
+  const sections = document.querySelectorAll('.dash-section');
+  const chartDrawn = {};
+
+  function switchSection(name) {
+    sections.forEach(s => s.classList.remove('active'));
+    sidebarItems.forEach(i => i.classList.remove('active'));
+    const target = document.getElementById('sec-' + name);
+    if (target) target.classList.add('active');
+    const btn = document.querySelector('.sidebar-item[data-section="' + name + '"]');
+    if (btn) btn.classList.add('active');
+    // init section data
+    if (name === 'faculty' && !chartDrawn.faculty) { buildFaculty(); chartDrawn.faculty = true; }
+    if (name === 'students' && !chartDrawn.students) { buildStudents(); chartDrawn.students = true; }
+    if (name === 'courses' && !chartDrawn.courses) { buildCourses(); chartDrawn.courses = true; }
+    if (name === 'results' && !chartDrawn.results) { initResultsChart(); chartDrawn.results = true; }
+    closeMobileSidebar();
+    window.scrollTo(0, 0);
+  }
+  sidebarItems.forEach(btn => btn.addEventListener('click', () => switchSection(btn.dataset.section)));
+
+  // ── Quick Action Cards ──
+  document.querySelectorAll('.quick-card, .btn[data-action], button[data-action]').forEach(el => {
+    el.addEventListener('click', () => {
+      const action = el.dataset.action;
+      const sec = el.dataset.section;
+      if (action === 'switch' && sec) { switchSection(sec); return; }
+      if (action === 'addStudent') openAddStudentModal();
+      if (action === 'addFaculty') openAddFacultyModal();
+      if (action === 'addCourse') openAddCourseModal();
+      if (action === 'report') openReportModal();
+      if (action === 'export') openExportModal();
+    });
+  });
+
+  // ── Mobile Sidebar ──
+  const sidebar = document.getElementById('dashSidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  const hamburger = document.getElementById('sidebarToggle');
+  function closeMobileSidebar() { sidebar.classList.remove('open'); overlay.classList.remove('open'); }
+  hamburger.addEventListener('click', () => { sidebar.classList.toggle('open'); overlay.classList.toggle('open'); });
+  overlay.addEventListener('click', closeMobileSidebar);
+
+  // ── Modal ──
+  const backdrop = document.getElementById('dashModal');
+  const modalTitle = document.getElementById('dashModalTitle');
+  const modalSub = document.getElementById('dashModalSubtitle');
+  const modalBody = document.getElementById('dashModalBody');
+  const modalActions = document.getElementById('dashModalActions');
+
+  window.openModal = function(title, subtitle, body, actions) {
+    modalTitle.textContent = title;
+    modalSub.innerHTML = subtitle || '';
+    modalBody.innerHTML = body || '';
+    modalActions.innerHTML = actions || '';
+    backdrop.classList.add('open');
+    setTimeout(() => backdrop.classList.add('visible'), 10);
+    document.getElementById('dashModalClose').focus();
+  };
+  window.closeModal = function() {
+    backdrop.classList.remove('visible');
+    setTimeout(() => backdrop.classList.remove('open'), 250);
+  };
+  document.getElementById('dashModalClose').addEventListener('click', closeModal);
+  backdrop.addEventListener('click', e => { if (e.target === backdrop) closeModal(); });
+  window.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  // ── Faculty Data ──
+  const FACULTY = [
+    { initials:'DR', name:'Dr. Rajesh Kumar', dept:'Physics', exp:'12 years', rating:'4.9', color:'linear-gradient(135deg,var(--navy),var(--navy-light))' },
+    { initials:'AM', name:'Prof. Anika Mehra', dept:'Chemistry', exp:'9 years', rating:'4.8', color:'linear-gradient(135deg,var(--crimson),var(--crimson-light))' },
+    { initials:'VS', name:'Mr. Vikram Singh', dept:'Mathematics', exp:'15 years', rating:'4.9', color:'linear-gradient(135deg,var(--emerald),#10B981)' },
+    { initials:'SK', name:'Ms. Sana Khan', dept:'Biology', exp:'8 years', rating:'4.7', color:'linear-gradient(135deg,var(--gold),#D97706)' },
+    { initials:'PG', name:'Dr. Priya Gupta', dept:'English', exp:'11 years', rating:'4.6', color:'linear-gradient(135deg,#7C3AED,#A78BFA)' },
+    { initials:'MR', name:'Mr. Manish Rao', dept:'Physics', exp:'6 years', rating:'4.5', color:'linear-gradient(135deg,var(--navy),#3B82F6)' },
+  ];
+
+  function buildFaculty() {
+    const grid = document.getElementById('facultyGrid');
+    if (!grid) return;
+    grid.innerHTML = FACULTY.map(f => `
+      <div class="faculty-card" data-dept="${f.dept}">
+        <div class="faculty-card-header">
+          <div class="faculty-avatar" style="background:${f.color};">${f.initials}</div>
+          <div><div class="faculty-name">${f.name}</div><div class="faculty-dept">${f.dept}</div></div>
         </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; 2026 Excel Academy. All rights reserved.</p>
-      <div class="footer-bottom-links">
-        <a href="privacy-policy.html">Privacy Policy</a>
-        <a href="terms-conditions.html">Terms & Conditions</a>
-        <a href="sitemap.html">Sitemap</a>
-      </div>
-    </div>
-  </footer>
+        <div class="faculty-meta">
+          <span class="faculty-chip"><i class="fas fa-briefcase"></i> ${f.exp}</span>
+          <div class="faculty-rating"><i class="fas fa-star"></i> ${f.rating}</div>
+        </div>
+        <button class="btn btn-outline btn-sm" style="width:100%;" onclick="viewFaculty('${f.name}','${f.dept}','${f.exp}','${f.rating}')"><i class="fas fa-eye"></i> View Profile</button>
+      </div>`).join('');
+    // search + filter
+    const search = document.getElementById('facultySearch');
+    const filter = document.getElementById('facultyFilter');
+    function filterFaculty() {
+      const q = search.value.toLowerCase(); const f = filter.value;
+      document.querySelectorAll('#facultyGrid .faculty-card').forEach(c => {
+        c.style.display = (c.textContent.toLowerCase().includes(q) && (!f || c.dataset.dept === f)) ? '' : 'none';
+      });
+    }
+    search.addEventListener('input', filterFaculty);
+    filter.addEventListener('change', filterFaculty);
+  }
 
-  <button class="back-to-top" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
+  window.viewFaculty = function(name, dept, exp, rating) {
+    openModal('Faculty Profile', '',
+      `<div style="display:flex;flex-direction:column;gap:12px;">
+        <div style="text-align:center;padding:16px;background:var(--bg-soft);border-radius:var(--radius-md);">
+          <div style="width:64px;height:64px;border-radius:50%;background:var(--navy);color:var(--white);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.3rem;margin:0 auto 10px;">${name.split(' ').map(n=>n[0]).join('').slice(0,2)}</div>
+          <strong>${name}</strong><br><span style="font-size:0.8rem;color:var(--text-secondary);">${dept} · ${exp} exp.</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div class="form-group"><label>Department</label><input type="text" value="${dept}" readonly></div>
+          <div class="form-group"><label>Experience</label><input type="text" value="${exp}" readonly></div>
+          <div class="form-group"><label>Rating</label><input type="text" value="⭐ ${rating} / 5.0" readonly></div>
+          <div class="form-group"><label>Status</label><input type="text" value="Active" readonly></div>
+        </div>
+      </div>`,
+      `<button class="btn btn-outline" onclick="closeModal()">Close</button>
+       <button class="btn btn-primary" onclick="openModal('Faculty Updated','Faculty details saved.','','<button class=\\'btn btn-primary\\' onclick=\\'closeModal()\\'>Done</button>')"><i class="fas fa-edit"></i> Edit</button>`
+    );
+  };
 
-  <script src="assets/js/main.js"></script>
+  // ── Students Data ──
+  const STUDENTS = [
+    { name:'Aarav Iyer', id:'EA-2025-0001', cls:'JEE Advanced', status:'Active', joined:'01 Jun 2025' },
+    { name:'Neha Joshi', id:'EA-2025-0002', cls:'NEET UG', status:'Active', joined:'03 Jun 2025' },
+    { name:'Rohan Desai', id:'EA-2025-0003', cls:'Foundation XI', status:'Active', joined:'05 Jun 2025' },
+    { name:'Isha Reddy', id:'EA-2025-0004', cls:'Class X', status:'Active', joined:'07 Jun 2025' },
+    { name:'Karan Kapoor', id:'EA-2025-0005', cls:'JEE Advanced', status:'Inactive', joined:'10 Jun 2025' },
+    { name:'Meera Pillai', id:'EA-2025-0006', cls:'NEET UG', status:'Pending', joined:'12 Jun 2025' },
+    { name:'Priya Patel', id:'EA-2025-0007', cls:'JEE Advanced', status:'Active', joined:'15 Jul 2025' },
+    { name:'Rahul Verma', id:'EA-2025-0008', cls:'NEET UG', status:'Active', joined:'14 Jul 2025' },
+  ];
+
+  function buildStudents() {
+    const tbody = document.getElementById('studentTbody');
+    if (!tbody) return;
+    const statusBadge = s => s === 'Active' ? 'badge-success' : s === 'Pending' ? 'badge-warning' : 'badge-danger';
+    tbody.innerHTML = STUDENTS.map(s => `
+      <tr data-cls="${s.cls}" data-status="${s.status}">
+        <td><strong>${s.name}</strong></td>
+        <td>${s.id}</td>
+        <td>${s.cls}</td>
+        <td><span class="badge ${statusBadge(s.status)}">${s.status}</span></td>
+        <td>${s.joined}</td>
+        <td style="display:flex;gap:6px;">
+          <button class="btn btn-sm btn-outline" onclick="viewStudent('${s.name}','${s.id}','${s.cls}','${s.status}')"><i class="fas fa-eye"></i></button>
+          <button class="btn btn-sm btn-outline" onclick="editStudent('${s.name}')"><i class="fas fa-edit"></i></button>
+          <button class="btn btn-sm btn-outline" style="color:var(--crimson);" onclick="deleteStudent('${s.name}', this)"><i class="fas fa-trash"></i></button>
+        </td>
+      </tr>`).join('');
+
+    const search = document.getElementById('studentSearch');
+    const clsFilter = document.getElementById('studentClassFilter');
+    const statusFilter = document.getElementById('studentStatusFilter');
+    function filterStudents() {
+      const q = search.value.toLowerCase();
+      const cls = clsFilter.value; const status = statusFilter.value;
+      document.querySelectorAll('#studentTbody tr').forEach(tr => {
+        const txt = tr.textContent.toLowerCase();
+        const trCls = tr.dataset.cls; const trStatus = tr.dataset.status;
+        tr.style.display = (txt.includes(q) && (!cls || trCls === cls) && (!status || trStatus === status)) ? '' : 'none';
+      });
+    }
+    search.addEventListener('input', filterStudents);
+    clsFilter.addEventListener('change', filterStudents);
+    statusFilter.addEventListener('change', filterStudents);
+  }
+
+  window.viewStudent = function(name, id, cls, status) {
+    openModal('Student Profile', '',
+      `<div style="display:flex;flex-direction:column;gap:12px;">
+        <div style="text-align:center;padding:16px;background:var(--bg-soft);border-radius:var(--radius-md);">
+          <div style="width:60px;height:60px;border-radius:50%;background:var(--navy);color:var(--white);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.2rem;margin:0 auto 10px;">${name.split(' ').map(n=>n[0]).join('').slice(0,2)}</div>
+          <strong>${name}</strong><br><span style="font-size:0.8rem;color:var(--text-secondary);">${id}</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div class="form-group"><label>Course</label><input type="text" value="${cls}" readonly></div>
+          <div class="form-group"><label>Status</label><input type="text" value="${status}" readonly></div>
+        </div>
+      </div>`,
+      `<button class="btn btn-outline" onclick="closeModal()">Close</button>
+       <button class="btn btn-primary" onclick="editStudent('${name}')"><i class="fas fa-edit"></i> Edit</button>`
+    );
+  };
+
+  window.editStudent = function(name) {
+    openModal('Edit Student: ' + name, '',
+      `<div class="profile-grid" style="gap:12px;">
+        <div class="form-group"><label>Full Name</label><input type="text" value="${name}"></div>
+        <div class="form-group"><label>Email</label><input type="email" placeholder="student@email.com"></div>
+        <div class="form-group"><label>Course</label><select><option>JEE Advanced</option><option>NEET UG</option><option>Class X</option></select></div>
+        <div class="form-group"><label>Status</label><select><option>Active</option><option>Inactive</option><option>Pending</option></select></div>
+      </div>`,
+      `<button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+       <button class="btn btn-primary" onclick="closeModal();setTimeout(()=>openModal('Student Updated ✓','Changes saved successfully.','','<button class=\\'btn btn-primary\\' onclick=\\'closeModal()\\'>Done</button>'),300);">Save Changes</button>`
+    );
+  };
+
+  window.deleteStudent = function(name, btn) {
+    openModal('Delete Student?',
+      `Are you sure you want to remove <strong>${name}</strong> from the system? This action cannot be undone.`,
+      '',
+      `<button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+       <button class="btn btn-primary" style="background:var(--crimson);border-color:var(--crimson);" onclick="closeModal();btn.closest('tr').remove();">Delete</button>`
+    );
+    // store reference
+    window._deleteTarget = btn;
+  };
+
+  // ── Courses ──
+  const COURSES = [
+    { code:'JEE-ADV', title:'JEE Advanced 2026', faculty:'Dr. Rajesh Kumar', duration:'2 Years', enrolled:320, status:'Active' },
+    { code:'NEET-UG', title:'NEET UG 2026', faculty:'Ms. Sana Khan', duration:'2 Years', enrolled:280, status:'Active' },
+    { code:'FOUND-XI', title:'Foundation XI', faculty:'Mr. Vikram Singh', duration:'1 Year', enrolled:150, status:'Active' },
+    { code:'BOARDS-X', title:'Boards X – Science', faculty:'Prof. Anika Mehra', duration:'1 Year', enrolled:210, status:'Active' },
+    { code:'JEE-MAIN', title:'JEE Main Crash', faculty:'Dr. Priya Gupta', duration:'6 Months', enrolled:90, status:'Active' },
+    { code:'UPSC-CSE', title:'UPSC CSE Foundation', faculty:'Mr. Manish Rao', duration:'2 Years', enrolled:40, status:'Upcoming' },
+  ];
+
+  function buildCourses() {
+    const grid = document.getElementById('courseGrid');
+    if (!grid) return;
+    grid.innerHTML = COURSES.map(c => `
+      <div class="course-card">
+        <div class="course-code">${c.code}</div>
+        <div class="course-title">${c.title}</div>
+        <div class="course-meta">
+          <div class="course-meta-row"><i class="fas fa-chalkboard-teacher"></i> ${c.faculty}</div>
+          <div class="course-meta-row"><i class="fas fa-clock"></i> ${c.duration}</div>
+          <div class="course-meta-row"><i class="fas fa-users"></i> ${c.enrolled} enrolled</div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+          <span class="badge ${c.status==='Active'?'badge-success':'badge-info'}">${c.status}</span>
+          <button class="btn btn-sm btn-outline" onclick="viewCourse('${c.title}','${c.faculty}','${c.duration}','${c.enrolled}','${c.status}')"><i class="fas fa-eye"></i> Details</button>
+        </div>
+      </div>`).join('');
+  }
+
+  window.viewCourse = function(title, faculty, duration, enrolled, status) {
+    openModal(title, '',
+      `<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="form-group"><label>Lead Faculty</label><input value="${faculty}" readonly></div>
+        <div class="form-group"><label>Duration</label><input value="${duration}" readonly></div>
+        <div class="form-group"><label>Enrolled</label><input value="${enrolled} students" readonly></div>
+        <div class="form-group"><label>Status</label><input value="${status}" readonly></div>
+      </div>`,
+      `<button class="btn btn-outline" onclick="closeModal()">Close</button>
+       <button class="btn btn-primary" onclick="closeModal()"><i class="fas fa-edit"></i> Edit Course</button>`
+    );
+  };
+
+  // ── Results Chart ──
+  function initResultsChart() {
+    const c = document.getElementById('resultsChart');
+    if (!c) return;
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const ctx = c.getContext('2d');
+    const labels = ['Physics','Chemistry','Math','Biology','English','Overall'];
+    const data = [82,78,91,76,88,87];
+    const colors = ['#1E3A8A','#DC2626','#059669','#D97706','#7C3AED','#0891B2'];
+    const w = c.width; const h = c.height; const pad = 44;
+    const chartW = w - pad*2; const chartH = h - pad*2;
+    const barW = 52;
+    const gap = (chartW - barW*data.length) / (data.length + 1);
+    const labelColor = isDark ? 'rgba(148,163,184,0.9)' : '#374151';
+    const gridColor  = isDark ? 'rgba(148,163,184,0.12)' : 'rgba(55,65,81,0.15)';
+    const valueColor = isDark ? '#f1f5f9' : '#1f2937';
+    ctx.clearRect(0,0,w,h);
+    // grid lines
+    ctx.strokeStyle = gridColor; ctx.lineWidth = 1;
+    for (let i=0;i<=5;i++){
+      const y=pad+(chartH/5)*i;
+      ctx.beginPath(); ctx.moveTo(pad,y); ctx.lineTo(w-pad,y); ctx.stroke();
+    }
+    // y-axis labels
+    ctx.fillStyle = labelColor; ctx.font = '10px DM Sans, sans-serif'; ctx.textAlign = 'right';
+    for (let i=0;i<=5;i++){
+      const pct = 100 - i*20;
+      const y = pad + (chartH/5)*i;
+      ctx.fillText(pct+'%', pad-6, y+4);
+    }
+    // bars
+    data.forEach((v,i) => {
+      const x = pad + gap*(i+1) + barW*i;
+      const barH = (v/100)*chartH; const y = pad + chartH - barH;
+      const g = ctx.createLinearGradient(0, y, 0, y+barH);
+      g.addColorStop(0, colors[i]); g.addColorStop(1, colors[i]+'88');
+      ctx.fillStyle = g; ctx.beginPath();
+      ctx.roundRect ? ctx.roundRect(x, y, barW, barH, 7) : ctx.rect(x, y, barW, barH);
+      ctx.fill();
+      // x-axis label
+      ctx.fillStyle = labelColor; ctx.font = '10px DM Sans, sans-serif'; ctx.textAlign = 'center';
+      ctx.fillText(labels[i], x + barW/2, h - 4);
+      // value pill above bar
+      const valText = v+'%';
+      ctx.font = 'bold 11px DM Sans, sans-serif';
+      const tw = ctx.measureText(valText).width;
+      const pillX = x + barW/2 - tw/2 - 5;
+      const pillY = y - 21;
+      const pillW = tw + 10; const pillH = 17;
+      ctx.fillStyle = isDark ? 'rgba(30,30,30,0.75)' : 'rgba(255,255,255,0.9)';
+      ctx.beginPath();
+      ctx.roundRect ? ctx.roundRect(pillX, pillY, pillW, pillH, 4) : ctx.rect(pillX, pillY, pillW, pillH);
+      ctx.fill();
+      ctx.fillStyle = valueColor; ctx.textAlign = 'center';
+      ctx.fillText(valText, x + barW/2, pillY + 12);
+    });
+  }
+
+  // ── Overview Chart ──
+  const dc = document.getElementById('dashChart');
+  if (dc) {
+    const ctx = dc.getContext('2d');
+    const gradient = ctx.createLinearGradient(0,0,0,200);
+    gradient.addColorStop(0,'rgba(220,38,38,0.35)'); gradient.addColorStop(1,'rgba(220,38,38,0)');
+    const data=[42,58,65,72,78,84,88,84.5]; const labels=['Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr'];
+    const w=dc.width; const h=dc.height; const pad=36;
+    const cW=w-pad*2; const cH=h-pad*2; const maxV=100; const stepX=cW/(data.length-1);
+    ctx.clearRect(0,0,w,h);
+    ctx.strokeStyle='rgba(100,116,139,0.1)'; ctx.lineWidth=1;
+    for(let i=0;i<=4;i++){const y=pad+(cH/4)*i;ctx.beginPath();ctx.moveTo(pad,y);ctx.lineTo(w-pad,y);ctx.stroke();}
+    ctx.fillStyle='rgba(100,116,139,0.6)'; ctx.font='11px DM Sans'; ctx.textAlign='center';
+    labels.forEach((l,i)=>ctx.fillText('₹'+data[i].toFixed(0)+'L',pad+i*stepX,h-6));
+    ctx.beginPath(); ctx.moveTo(pad,h-pad);
+    data.forEach((v,i)=>ctx.lineTo(pad+i*stepX,pad+cH-(v/maxV)*cH));
+    ctx.lineTo(pad+(data.length-1)*stepX,h-pad); ctx.closePath();
+    ctx.fillStyle=gradient; ctx.fill();
+    ctx.beginPath();
+    data.forEach((v,i)=>{const x=pad+i*stepX; const y=pad+cH-(v/maxV)*cH; i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
+    ctx.strokeStyle='#DC2626'; ctx.lineWidth=2.5; ctx.lineJoin='round'; ctx.stroke();
+    data.forEach((v,i)=>{const x=pad+i*stepX; const y=pad+cH-(v/maxV)*cH;
+      ctx.beginPath(); ctx.arc(x,y,4,0,Math.PI*2); ctx.fillStyle='#FFF'; ctx.fill(); ctx.strokeStyle='#DC2626'; ctx.lineWidth=2.5; ctx.stroke();});
+  }
+
+  // ── Announcements ──
+  const annBody = document.getElementById('annBody');
+  const annCount = document.getElementById('annCharCount');
+  if (annBody && annCount) {
+    annBody.addEventListener('input', () => { annCount.textContent = annBody.value.length + ' / 500'; });
+  }
+
+  window.publishAnn = function() {
+    const title = document.getElementById('annTitle').value.trim();
+    const body = document.getElementById('annBody').value.trim();
+    if (!title || !body) { openModal('Incomplete Form','Please fill in both title and message before publishing.','',`<button class="btn btn-primary" onclick="closeModal()">OK</button>`); return; }
+    const list = document.getElementById('annList');
+    const item = document.createElement('div'); item.className = 'ann-item';
+    item.innerHTML = `<div class="ann-item-header"><div><div class="ann-item-title">${title}</div></div><div class="ann-item-actions"><button class="btn btn-sm btn-outline" onclick="editAnn(this)"><i class="fas fa-edit"></i> Edit</button><button class="btn btn-sm btn-outline" style="color:var(--crimson);" onclick="deleteAnn(this)"><i class="fas fa-trash"></i></button></div></div><div class="ann-item-body">${body}</div><div class="ann-item-meta"><i class="fas fa-clock"></i> Just published · <span class="badge badge-success" style="font-size:0.7rem;">Published</span></div>`;
+    list.prepend(item);
+    document.getElementById('annTitle').value = '';
+    document.getElementById('annBody').value = '';
+    if(annCount) annCount.textContent = '0 / 500';
+    openModal('Announcement Published ✓', 'Your announcement has been sent to all selected recipients.','',`<button class="btn btn-primary" onclick="closeModal()">Done</button>`);
+  };
+
+  window.saveDraftAnn = function() {
+    openModal('Draft Saved','Your announcement has been saved as a draft.','',`<button class="btn btn-primary" onclick="closeModal()">OK</button>`);
+  };
+
+  window.deleteAnn = function(btn) {
+    openModal('Delete Announcement?','This announcement will be permanently removed.',
+      '',`<button class="btn btn-outline" onclick="closeModal()">Cancel</button><button class="btn btn-primary" style="background:var(--crimson);border-color:var(--crimson);" onclick="closeModal();${btn.closest('.ann-item').remove ? '' : ''}">Delete</button>`
+    );
+    window._annTarget = btn;
+    document.getElementById('dashModalActions').querySelector('button:last-child').onclick = () => {
+      closeModal(); if(window._annTarget) window._annTarget.closest('.ann-item').remove();
+    };
+  };
+
+  window.editAnn = function(btn) {
+    const item = btn.closest('.ann-item');
+    const title = item.querySelector('.ann-item-title').textContent;
+    const body = item.querySelector('.ann-item-body').textContent;
+    openModal('Edit Announcement', '',
+      `<div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="form-group"><label>Title</label><input type="text" id="editAnnTitle" value="${title}"></div>
+        <div class="form-group"><label>Message</label><textarea id="editAnnBody" rows="4">${body}</textarea></div>
+      </div>`,
+      `<button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+       <button class="btn btn-primary" onclick="saveEditedAnn()">Save Changes</button>`
+    );
+    window._editAnnItem = item;
+  };
+
+  window.saveEditedAnn = function() {
+    const t = document.getElementById('editAnnTitle'); const b = document.getElementById('editAnnBody');
+    if (window._editAnnItem && t && b) {
+      window._editAnnItem.querySelector('.ann-item-title').textContent = t.value;
+      window._editAnnItem.querySelector('.ann-item-body').textContent = b.value;
+    }
+    closeModal();
+    setTimeout(() => openModal('Saved ✓','Announcement updated.','',`<button class="btn btn-primary" onclick="closeModal()">Done</button>`), 300);
+  };
+
+  window.publishExistingAnn = function(btn) {
+    const item = btn.closest('.ann-item');
+    item.querySelector('.ann-item-meta').innerHTML = '<i class="fas fa-clock"></i> Just published · <span class="badge badge-success" style="font-size:0.7rem;">Published</span>';
+    btn.remove();
+    openModal('Published ✓','Announcement is now live.','',`<button class="btn btn-primary" onclick="closeModal()">Done</button>`);
+  };
+
+  // ── Payments ──
+  window.viewReceipt = function(student, course, amount, date) {
+    openModal('Payment Receipt', '',
+      `<div style="border:1px solid var(--border-color);border-radius:var(--radius-md);padding:20px;display:flex;flex-direction:column;gap:10px;font-size:0.875rem;">
+        <div style="text-align:center;padding-bottom:12px;border-bottom:1px solid var(--border-color);">
+          <img src="assets/images/logo1.png" alt="Logo" style="height:36px;margin-bottom:8px;"><br>
+          <strong style="font-size:1rem;">Excel Academy</strong><br>
+          <span style="color:var(--text-secondary);font-size:0.78rem;">Fee Receipt</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <div><strong>Student:</strong><br>${student}</div>
+          <div><strong>Date:</strong><br>${date}</div>
+          <div><strong>Course:</strong><br>${course}</div>
+          <div><strong>Amount:</strong><br><span style="color:var(--emerald);font-weight:700;font-size:1.1rem;">${amount}</span></div>
+        </div>
+        <div style="text-align:center;color:var(--text-secondary);font-size:0.75rem;padding-top:8px;border-top:1px solid var(--border-color);">This is a system-generated receipt. No signature required.</div>
+      </div>`,
+      `<button class="btn btn-outline" onclick="closeModal()">Close</button>
+       <button class="btn btn-primary" onclick="closeModal()"><i class="fas fa-print"></i> Print</button>`
+    );
+  };
+
+  const paySearch = document.getElementById('paySearch');
+  if (paySearch) {
+    paySearch.addEventListener('input', () => {
+      const q = paySearch.value.toLowerCase();
+      document.querySelectorAll('#payTable tbody tr').forEach(tr => { tr.style.display = tr.textContent.toLowerCase().includes(q) ? '' : 'none'; });
+    });
+  }
+
+  // ── Modal Openers ──
+  window.openAddStudentModal = function() {
+    openModal('Add New Student', 'Register a new student into the system.',
+      `<div class="profile-grid" style="gap:12px;">
+        <div class="form-group"><label>Full Name</label><input type="text" placeholder="Student's full name"></div>
+        <div class="form-group"><label>Date of Birth</label><input type="date"></div>
+        <div class="form-group"><label>Email</label><input type="email" placeholder="student@email.com"></div>
+        <div class="form-group"><label>Phone</label><input type="tel" placeholder="+91 XXXXX XXXXX"></div>
+        <div class="form-group"><label>Course</label><select><option>JEE Advanced 2026</option><option>NEET UG 2026</option><option>Foundation XI</option><option>Boards X</option></select></div>
+        <div class="form-group"><label>Guardian Name</label><input type="text" placeholder="Parent/Guardian name"></div>
+      </div>`,
+      `<button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+       <button class="btn btn-primary" onclick="closeModal();setTimeout(()=>openModal('Student Enrolled ✓','New student has been registered successfully.','','<button class=\\'btn btn-primary\\' onclick=\\'closeModal()\\'>Done</button>'),300);">Enroll Student</button>`
+    );
+  };
+
+  window.openAddFacultyModal = function() {
+    openModal('Hire New Faculty', 'Add a new faculty member to the institute.',
+      `<div class="profile-grid" style="gap:12px;">
+        <div class="form-group"><label>Full Name</label><input type="text" placeholder="Faculty full name"></div>
+        <div class="form-group"><label>Qualification</label><input type="text" placeholder="e.g. Ph.D Physics, IIT Delhi"></div>
+        <div class="form-group"><label>Department</label><select><option>Physics</option><option>Chemistry</option><option>Mathematics</option><option>Biology</option><option>English</option></select></div>
+        <div class="form-group"><label>Experience</label><input type="text" placeholder="e.g. 10 years"></div>
+        <div class="form-group"><label>Email</label><input type="email" placeholder="faculty@excelacademy.in"></div>
+        <div class="form-group"><label>Phone</label><input type="tel" placeholder="+91 XXXXX XXXXX"></div>
+      </div>`,
+      `<button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+       <button class="btn btn-primary" onclick="closeModal();setTimeout(()=>openModal('Faculty Added ✓','New faculty member has been registered.','','<button class=\\'btn btn-primary\\' onclick=\\'closeModal()\\'>Done</button>'),300);">Add Faculty</button>`
+    );
+  };
+
+  window.openAddCourseModal = function() {
+    openModal('Add New Course', '',
+      `<div class="profile-grid" style="gap:12px;">
+        <div class="form-group"><label>Course Title</label><input type="text" placeholder="e.g. JEE Advanced 2027"></div>
+        <div class="form-group"><label>Course Code</label><input type="text" placeholder="e.g. JEE-ADV-27"></div>
+        <div class="form-group"><label>Lead Faculty</label><select><option>Dr. Rajesh Kumar</option><option>Prof. Anika Mehra</option><option>Mr. Vikram Singh</option></select></div>
+        <div class="form-group"><label>Duration</label><select><option>6 Months</option><option>1 Year</option><option>2 Years</option></select></div>
+      </div>`,
+      `<button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+       <button class="btn btn-primary" onclick="closeModal();setTimeout(()=>openModal('Course Created ✓','New course has been added.','','<button class=\\'btn btn-primary\\' onclick=\\'closeModal()\\'>Done</button>'),300);">Create Course</button>`
+    );
+  };
+
+  window.openReportModal = function() {
+    openModal('Generate Report', 'Select report type and date range.',
+      `<div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="form-group"><label>Report Type</label><select><option>Overall Performance Report</option><option>Attendance Summary</option><option>Revenue Report</option><option>Faculty Performance</option></select></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div class="form-group"><label>From</label><input type="date"></div>
+          <div class="form-group"><label>To</label><input type="date"></div>
+        </div>
+        <div class="form-group"><label>Format</label><select><option>PDF</option><option>Excel (CSV)</option></select></div>
+      </div>`,
+      `<button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+       <button class="btn btn-primary" onclick="closeModal();setTimeout(()=>openModal('Report Generated ✓','Your report is ready. It will be emailed to admin@excelacademy.in within 5 minutes.','','<button class=\\'btn btn-primary\\' onclick=\\'closeModal()\\'>Done</button>'),300);"><i class="fas fa-file-export"></i> Generate</button>`
+    );
+  };
+
+  window.openExportModal = function() {
+    openModal('Export Data', 'Choose what to export.',
+      `<div class="form-group"><label>Data Set</label><select><option>All Transactions</option><option>Student List</option><option>Faculty List</option><option>Results Summary</option></select></div>`,
+      `<button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+       <button class="btn btn-primary" onclick="closeModal();setTimeout(()=>openModal('Export Ready ✓','Data has been exported as CSV file.','','<button class=\\'btn btn-primary\\' onclick=\\'closeModal()\\'>Done</button>'),300);"><i class="fas fa-download"></i> Export CSV</button>`
+    );
+  };
+
+  // ── Settings ──
+  window.saveSettings = function() {
+    const dm = document.getElementById('settingsDarkMode');
+    const rm = document.getElementById('settingsRTL');
+    if (dm) { const t=dm.checked?'dark':'light'; document.documentElement.setAttribute('data-theme',t); localStorage.setItem('theme',t); }
+    if (rm) { const d=rm.checked?'rtl':'ltr'; document.documentElement.setAttribute('dir',d); localStorage.setItem('dir',d); }
+    openModal('Settings Saved ✓','Your preferences have been updated.','',`<button class="btn btn-primary" onclick="closeModal()">Done</button>`);
+  };
+  window.cancelSettings = function() {
+    openModal('Discard Changes?','Unsaved settings will be reverted.','',
+      `<button class="btn btn-outline" onclick="closeModal()">Keep Editing</button><button class="btn btn-primary" onclick="closeModal()">Discard</button>`);
+  };
+
+  // sync setting toggles
+  const dm = document.getElementById('settingsDarkMode');
+  const rm = document.getElementById('settingsRTL');
+  if(dm) dm.checked = document.documentElement.getAttribute('data-theme')==='dark';
+  if(rm) rm.checked = document.documentElement.getAttribute('dir')==='rtl';
+
+  // ── Logout ──
+  document.getElementById('logoutBtn').addEventListener('click', () => {
+    openModal('Confirm Logout','Are you sure you want to log out of the Admin Dashboard?','',
+      `<button class="btn btn-outline" onclick="closeModal()"><i class="fas fa-times"></i> Cancel</button>
+       <button class="btn btn-primary" style="background:var(--crimson);border-color:var(--crimson);" onclick="window.location.href='login.html'"><i class="fas fa-sign-out-alt"></i> Logout</button>`
+    );
+  });
+
+})();
+</script>
 </body>
 </html>
