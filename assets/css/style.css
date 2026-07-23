@@ -2377,6 +2377,9 @@ h1, h2, h3, h4, h5, h6 {
 
 [dir="rtl"] .hero-arrow.prev { left: auto; right: 30px; }
 [dir="rtl"] .hero-arrow.next { right: auto; left: 30px; }
+[dir="rtl"] .hero-arrow i {
+  transform: scaleX(-1);
+}
 
 [dir="rtl"] .footer-links a:hover {
   transform: translateX(-4px);
