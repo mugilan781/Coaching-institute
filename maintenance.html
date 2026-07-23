@@ -52,6 +52,34 @@
       align-items: center;
       padding-top: 4px;
     }
+    @media (max-width: 576px) {
+      .maintenance-countdown {
+        gap: 8px;
+        margin-bottom: 24px;
+      }
+      .countdown-item {
+        padding: 12px 14px;
+        min-width: 70px;
+        border-radius: var(--radius-md);
+      }
+      .countdown-item .countdown-number {
+        font-size: 1.6rem;
+      }
+      .countdown-item .countdown-label {
+        font-size: 0.62rem;
+        letter-spacing: 0.5px;
+        margin-top: 4px;
+      }
+      .countdown-separator {
+        font-size: 1.6rem;
+        padding-top: 2px;
+      }
+    }
+    @media (max-width: 480px) {
+      .maintenance-page {
+        padding: 60px 16px 30px !important;
+      }
+    }
   </style>
 </head>
 <body>
