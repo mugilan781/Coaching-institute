@@ -2460,6 +2460,7 @@ h1, h2, h3, h4, h5, h6 {
   :root {
     --nav-height: 70px;
     --section-padding: 80px 0;
+    --container-padding: 0 16px;
   }
 
   .nav-links {
@@ -3371,10 +3372,10 @@ h1, h2, h3, h4, h5, h6 {
   .hero-slide-content p { font-size: 0.95rem; }
   .hero-indicators { gap: 8px; }
   .hero-indicator { width: 10px; height: 10px; }
-
-  .nav-logo { font-size: 1.1rem; }
+  .nav-logo { font-size: 1.05rem; gap: 8px; }
   .nav-logo-icon { width: 32px; height: 32px; }
-  .nav-actions { gap: 6px; }
+  .nav-actions { gap: 4px; }
+
   .theme-toggle, .rtl-toggle, .profile-btn { width: 34px; height: 34px; }
   .theme-toggle svg { width: 16px; height: 16px; }
   .rtl-toggle { font-size: 0.65rem; min-width: 34px; padding: 0 6px; }
@@ -3416,7 +3417,7 @@ h1, h2, h3, h4, h5, h6 {
   .blog-details-content .featured-image { height: 220px !important; }
   .blog-details-content h2 { font-size: 1.4rem; }
 
-  .dash-table-wrap { margin: 0 -16px; }
+  .dash-table-wrap { margin: 0; }
   .dash-table th, .dash-table td { padding: 10px 12px; font-size: 0.82rem; }
   .dash-table { min-width: 500px; }
 
