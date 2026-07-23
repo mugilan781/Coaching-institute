@@ -10,6 +10,44 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    /* Scoped FAQ Snappy Transition overrides */
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.22s cubic-bezier(0.4, 0, 0.2, 1), padding 0.22s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+    .faq-item.active .faq-answer {
+      padding: 0 24px 20px;
+    }
+    
+    /* Contact Form Success Toast styling */
+    .contact-success-notification {
+      margin-top: 16px;
+      padding: 14px 20px;
+      border-radius: var(--radius-md);
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: #065f46; /* High contrast Dark Green for Light Mode */
+      background: #ecfdf5; /* Soft Emerald 50 background */
+      border: 1px solid #a7f3d0; /* Emerald 200 border */
+      display: none;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .contact-success-notification.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    [data-theme="dark"] .contact-success-notification {
+      color: #34d399; /* Emerald 400 for high contrast in Dark Mode */
+      background: rgba(16, 185, 129, 0.1);
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+  </style>
 </head>
 <body>
 
@@ -112,7 +150,7 @@
           </div>
         </div>
 
-        <form class="reveal-right">
+        <form id="contact-form" class="reveal-right">
           <div class="contact-info-card">
             <div class="form-row">
               <div class="form-group">
@@ -141,6 +179,7 @@
             <button type="submit" class="btn btn-primary w-full">
               <i class="fa-regular fa-paper-plane"></i> Send Message
             </button>
+            <div id="contact-success-notification" class="contact-success-notification"></div>
           </div>
         </form>
       </div>
@@ -152,6 +191,7 @@
       <div class="section-header reveal">
         <span class="section-tag"><i class="fa-regular fa-map"></i> Find Us</span>
         <h2 class="section-title">Our Location</h2>
+        <p class="section-subtitle">Visit our main campus in the heart of Delhi or find us on the map for easy directions.</p>
       </div>
       <div class="reveal-scale" style="border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lg);">
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3502.361873335379!2d77.22883031508156!3d28.63298298241843!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd1b5c2f3b4d%3A0x1b3b3b3b3b3b3b3b!2sNew%20Delhi%2C%20India!5e0!3m2!1sen!2sin!4v1" width="100%" height="400" style="border:0; display: block;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Excel Academy Location"></iframe>
@@ -164,9 +204,10 @@
       <div class="section-header reveal">
         <span class="section-tag"><i class="fa-regular fa-circle-question"></i> FAQ</span>
         <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Find quick answers to common queries about our courses, demo lectures, and admission procedures.</p>
       </div>
       <div style="max-width: 800px; margin: 0 auto;">
-        <div class="faq-item active reveal">
+        <div class="faq-item reveal">
           <button class="faq-question">
             <span>How can I enroll in a course?</span>
             <span class="faq-icon"><i class="fa-solid fa-plus"></i></span>
@@ -214,12 +255,12 @@
         <p class="section-subtitle">Stay updated with the latest news, tips, and success stories from Excel Academy.</p>
       </div>
       <div class="flex-center gap-24 reveal-scale" style="flex-wrap: wrap;">
-        <a href="#" class="btn btn-icon btn-primary" style="width: 64px; height: 64px; font-size: 1.5rem; border-radius: var(--radius-lg);"><i class="fa-brands fa-facebook-f"></i></a>
-        <a href="#" class="btn btn-icon btn-secondary" style="width: 64px; height: 64px; font-size: 1.5rem; border-radius: var(--radius-lg);"><i class="fa-brands fa-instagram"></i></a>
-        <a href="#" class="btn btn-icon btn-primary" style="width: 64px; height: 64px; font-size: 1.5rem; border-radius: var(--radius-lg);"><i class="fa-brands fa-youtube"></i></a>
-        <a href="#" class="btn btn-icon btn-secondary" style="width: 64px; height: 64px; font-size: 1.5rem; border-radius: var(--radius-lg);"><i class="fa-brands fa-x-twitter"></i></a>
-        <a href="#" class="btn btn-icon btn-primary" style="width: 64px; height: 64px; font-size: 1.5rem; border-radius: var(--radius-lg);"><i class="fa-brands fa-linkedin-in"></i></a>
-        <a href="#" class="btn btn-icon btn-secondary" style="width: 64px; height: 64px; font-size: 1.5rem; border-radius: var(--radius-lg);"><i class="fa-brands fa-telegram"></i></a>
+        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Follow Excel Academy on Facebook" class="btn btn-icon btn-primary" style="width: 64px; height: 64px; font-size: 1.5rem; border-radius: var(--radius-lg);"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Follow Excel Academy on Instagram" class="btn btn-icon btn-secondary" style="width: 64px; height: 64px; font-size: 1.5rem; border-radius: var(--radius-lg);"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="Subscribe to Excel Academy on YouTube" class="btn btn-icon btn-primary" style="width: 64px; height: 64px; font-size: 1.5rem; border-radius: var(--radius-lg);"><i class="fa-brands fa-youtube"></i></a>
+        <a href="https://x.com" target="_blank" rel="noopener noreferrer" aria-label="Follow Excel Academy on X (Twitter)" class="btn btn-icon btn-secondary" style="width: 64px; height: 64px; font-size: 1.5rem; border-radius: var(--radius-lg);"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="Connect with Excel Academy on LinkedIn" class="btn btn-icon btn-primary" style="width: 64px; height: 64px; font-size: 1.5rem; border-radius: var(--radius-lg);"><i class="fa-brands fa-linkedin-in"></i></a>
+        <a href="https://t.me" target="_blank" rel="noopener noreferrer" aria-label="Join Excel Academy on Telegram" class="btn btn-icon btn-secondary" style="width: 64px; height: 64px; font-size: 1.5rem; border-radius: var(--radius-lg);"><i class="fa-brands fa-telegram"></i></a>
       </div>
     </div>
   </section>
@@ -314,5 +355,97 @@
   <button class="back-to-top" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
 
   <script src="assets/js/main.js"></script>
+  <script>
+    // Scoped handlers for Contact Form and Snappy FAQ Accordion
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Contact Form Submit handler
+      const contactForm = document.getElementById('contact-form');
+      const contactNotification = document.getElementById('contact-success-notification');
+      
+      if (contactForm && contactNotification) {
+        contactForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          
+          // Clear active timeouts
+          if (window.contactTimeout) clearTimeout(window.contactTimeout);
+          if (window.contactDismissTimeout) clearTimeout(window.contactDismissTimeout);
+          
+          // Populate content and animate
+          contactNotification.innerHTML = '<i class="fas fa-check-circle" style="color: #10B981; font-size: 1.10rem;"></i> Thank you! Your message has been sent successfully. We will get back to you shortly.';
+          contactNotification.style.display = 'flex';
+          
+          // Force layout reflow
+          contactNotification.offsetHeight;
+          
+          contactNotification.classList.add('show');
+          
+          // Reset form inputs
+          contactForm.reset();
+          
+          // Smooth fade-out after 5 seconds
+          window.contactTimeout = setTimeout(() => {
+            contactNotification.classList.remove('show');
+            window.contactDismissTimeout = setTimeout(() => {
+              contactNotification.style.display = 'none';
+            }, 300);
+          }, 5000);
+        });
+      }
+
+      // 2. Dynamic FAQ Accordion handler
+      const faqItems = document.querySelectorAll('.faq-item');
+      faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        const answer = item.querySelector('.faq-answer');
+        if (question && answer) {
+          answer.style.maxHeight = '0px';
+          
+          question.addEventListener('click', (e) => {
+            // Stop main.js handler from overriding
+            e.stopImmediatePropagation();
+            
+            const isActive = item.classList.contains('active');
+            
+            // Close all items
+            faqItems.forEach(i => {
+              i.classList.remove('active');
+              const ans = i.querySelector('.faq-answer');
+              if (ans) {
+                if (ans._timeout) clearTimeout(ans._timeout);
+                
+                if (ans.style.maxHeight !== '0px') {
+                  const currentHeight = ans.offsetHeight;
+                  ans.style.maxHeight = currentHeight + 'px';
+                  ans.offsetHeight; // force reflow
+                  ans.style.maxHeight = '0px';
+                }
+              }
+            });
+            
+            // Open clicked item
+            if (!isActive) {
+              item.classList.add('active');
+              
+              const p = answer.querySelector('p');
+              // Content height + 20px padding-bottom
+              const targetHeight = p ? (p.scrollHeight + 20) : 250;
+              
+              // Transition smoothly to target height
+              answer.style.maxHeight = '0px';
+              answer.offsetHeight; // Force browser reflow to register the 0px starting point
+              answer.style.maxHeight = targetHeight + 'px';
+              
+              // Clear inline max-height after transition
+              answer._timeout = setTimeout(() => {
+                if (item.classList.contains('active')) {
+                  answer.style.maxHeight = 'none';
+                }
+              }, 250);
+            }
+          }, true);
+        }
+      });
+    });
+  </script>
 </body>
 </html>

@@ -3,13 +3,161 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="10 Proven Study Techniques to Boost Your Exam Performance - Expert tips and strategies from Excel Academy's faculty to help you ace your competitive exams.">
-  <title>10 Proven Study Techniques - Excel Academy Blog</title>
+  <meta name="description" content="Excel Academy Blog - Expert tips and strategies from our faculty to help you ace your competitive exams.">
+  <title>Blog Details - Excel Academy</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .page-header {
+      padding: 150px 0 80px !important;
+      margin-bottom: 0 !important;
+    }
+    /* Premium centered wide reading layout */
+    .blog-details-layout {
+      display: flex;
+      flex-direction: column;
+      max-width: 900px;
+      margin: 0 auto;
+      gap: 48px;
+      padding: 0 20px;
+    }
+    
+    .blog-details-content {
+      width: 100%;
+    }
+    
+    .blog-details-content .featured-image {
+      width: 100%;
+      height: 480px;
+      object-fit: cover;
+      border-radius: var(--radius-lg);
+      margin-bottom: 32px;
+    }
+
+    .blog-details-content h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-top: 40px;
+      margin-bottom: 20px;
+      line-height: 1.35;
+    }
+
+    .blog-details-content p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+    
+    .blog-details-sidebar {
+      width: 100%;
+      margin-top: 24px; /* Proper spacing below the leave-a-comment container */
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+    
+    @media (max-width: 768px) {
+      .blog-details-sidebar {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .blog-details-content .featured-image {
+        height: 280px;
+      }
+    }
+    
+    /* Sidebar styling overrides to remove unwanted divider lines */
+    .sidebar-widget {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-color);
+      padding: 24px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+      margin-bottom: 0;
+    }
+    .sidebar-widget h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 18px;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+    .sidebar-widget ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .sidebar-widget ul li {
+      padding: 10px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+    }
+    .sidebar-widget ul li:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .sidebar-widget ul li a {
+      color: var(--text-secondary);
+      font-weight: 500;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sidebar-widget ul li a::before {
+      content: '\f105';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+    .sidebar-widget ul li:hover a {
+      color: var(--navy);
+      transform: translateX(4px);
+    }
+    .sidebar-widget ul li span {
+      background: var(--bg-soft);
+      padding: 2px 10px;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+    .sidebar-widget ul li:hover span {
+      background: var(--navy);
+      color: var(--white);
+    }
+    
+    .tag-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .tag-cloud a {
+      padding: 6px 14px;
+      background: var(--bg-soft);
+      border-radius: 50px;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+    .tag-cloud a:hover {
+      background: var(--navy);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+  </style>
 </head>
 <body>
 
@@ -60,258 +208,132 @@
     </div>
   </nav>
 
-  <main>    <section class="page-header" style="background-image: url('assets/images/blog-hero.jpg');">
+  <main>
+    <section class="page-header" style="background-image: url('assets/images/blog-hero.jpg');">
       <div class="container">
         <div class="page-header-content">
-          <span class="hero-label reveal">Blog Article</span>
-          <h1 class="reveal">10 Proven Study <span class="text-gradient">Techniques</span></h1>
-          <p class="hero-desc reveal">Master the art of effective studying, improve your concentration, and maximize your retention with these scientifically backed strategies.</p>
+          <span class="hero-label reveal" id="hero-label">Blog Article</span>
+          <h1 class="reveal" id="hero-title">Blog <span class="text-gradient">Details</span></h1>
+          <p class="hero-desc reveal" id="hero-desc">Expert tips, study strategies, and success stories from our premier coaching faculty.</p>
           <div class="breadcrumb reveal" style="transition-delay: 0.1s">
             <a href="index.html">Home</a>
             <span>/</span>
             <a href="blog.html">Blog</a>
             <span>/</span>
-            <span>10 Proven Study Techniques</span>
+            <span id="breadcrumb-current">Details</span>
           </div>
         </div>
       </div>
     </section>
+
     <!-- Article Content -->
-    <section class="section">
+    <section class="section" style="padding: 60px 0 !important;">
       <div class="container">
         <div class="blog-details-layout">
           <div class="blog-details-content">
 
-            <img class="featured-image reveal-scale" src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1200&h=600&fit=crop" alt="Student studying with effective techniques">
+            <img class="featured-image reveal-scale" id="featured-image" src="" alt="Featured Post Image">
 
             <div class="reveal">
-              <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-bottom: 24px;">
-                <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; color: var(--text-secondary);"><i class="fa-regular fa-calendar"></i> June 15, 2026</span>
-                <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; color: var(--text-secondary);"><i class="fa-regular fa-clock"></i> 5 min read</span>
-                <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; color: var(--text-secondary);"><i class="fa-regular fa-user"></i> By Dr. Arvind Sharma</span>
-                <span style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; background: rgba(30,58,138,0.1); color: var(--navy); border-radius: 50px; font-size: 0.75rem; font-weight: 600;">Study Tips</span>
+              <div id="article-meta-row" style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-bottom: 24px;">
+                <!-- Populated dynamically -->
               </div>
             </div>
 
-            <h2 class="reveal">10 Proven Study Techniques to Boost Your Exam Performance</h2>
+            <div id="article-body-content" class="reveal">
+              <!-- Populated dynamically -->
+            </div>
 
-            <p class="reveal">Preparing for competitive exams like JEE, NEET, or UPSC requires more than just hard work — it demands smart strategies. At Excel Academy, we have spent over a decade refining study methodologies that help students maximize their potential. Here are ten proven techniques that our top-performing students swear by.</p>
-
-            <h2 class="reveal">1. Active Recall</h2>
-            <p class="reveal">Instead of passively reading textbooks, actively test yourself on the material. Close the book and try to recall key concepts from memory. Research shows that active recall strengthens neural pathways and significantly improves long-term retention compared to re-reading or highlighting.</p>
-
-            <h2 class="reveal">2. Spaced Repetition</h2>
-            <p class="reveal">Review material at increasing intervals over time. Use the spaced repetition technique to revisit topics after 1 day, 3 days, 1 week, and 1 month. This method leverages the psychological spacing effect to move information from short-term to long-term memory efficiently.</p>
-
-            <h2 class="reveal">3. The Feynman Technique</h2>
-            <p class="reveal">Named after physicist Richard Feynman, this technique involves explaining a concept in simple terms as if teaching it to someone else. If you cannot explain it simply, you have not understood it well enough. This approach reveals gaps in your understanding and solidifies your knowledge.</p>
-
-            <h2 class="reveal">4. Pomodoro Method</h2>
-            <p class="reveal">Work in focused 25-minute intervals followed by 5-minute breaks. After four cycles, take a longer 15-30 minute break. This technique maintains high concentration levels and prevents mental fatigue during long study sessions.</p>
-
-            <h2 class="reveal">5. Mind Mapping</h2>
-            <p class="reveal">Create visual diagrams that connect related concepts. Mind maps help you see the big picture, understand relationships between topics, and make recall easier during exams. Use colors and images to make your maps more memorable.</p>
-
-            <h2 class="reveal">6. Practice Testing</h2>
-            <p class="reveal">Regularly attempt practice questions and previous years' papers under timed conditions. This not only familiarizes you with the exam pattern but also builds speed and accuracy. At Excel Academy, our test series are designed to simulate real exam environments.</p>
-
-            <h2 class="reveal">7. Interleaved Practice</h2>
-            <p class="reveal">Instead of studying one topic for hours, mix different subjects or topics within a single study session. This forces your brain to constantly retrieve and apply knowledge in different contexts, leading to deeper understanding and better retention.</p>
-
-            <h2 class="reveal">8. Elaborative Interrogation</h2>
-            <p class="reveal">Ask yourself "why" questions as you study. For example, "Why does this formula work?" or "Why is this concept important?" This technique encourages deeper processing and helps you build meaningful connections between new information and existing knowledge.</p>
-
-            <h2 class="reveal">9. Dual Coding</h2>
-            <p class="reveal">Combine verbal information with visual aids. Create diagrams, flowcharts, and mind maps alongside your notes. The brain processes visual and verbal information through different channels, and combining them enhances learning and recall significantly.</p>
-
-            <h2 class="reveal">10. Self-Explanation</h2>
-            <p class="reveal">After reading a concept or solving a problem, explain the reasoning behind it in your own words. This technique forces you to process information deeply and identify any gaps in your understanding before they become problems in the exam hall.</p>
-
-            <p class="reveal" style="margin-top: 32px; padding: 24px; background: var(--bg-soft); border-radius: var(--radius-md); border-left: 4px solid var(--navy);">At Excel Academy, we integrate these techniques into our curriculum to ensure every student develops effective study habits. Our faculty guides students in applying these methods through structured practice sessions and personalized feedback. Start implementing these techniques today and watch your exam performance transform.</p>
+            <!-- Tags Section -->
+            <div class="reveal" id="article-tags-container" style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 32px; padding-top: 16px;">
+              <!-- Populated dynamically -->
+            </div>
 
             <!-- Share Buttons -->
-            <div class="reveal" style="margin-top: 50px; padding: 32px 0; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+            <div class="reveal" style="margin-top: 40px; padding: 24px 0; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
               <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
                 <span style="font-weight: 600; font-family: var(--font-display);">Share This Article:</span>
-                <a href="#" style="width: 44px; height: 44px; border-radius: var(--radius-full); background: #1877F2; color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: all var(--transition-fast);"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="#" style="width: 44px; height: 44px; border-radius: var(--radius-full); background: #1DA1F2; color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: all var(--transition-fast);"><i class="fa-brands fa-twitter"></i></a>
-                <a href="#" style="width: 44px; height: 44px; border-radius: var(--radius-full); background: #0A66C2; color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: all var(--transition-fast);"><i class="fa-brands fa-linkedin-in"></i></a>
-                <a href="#" style="width: 44px; height: 44px; border-radius: var(--radius-full); background: #E4405F; color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: all var(--transition-fast);"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#" style="width: 44px; height: 44px; border-radius: var(--radius-full); background: #25D366; color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: all var(--transition-fast);"><i class="fa-brands fa-whatsapp"></i></a>
+                <a href="#" id="share-fb" target="_blank" rel="noopener noreferrer" style="width: 44px; height: 44px; border-radius: var(--radius-full); background: #1877F2; color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: all var(--transition-fast);"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" id="share-tw" target="_blank" rel="noopener noreferrer" style="width: 44px; height: 44px; border-radius: var(--radius-full); background: #1DA1F2; color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: all var(--transition-fast);"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#" id="share-li" target="_blank" rel="noopener noreferrer" style="width: 44px; height: 44px; border-radius: var(--radius-full); background: #0A66C2; color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: all var(--transition-fast);"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="#" id="share-wa" target="_blank" rel="noopener noreferrer" style="width: 44px; height: 44px; border-radius: var(--radius-full); background: #25D366; color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: all var(--transition-fast);"><i class="fa-brands fa-whatsapp"></i></a>
               </div>
             </div>
 
             <!-- Author Bio -->
-            <div class="reveal" style="margin-top: 40px; padding: 32px; background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border-color); display: flex; gap: 24px; align-items: center; flex-wrap: wrap;">
-              <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=120&h=120&fit=crop" alt="Dr. Arvind Sharma" style="width: 100px; height: 100px; border-radius: var(--radius-full); object-fit: cover; border: 4px solid var(--platinum);">
-              <div style="flex: 1; min-width: 200px;">
-                <h4 style="font-size: 1.1rem; margin-bottom: 4px;">Dr. Arvind Sharma</h4>
-                <p style="font-size: 0.85rem; color: var(--crimson); font-weight: 500; margin-bottom: 8px;">Physics Faculty, IIT Delhi Alumnus</p>
-                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7;">With over 15 years of teaching experience, Dr. Sharma has mentored thousands of JEE aspirants. He specializes in making complex physics concepts intuitive through real-world analogies and problem-solving frameworks.</p>
-              </div>
+            <div class="reveal" id="author-card" style="margin-top: 40px; padding: 32px; background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border-color); display: flex; gap: 24px; align-items: center; flex-wrap: wrap;">
+              <!-- Populated dynamically -->
             </div>
 
             <!-- Related Posts -->
             <div class="reveal" style="margin-top: 50px;">
-              <h3 style="font-size: 1.3rem; margin-bottom: 24px;">Related Posts</h3>
-              <div class="grid grid-3">
-                <div class="blog-card">
-                  <div class="blog-card-img">
-                    <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400&h=300&fit=crop" alt="Motivation">
-                    <span class="blog-category">Motivation</span>
-                  </div>
-                  <div class="blog-card-body">
-                    <div class="blog-meta">
-                      <span><i class="fa-regular fa-calendar"></i> Jun 5, 2026</span>
-                    </div>
-                    <h3 style="font-size: 1rem;">Staying Motivated During Long Exam Preparation</h3>
-                    <a href="blog-details.html" class="read-more">Read More <i class="fa-solid fa-arrow-right"></i></a>
-                  </div>
-                </div>
-                <div class="blog-card">
-                  <div class="blog-card-img">
-                    <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400&h=300&fit=crop" alt="JEE study plan">
-                    <span class="blog-category">Exam Prep</span>
-                  </div>
-                  <div class="blog-card-body">
-                    <div class="blog-meta">
-                      <span><i class="fa-regular fa-calendar"></i> May 28, 2026</span>
-                    </div>
-                    <h3 style="font-size: 1rem;">How to Create the Ultimate JEE Study Plan</h3>
-                    <a href="blog-details.html" class="read-more">Read More <i class="fa-solid fa-arrow-right"></i></a>
-                  </div>
-                </div>
-                <div class="blog-card">
-                  <div class="blog-card-img">
-                    <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=300&fit=crop" alt="Group study">
-                    <span class="blog-category">Study Tips</span>
-                  </div>
-                  <div class="blog-card-body">
-                    <div class="blog-meta">
-                      <span><i class="fa-regular fa-calendar"></i> May 20, 2026</span>
-                    </div>
-                    <h3 style="font-size: 1rem;">The Power of Group Study: Learn Faster Together</h3>
-                    <a href="blog-details.html" class="read-more">Read More <i class="fa-solid fa-arrow-right"></i></a>
-                  </div>
-                </div>
-                <div class="blog-card">
-                  <div class="blog-card-img">
-                    <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400&h=300&fit=crop" alt="Online learning">
-                    <span class="blog-category">Online Learning</span>
-                  </div>
-                  <div class="blog-card-body">
-                    <div class="blog-meta">
-                      <span><i class="fa-regular fa-calendar"></i> May 15, 2026</span>
-                    </div>
-                    <h3 style="font-size: 1rem;">Online vs Offline Coaching: Which is Right for You?</h3>
-                    <a href="blog-details.html" class="read-more">Read More <i class="fa-solid fa-arrow-right"></i></a>
-                  </div>
-                </div>
+              <h3 style="font-size: 1.3rem; margin-bottom: 24px; font-weight: 700; color: var(--text-primary);">Related Articles</h3>
+              <div class="grid grid-3" id="related-posts-grid">
+                <!-- Populated dynamically -->
               </div>
             </div>
 
             <!-- Comments -->
-            <div class="reveal" style="margin-top: 50px;">
-              <h3 style="font-size: 1.3rem; margin-bottom: 24px;">Comments (3)</h3>
-
-              <div style="display: flex; gap: 16px; padding: 24px; background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border-color); margin-bottom: 16px;">
-                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop" alt="Ananya" style="width: 48px; height: 48px; border-radius: var(--radius-full); object-fit: cover; flex-shrink: 0;">
-                <div>
-                  <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 6px;">
-                    <h5 style="font-size: 0.95rem;">Ananya Sharma</h5>
-                    <span style="font-size: 0.75rem; color: var(--text-secondary);">June 16, 2026</span>
-                  </div>
-                  <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7;">This article is incredibly helpful! I have been using the Pomodoro technique for a month now and my concentration has improved dramatically. The Feynman technique is next on my list to try. Thank you for sharing these evidence-based strategies.</p>
-                </div>
-              </div>
-              <div style="display: flex; gap: 16px; padding: 24px; background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border-color); margin-bottom: 16px;">
-                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop" alt="Rohit" style="width: 48px; height: 48px; border-radius: var(--radius-full); object-fit: cover; flex-shrink: 0;">
-                <div>
-                  <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 6px;">
-                    <h5 style="font-size: 0.95rem;">Rohit Singh</h5>
-                    <span style="font-size: 0.75rem; color: var(--text-secondary);">June 14, 2026</span>
-                  </div>
-                  <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7;">I have been using spaced repetition for my NEET preparation and the results have been amazing. This article validates what I have been experiencing. The dual coding technique is something I will definitely incorporate. Great read!</p>
-                </div>
-              </div>
-              <div style="display: flex; gap: 16px; padding: 24px; background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border-color); margin-bottom: 16px;">
-                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=60&h=60&fit=crop" alt="Vikram" style="width: 48px; height: 48px; border-radius: var(--radius-full); object-fit: cover; flex-shrink: 0;">
-                <div>
-                  <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 6px;">
-                    <h5 style="font-size: 0.95rem;">Vikram Joshi</h5>
-                    <span style="font-size: 0.75rem; color: var(--text-secondary);">June 13, 2026</span>
-                  </div>
-                  <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7;">The Pomodoro technique has been a game-changer for my UPSC preparation. I used to study for hours without breaks and would burn out quickly. Now I am more productive and retain more information. Thank you for this comprehensive guide!</p>
-                </div>
-              </div>
-              <div style="display: flex; gap: 16px; padding: 24px; background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border-color);">
-                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop" alt="Neha" style="width: 48px; height: 48px; border-radius: var(--radius-full); object-fit: cover; flex-shrink: 0;">
-                <div>
-                  <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 6px;">
-                    <h5 style="font-size: 0.95rem;">Neha Gupta</h5>
-                    <span style="font-size: 0.75rem; color: var(--text-secondary);">June 12, 2026</span>
-                  </div>
-                  <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7;">I have been struggling with organic chemistry but the Feynman technique has made it so much easier. Explaining concepts in simple terms really does work. Would love to see more articles on subject-specific strategies!</p>
-                </div>
-              </div>
+            <div class="reveal" style="margin-top: 50px;" id="comments-wrapper-section">
+              <!-- Populated dynamically -->
             </div>
 
             <!-- Comment Form -->
             <div class="reveal" style="margin-top: 40px; padding: 36px; background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border-color);">
-              <h3 style="font-size: 1.2rem; margin-bottom: 24px;">Leave a Comment</h3>
-              <form>
+              <h3 style="font-size: 1.2rem; margin-bottom: 24px; font-weight: 700; color: var(--text-primary);">Leave a Comment</h3>
+              <form id="comment-submission-form">
                 <div class="form-row">
                   <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" class="form-input" placeholder="Your name" required>
+                    <label for="comment-name">Name</label>
+                    <input type="text" id="comment-name" class="form-input" placeholder="Your name" required>
                   </div>
                   <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" class="form-input" placeholder="Your email" required>
+                    <label for="comment-email">Email</label>
+                    <input type="email" id="comment-email" class="form-input" placeholder="Your email" required>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="comment">Comment</label>
-                  <textarea id="comment" class="form-textarea" placeholder="Share your thoughts..." required></textarea>
+                  <label for="comment-body">Comment</label>
+                  <textarea id="comment-body" class="form-textarea" placeholder="Share your thoughts..." required></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Post Comment</button>
-              </div>
+              </form>
             </div>
 
           </div>
-          <aside>
-
+          
+          <aside class="blog-details-sidebar">
             <!-- Categories -->
             <div class="sidebar-widget reveal">
               <h3>Categories</h3>
               <ul>
-                <li style="padding: 10px 0; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-color); font-size: 0.9rem;">
-                  <a href="#" style="color: var(--text-secondary); transition: color var(--transition-fast);">Study Tips</a>
-                  <span style="background: var(--bg-soft); padding: 2px 10px; border-radius: 50px; font-size: 0.75rem; color: var(--text-secondary);">12</span>
+                <li>
+                  <a href="blog.html">Study Tips</a>
+                  <span>12</span>
                 </li>
-                <li style="padding: 10px 0; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-color); font-size: 0.9rem;">
-                  <a href="#" style="color: var(--text-secondary); transition: color var(--transition-fast);">Exam Preparation</a>
-                  <span style="background: var(--bg-soft); padding: 2px 10px; border-radius: 50px; font-size: 0.75rem; color: var(--text-secondary);">8</span>
+                <li>
+                  <a href="blog.html">Exam Preparation</a>
+                  <span>8</span>
                 </li>
-                <li style="padding: 10px 0; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-color); font-size: 0.9rem;">
-                  <a href="#" style="color: var(--text-secondary); transition: color var(--transition-fast);">Time Management</a>
-                  <span style="background: var(--bg-soft); padding: 2px 10px; border-radius: 50px; font-size: 0.75rem; color: var(--text-secondary);">6</span>
+                <li>
+                  <a href="blog.html">Time Management</a>
+                  <span>6</span>
                 </li>
-                <li style="padding: 10px 0; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-color); font-size: 0.9rem;">
-                  <a href="#" style="color: var(--text-secondary); transition: color var(--transition-fast);">Motivation</a>
-                  <span style="background: var(--bg-soft); padding: 2px 10px; border-radius: 50px; font-size: 0.75rem; color: var(--text-secondary);">5</span>
+                <li>
+                  <a href="blog.html">Motivation</a>
+                  <span>5</span>
                 </li>
-                <li style="padding: 10px 0; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-color); font-size: 0.9rem;">
-                  <a href="#" style="color: var(--text-secondary); transition: color var(--transition-fast);">Online Learning</a>
-                  <span style="background: var(--bg-soft); padding: 2px 10px; border-radius: 50px; font-size: 0.75rem; color: var(--text-secondary);">4</span>
+                <li>
+                  <a href="blog.html">Online Learning</a>
+                  <span>4</span>
                 </li>
-                <li style="padding: 10px 0; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-color); font-size: 0.9rem;">
-                  <a href="#" style="color: var(--text-secondary); transition: color var(--transition-fast);">Success Stories</a>
-                  <span style="background: var(--bg-soft); padding: 2px 10px; border-radius: 50px; font-size: 0.75rem; color: var(--text-secondary);">7</span>
+                <li>
+                  <a href="blog.html">Success Stories</a>
+                  <span>7</span>
                 </li>
-                <li style="padding: 10px 0; display: flex; align-items: center; justify-content: space-between; font-size: 0.9rem;">
-                  <a href="#" style="color: var(--text-secondary); transition: color var(--transition-fast);">Career Guidance</a>
-                  <span style="background: var(--bg-soft); padding: 2px 10px; border-radius: 50px; font-size: 0.75rem; color: var(--text-secondary);">3</span>
+                <li>
+                  <a href="blog.html">Career Guidance</a>
+                  <span>3</span>
                 </li>
               </ul>
             </div>
@@ -319,25 +341,25 @@
             <!-- Tags -->
             <div class="sidebar-widget reveal">
               <h3>Popular Tags</h3>
-              <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                <a href="#" style="padding: 6px 16px; background: var(--bg-soft); border-radius: 50px; font-size: 0.8rem; color: var(--text-secondary); transition: all var(--transition-fast);">JEE</a>
-                <a href="#" style="padding: 6px 16px; background: var(--bg-soft); border-radius: 50px; font-size: 0.8rem; color: var(--text-secondary); transition: all var(--transition-fast);">NEET</a>
-                <a href="#" style="padding: 6px 16px; background: var(--bg-soft); border-radius: 50px; font-size: 0.8rem; color: var(--text-secondary); transition: all var(--transition-fast);">UPSC</a>
-                <a href="#" style="padding: 6px 16px; background: var(--bg-soft); border-radius: 50px; font-size: 0.8rem; color: var(--text-secondary); transition: all var(--transition-fast);">Study Tips</a>
-                <a href="#" style="padding: 6px 16px; background: var(--bg-soft); border-radius: 50px; font-size: 0.8rem; color: var(--text-secondary); transition: all var(--transition-fast);">Motivation</a>
-                <a href="#" style="padding: 6px 16px; background: var(--bg-soft); border-radius: 50px; font-size: 0.8rem; color: var(--text-secondary); transition: all var(--transition-fast);">Time Management</a>
-                <a href="#" style="padding: 6px 16px; background: var(--bg-soft); border-radius: 50px; font-size: 0.8rem; color: var(--text-secondary); transition: all var(--transition-fast);">Online Learning</a>
-                <a href="#" style="padding: 6px 16px; background: var(--bg-soft); border-radius: 50px; font-size: 0.8rem; color: var(--text-secondary); transition: all var(--transition-fast);">Success Stories</a>
+              <div class="tag-cloud">
+                <a href="blog.html">JEE</a>
+                <a href="blog.html">NEET</a>
+                <a href="blog.html">UPSC</a>
+                <a href="blog.html">Study Tips</a>
+                <a href="blog.html">Motivation</a>
+                <a href="blog.html">Time Management</a>
+                <a href="blog.html">Online Learning</a>
+                <a href="blog.html">Success Stories</a>
               </div>
             </div>
-
           </aside>
+
         </div>
       </div>
     </section>
 
     <!-- CTA Section -->
-    <section class="section" style="background: linear-gradient(135deg, var(--navy-dark), var(--navy)); position: relative; overflow: hidden;">
+    <section class="section" style="background: linear-gradient(135deg, var(--navy-dark), var(--navy)); position: relative; overflow: hidden; padding: 60px 0 !important;">
       <div style="position: absolute; inset: 0; background: url('data:image/svg+xml,%3Csvg width=%2260%22 height=%2260%22 viewBox=%220 0 60 60%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22none%22 fill-rule=%22evenodd%22%3E%3Cg fill=%22%23ffffff%22 fill-opacity=%220.03%22%3E%3Cpath d=%22M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E'); opacity: 0.5;"></div>
       <div class="container" style="position: relative; z-index: 1; text-align: center;">
         <div class="reveal">
@@ -354,7 +376,7 @@
 
   </main>
 
-    <footer class="footer">
+  <footer class="footer">
     <div class="container">
       <div class="footer-top">
         <div class="footer-grid">
@@ -430,5 +452,382 @@
   <button class="back-to-top" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
 
   <script src="assets/js/main.js"></script>
+  
+  <script>
+    // Blog details articles database
+    const BLOG_DATABASE = {
+      "study-techniques": {
+        title: "10 Proven Study Techniques to Boost Your Exam Performance",
+        heroTitle: "10 Proven Study <span class=\"text-gradient\">Techniques</span>",
+        heroDesc: "Master the art of effective studying, improve your concentration, and maximize your retention with these scientifically backed strategies.",
+        breadcrumb: "10 Proven Study Techniques",
+        image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1200&h=600&fit=crop",
+        date: "June 15, 2026",
+        readTime: "5 min read",
+        author: "Dr. Arvind Sharma",
+        authorRole: "Physics Faculty, IIT Delhi Alumnus",
+        authorImage: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=120&h=120&fit=crop",
+        authorBio: "With over 15 years of teaching experience, Dr. Sharma has mentored thousands of JEE aspirants. He specializes in making complex physics concepts intuitive through real-world analogies.",
+        category: "Study Tips",
+        content: `
+          <p>Preparing for competitive exams like JEE, NEET, or UPSC requires more than just hard work — it demands smart strategies. At Excel Academy, we have spent over a decade refining study methodologies that help students maximize their potential. Here are ten proven techniques that our top-performing students swear by.</p>
+          
+          <h2>1. Active Recall</h2>
+          <p>Instead of passively reading textbooks, actively test yourself on the material. Close the book and try to recall key concepts from memory. Research shows that active recall strengthens neural pathways and significantly improves long-term retention compared to re-reading or highlighting.</p>
+
+          <h2>2. Spaced Repetition</h2>
+          <p>Review material at increasing intervals over time. Use the spaced repetition technique to revisit topics after 1 day, 3 days, 1 week, and 1 month. This method leverages the psychological spacing effect to move information from short-term to long-term memory efficiently.</p>
+
+          <h2>3. The Feynman Technique</h2>
+          <p>Named after physicist Richard Feynman, this technique involves explaining a concept in simple terms as if teaching it to someone else. If you cannot explain it simply, you have not understood it well enough. This approach reveals gaps in your understanding and solidifies your knowledge.</p>
+
+          <h2>4. Pomodoro Method</h2>
+          <p>Work in focused 25-minute intervals followed by 5-minute breaks. After four cycles, take a longer 15-30 minute break. This technique maintains high concentration levels and prevents mental fatigue during long study sessions.</p>
+
+          <h2>5. Mind Mapping</h2>
+          <p>Create visual diagrams that connect related concepts. Mind maps help you see the big picture, understand relationships between topics, and make recall easier during exams. Use colors and images to make your maps more memorable.</p>
+
+          <h2>6. Practice Testing</h2>
+          <p>Regularly attempt practice questions and previous years' papers under timed conditions. This not only familiarizes you with the exam pattern but also builds speed and accuracy. At Excel Academy, our test series are designed to simulate real exam environments.</p>
+
+          <h2>7. Interleaved Practice</h2>
+          <p>Instead of studying one topic for hours, mix different subjects or topics within a study session. This forces your brain to constantly retrieve and apply knowledge in different contexts, leading to deeper understanding.</p>
+
+          <h2>8. Elaborative Interrogation</h2>
+          <p>Ask yourself "why" questions as you study. For example, "Why does this formula work?" or "Why is this concept important?" This technique encourages deeper processing and helps build meaningful connections between concepts.</p>
+
+          <h2>9. Dual Coding</h2>
+          <p>Combine verbal information with visual aids. Create diagrams, flowcharts, and mind maps alongside your notes. The brain processes visual and verbal information through different channels, enhancing learning significantly.</p>
+
+          <h2>10. Self-Explanation</h2>
+          <p>After reading a concept or solving a problem, explain the reasoning behind it in your own words. This technique forces you to process information deeply and identify any gaps in your understanding before the exam hall.</p>
+        `,
+        tags: ["Study Tips", "Exam Prep", "Motivation"],
+        comments: [
+          { name: "Ananya Sharma", date: "June 16, 2026", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop", text: "This article is incredibly helpful! I have been using the Pomodoro technique for a month now and my concentration has improved dramatically. The Feynman technique is next on my list to try. Thank you for sharing these evidence-based strategies." },
+          { name: "Rohit Singh", date: "June 14, 2026", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop", text: "I have been using spaced repetition for my NEET preparation and the results have been amazing. This article validates what I have been experiencing. The dual coding technique is something I will definitely incorporate. Great read!" },
+          { name: "Vikram Joshi", date: "June 13, 2026", avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=60&h=60&fit=crop", text: "The Pomodoro technique has been a game-changer for my UPSC preparation. I used to study for hours without breaks and would burn out quickly. Now I am more productive and retain more information. Thank you for this comprehensive guide!" }
+        ]
+      },
+      "time-management": {
+        title: "Mastering Time Management During Exam Season",
+        heroTitle: "Mastering Time <span class=\"text-gradient\">Management</span>",
+        heroDesc: "Learn how top students balance multiple subjects, revision, and rest to maximize their exam performance without burnout.",
+        breadcrumb: "Mastering Time Management",
+        image: "assets/images/time_management.png",
+        date: "June 10, 2026",
+        readTime: "4 min read",
+        author: "Prof. Meera Nair",
+        authorRole: "Senior Counselor & Time Management Expert",
+        authorImage: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&h=120&fit=crop",
+        authorBio: "Prof. Nair has spent over two decades counseling students on study schedules, stress management, and maintaining mental well-being during stressful competitive exam periods.",
+        category: "Time Management",
+        content: `
+          <p>Exam season can feel like a race against the clock. With vast syllabi to cover and limited hours, time becomes your most valuable asset. The difference between a ranker and an average student often lies not in their intelligence, but in how they manage their 24 hours. Here is a comprehensive guide to mastering time during exams.</p>
+
+          <h2>1. The Priority Matrix (Eisenhower Matrix)</h2>
+          <p>Categorize your study topics into four quadrants: Urgent & Important, Important but Not Urgent, Urgent but Not Important, and Neither. Focus on the 'Important but Not Urgent' quadrant early in your preparation to avoid last-minute panic and rushed revision.</p>
+
+          <h2>2. Time Blocking</h2>
+          <p>Instead of vague goals like "study Physics today," assign specific blocks of time to definite tasks. For example: "9:00 AM - 11:00 AM: Solve Electrostatics practice problems." This creates cognitive commitment and eliminates decision paralysis.</p>
+
+          <h2>3. The Rule of Three</h2>
+          <p>At the start of each day, write down the three most important topics or chapters you must master. Focus all your energy on finishing these three tasks before moving on to anything else. This simple rule ensures progress on critical components.</p>
+
+          <h2>4. Avoid the Multitasking Trap</h2>
+          <p>Switching between Physics, Chemistry, and your phone reduces cognitive efficiency by up to 40%. Focus on one subject block at a time. Put your phone in another room or use website blockers to create a distraction-free zone.</p>
+
+          <h2>5. Plan Your Breaks</h2>
+          <p>Unplanned breaks break focus and lead to procrastination. Plan exact intervals for rest. A 10-minute walk or a quick stretching session after 90 minutes of study refreshes the brain and prevents burnout.</p>
+        `,
+        tags: ["Time Management", "Study Tips", "Exam Prep"],
+        comments: [
+          { name: "Aditi Rao", date: "June 11, 2026", avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop", text: "Time blocking has completely changed how I organize my day. I no longer feel overwhelmed by the sheer size of the JEE syllabus." },
+          { name: "Karan Johar", date: "June 10, 2026", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=60&h=60&fit=crop", text: "Excellent strategies. Avoiding multitasking is hard but it is absolutely essential for focus." }
+        ]
+      },
+      "motivation": {
+        title: "Staying Motivated During Long Exam Preparation",
+        heroTitle: "Staying <span class=\"text-gradient\">Motivated</span>",
+        heroDesc: "Practical strategies to maintain focus, overcome burnout, and keep your motivation high throughout months of intense preparation.",
+        breadcrumb: "Staying Motivated",
+        image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1200&h=600&fit=crop",
+        date: "June 5, 2026",
+        readTime: "6 min read",
+        author: "Dr. Rajesh Khanna",
+        authorRole: "Student Mentor & Motivational Speaker",
+        authorImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&h=120&fit=crop",
+        authorBio: "Dr. Khanna specializes in cognitive behavior and student performance. He has written multiple books on maintaining high morale during exam stress.",
+        category: "Motivation",
+        content: `
+          <p>Competitive exams like JEE and NEET are not sprints; they are marathons. Maintaining the same level of enthusiasm and drive over 1-2 years is one of the biggest challenges students face. Burnout, low mock test scores, and fatigue can drain your motivation. Here is how to keep your fire burning.</p>
+
+          <h2>1. Reconnect with Your 'Why'</h2>
+          <p>Why did you start this journey? Whether it is to enter a premier institute, pursue a research career, or make your parents proud, write down your primary motivation and place it where you see it every day. Your 'why' is your fuel when the going gets tough.</p>
+
+          <h2>2. Break Down the Goal</h2>
+          <p>Thinking about the entire syllabus at once leads to overwhelm. Break your goals into yearly, monthly, weekly, and daily targets. Celebrate finishing a daily goal. Small wins trigger dopamine releases that sustain motivation.</p>
+
+          <h2>3. Reframe Mock Test Failures</h2>
+          <p>A low test score is not a reflection of your worth; it is a diagnostic tool. Analyze your mistakes, understand where you went wrong, and correct them. Every mistake you catch now is one less mistake in the final exam.</p>
+
+          <h2>4. The Power of a Support Group</h2>
+          <p>Surround yourself with positive, goal-oriented friends who share your ambitions. Peer support, healthy competition, and discussing doubts can lift your spirit when you feel low.</p>
+        `,
+        tags: ["Motivation", "Exam Prep", "Counseling"],
+        comments: [
+          { name: "Suresh Kumar", date: "June 6, 2026", avatar: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=60&h=60&fit=crop", text: "Reframing test scores as diagnostic tools helped me overcome mock exam anxiety. Highly recommended reading!" },
+          { name: "Pooja Patel", date: "June 6, 2026", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=60&h=60&fit=crop", text: "Breaking down the goals makes a huge difference. Master a day, and you will eventually master the exam." }
+        ]
+      },
+      "jee-study-plan": {
+        title: "How to Create the Ultimate JEE Study Plan",
+        heroTitle: "Ultimate JEE <span class=\"text-gradient\">Study Plan</span>",
+        heroDesc: "A step-by-step guide to building a study schedule that covers the entire JEE syllabus while leaving room for revision and practice tests.",
+        breadcrumb: "JEE Study Plan",
+        image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=1200&h=600&fit=crop",
+        date: "May 28, 2026",
+        readTime: "7 min read",
+        author: "Dr. Arvind Sharma",
+        authorRole: "Physics Faculty, IIT Delhi Alumnus",
+        authorImage: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=120&h=120&fit=crop",
+        authorBio: "With over 15 years of teaching experience, Dr. Sharma has mentored thousands of JEE aspirants. He specializes in making complex physics concepts intuitive.",
+        category: "Exam Prep",
+        content: `
+          <p>JEE Main and Advanced require a comprehensive, well-structured approach. With thousands of applicants competing for seats in India's elite IITs and NITs, a balanced study plan is your primary competitive edge. Here is how to map out a winning strategy.</p>
+
+          <h2>1. Understand the Syllabus Weightage</h2>
+          <p>Not all chapters carry equal weightage. Identify high-yield topics across Physics, Chemistry, and Mathematics. Focus heavily on concepts like Calculus and coordinate geometry in Math, Mechanics and Electrodynamics in Physics, and Organic/Physical chemistry basics early on.</p>
+
+          <h2>2. Phase-Based Planning</h2>
+          <p>Divide your timeline into three main phases: Concept Building (covering the syllabus), Intensive Revision (strengthening weak areas), and Mock Tests & Strategy (acclimatizing to the exam conditions). Never skip the revision phase.</p>
+
+          <h2>3. Daily Subject Balance</h2>
+          <p>Study at least two subjects per day to keep your brain engaged. Mix an analytical subject like Mathematics with a descriptive or conceptual one like Chemistry. This prevents mental block and maintains high efficiency.</p>
+
+          <h2>4. Regular Revision Cycles</h2>
+          <p>Set aside Sundays strictly for revision. Review formula books, concept maps, and hand-written short notes. Retaining existing knowledge is just as important as acquiring new information.</p>
+        `,
+        tags: ["JEE", "Exam Prep", "Study Tips"],
+        comments: [
+          { name: "Rahul Mehta", date: "May 29, 2026", avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=60&h=60&fit=crop", text: "This step-by-step layout is very clean. Subject balancing has helped me balance inorganic chemistry revision." }
+        ]
+      },
+      "group-study": {
+        title: "The Power of Group Study: Learn Faster Together",
+        heroTitle: "Power of <span class=\"text-gradient\">Group Study</span>",
+        heroDesc: "Discover how collaborative learning can deepen your understanding, improve retention, and make exam preparation more enjoyable.",
+        breadcrumb: "Power of Group Study",
+        image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1200&h=600&fit=crop",
+        date: "May 20, 2026",
+        readTime: "5 min read",
+        author: "Prof. Meera Nair",
+        authorRole: "Senior Counselor & Time Management Expert",
+        authorImage: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&h=120&fit=crop",
+        authorBio: "Prof. Nair has spent over two decades counseling students on study schedules and maintains student learning support groups.",
+        category: "Study Tips",
+        content: `
+          <p>While self-study is fundamental, studying in a small, structured group can drastically accelerate your preparation. Peer explanation, doubt clearing, and collaborative problem solving are proven methods to cement concepts. Here is how to make group study highly productive.</p>
+
+          <h2>1. Limit Group Size</h2>
+          <p>The ideal study group consists of 3 to 4 students. Any larger, and the session can easily devolve into social gatherings and distractions. Choose members who share similar drive, work ethics, and academic goals.</p>
+
+          <h2>2. Establish Clear Objectives</h2>
+          <p>Set a specific agenda before meeting. For example: "On Tuesday, we will solve and discuss 30 advanced Organic Chemistry mechanism questions." This keeps the group focused and ensures maximum output.</p>
+
+          <h2>3. Peer Teaching</h2>
+          <p>Assign specific topics to different members to teach. Explaining a hard topic to others requires complete concept mastery, revealing deep learning gaps in the presenter and clarifying it for others.</p>
+
+          <h2>4. Solve Doubts Collectively</h2>
+          <p>Use the collective intelligence of the group to tackle complex doubts. A classmate might explain a concept in a simpler way than a reference book, saving time and stress.</p>
+        `,
+        tags: ["Study Tips", "Motivation", "Collab"],
+        comments: [
+          { name: "Priya Das", date: "May 21, 2026", avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop", text: "We started a group study circle of three for NEET prep. Explaining biology classifications has made it very easy to remember." },
+          { name: "Vivek Roy", date: "May 21, 2026", avatar: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=60&h=60&fit=crop", text: "Peer teaching is extremely powerful. If you teach it, you understand it 10 times better." }
+        ]
+      },
+      "online-vs-offline": {
+        title: "Online vs Offline Coaching: Which is Right for You?",
+        heroTitle: "Online <span class=\"text-gradient\">vs Offline</span>",
+        heroDesc: "An honest comparison of the pros and cons of online and offline coaching to help you make the best choice for your learning style.",
+        breadcrumb: "Online vs Offline",
+        image: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1200&h=600&fit=crop",
+        date: "May 15, 2026",
+        readTime: "4 min read",
+        author: "Dr. Rajesh Khanna",
+        authorRole: "Student Mentor & Motivational Speaker",
+        authorImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&h=120&fit=crop",
+        authorBio: "Dr. Khanna specializes in educational psychology and student counseling. He regularly guides students to find the perfect prep mediums.",
+        category: "Online Learning",
+        content: `
+          <p>With the digital education boom, students have access to top-tier lecturers online right from their bedrooms. However, traditional offline classrooms remain extremely popular. Choosing the right format is critical for competitive exam prep. Let's break down both options.</p>
+
+          <h2>1. Flexibility & Location</h2>
+          <p>Online coaching offers complete geographic freedom and flexible timings. You save commute time and can learn at your own pace. Offline coaching offers structural discipline, fixed schedules, and an environment free from home distractions.</p>
+
+          <h2>2. Peer Interaction & Ambience</h2>
+          <p>Offline centers provide immediate peer interaction, competitive physical classrooms, and direct contact with instructors. Online coaching requires high self-discipline to prevent isolation and procrastination.</p>
+
+          <h2>3. Doubt Resolution</h2>
+          <p>Offline centers allow you to ask doubts directly during or after lectures. Online programs resolve doubts through chats or live sessions, which can sometimes have latency.</p>
+
+          <h2>4. Hybrid Coaching: The Excel Approach</h2>
+          <p>At Excel Academy, we believe in a hybrid approach. We offer physical classroom lectures for structural rigor, coupled with online question banks and recorded lectures for custom revision.</p>
+        `,
+        tags: ["Online Learning", "Exam Prep", "Counseling"],
+        comments: [
+          { name: "Devika Sen", date: "May 16, 2026", avatar: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=60&h=60&fit=crop", text: "The hybrid model is indeed the best. Having lectures recorded helps immensely during pre-exam revisions." },
+          { name: "Rohan Das", date: "May 15, 2026", avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=60&h=60&fit=crop", text: "Commuting takes 2 hours of my day. Moving to online test portals saved me a lot of study time." }
+        ]
+      }
+    };
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // Extract parameter
+      const params = new URLSearchParams(window.location.search);
+      let id = params.get('id') || 'study-techniques';
+      
+      // Fallbacks
+      if (id === 'neet-guide') id = 'jee-study-plan';
+      if (!BLOG_DATABASE[id]) id = 'study-techniques';
+      
+      const article = BLOG_DATABASE[id];
+      
+      // 1. Update Title and Meta Tags
+      document.title = `${article.title} - Excel Academy Blog`;
+      const descriptionMeta = document.querySelector('meta[name="description"]');
+      if (descriptionMeta) {
+        descriptionMeta.setAttribute("content", `${article.title} - Expert insights and preparation tips from Excel Academy.`);
+      }
+      
+      // 2. Update Hero Section
+      document.getElementById('hero-title').innerHTML = article.heroTitle;
+      document.getElementById('hero-desc').textContent = article.heroDesc;
+      document.getElementById('hero-label').textContent = article.category;
+      document.getElementById('breadcrumb-current').textContent = article.breadcrumb;
+      
+      // 3. Update Featured Image
+      const featuredImg = document.getElementById('featured-image');
+      featuredImg.src = article.image;
+      featuredImg.alt = article.title;
+      
+      // 4. Update Meta Row
+      document.getElementById('article-meta-row').innerHTML = `
+        <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; color: var(--text-secondary);"><i class="fa-regular fa-calendar"></i> ${article.date}</span>
+        <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; color: var(--text-secondary);"><i class="fa-regular fa-clock"></i> ${article.readTime}</span>
+        <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; color: var(--text-secondary);"><i class="fa-regular fa-user"></i> By ${article.author}</span>
+        <span style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; background: rgba(30,58,138,0.1); color: var(--navy); border-radius: 50px; font-size: 0.75rem; font-weight: 600;">${article.category}</span>
+      `;
+      
+      // 5. Update Article Content
+      document.getElementById('article-body-content').innerHTML = `
+        <h2>${article.title}</h2>
+        ${article.content}
+      `;
+      
+      // 6. Update Tags Cloud
+      let tagsHtml = `<span style="font-weight: 600; font-family: var(--font-display); margin-right: 8px;">Tags:</span>`;
+      article.tags.forEach(t => {
+        tagsHtml += `<span style="padding: 4px 12px; background: var(--bg-soft); border-radius: 50px; font-size: 0.78rem; color: var(--text-secondary); font-weight: 500;">${t}</span>`;
+      });
+      document.getElementById('article-tags-container').innerHTML = tagsHtml;
+      
+      // 7. Update Share Links
+      const pageUrl = encodeURIComponent(window.location.href);
+      const pageTitle = encodeURIComponent(article.title);
+      document.getElementById('share-fb').href = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
+      document.getElementById('share-tw').href = `https://twitter.com/intent/tweet?url=${pageUrl}&text=${pageTitle}`;
+      document.getElementById('share-li').href = `https://www.linkedin.com/shareArticle?url=${pageUrl}&title=${pageTitle}`;
+      document.getElementById('share-wa').href = `https://api.whatsapp.com/send?text=${pageTitle}%20${pageUrl}`;
+      
+      // 8. Update Author Card
+      document.getElementById('author-card').innerHTML = `
+        <img src="${article.authorImage}" alt="${article.author}" style="width: 100px; height: 100px; border-radius: var(--radius-full); object-fit: cover; border: 4px solid var(--platinum);">
+        <div style="flex: 1; min-width: 200px;">
+          <h4 style="font-size: 1.1rem; margin-bottom: 4px; font-weight: 700; color: var(--text-primary);">${article.author}</h4>
+          <p style="font-size: 0.85rem; color: var(--crimson); font-weight: 500; margin-bottom: 8px;">${article.authorRole}</p>
+          <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7;">${article.authorBio}</p>
+        </div>
+      `;
+      
+      // 9. Update Related Posts (exclude current)
+      const allKeys = Object.keys(BLOG_DATABASE);
+      const filteredKeys = allKeys.filter(k => k !== id).slice(0, 3);
+      let relatedHtml = '';
+      filteredKeys.forEach(k => {
+        const item = BLOG_DATABASE[k];
+        relatedHtml += `
+          <div class="blog-card">
+            <div class="blog-card-img" style="height: 180px; position: relative; overflow: hidden;">
+              <img src="${item.image}" alt="${item.title}" style="width: 100%; height: 100%; object-fit: cover;">
+              <span class="blog-category" style="position: absolute; top: 12px; left: 12px; background: var(--navy); color: var(--white); font-size: 0.72rem; font-weight: 600; padding: 4px 10px; border-radius: 50px;">${item.category}</span>
+            </div>
+            <div class="blog-card-body" style="padding: 20px; display: flex; flex-direction: column; flex-grow: 1;">
+              <div class="blog-meta" style="font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 10px;">
+                <span><i class="fa-regular fa-calendar"></i> ${item.date}</span>
+              </div>
+              <h3 style="font-size: 0.95rem; line-height: 1.4; font-weight: 700; color: var(--text-primary); margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 2.7rem;">${item.title}</h3>
+              <a href="blog-details.html?id=${k}" class="read-more" style="font-size: 0.85rem; font-weight: 600; color: var(--navy); display: inline-flex; align-items: center; gap: 6px; margin-top: auto;">Read More <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+          </div>
+        `;
+      });
+      document.getElementById('related-posts-grid').innerHTML = relatedHtml;
+      
+      // 10. Update Comments Section
+      let commentsHtml = `<h3 style="font-size: 1.3rem; margin-bottom: 24px; font-weight: 700; color: var(--text-primary);">Comments (${article.comments.length})</h3>`;
+      article.comments.forEach(c => {
+        commentsHtml += `
+          <div style="display: flex; gap: 16px; padding: 24px; background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border-color); margin-bottom: 16px;">
+            <img src="${c.avatar}" alt="${c.name}" style="width: 48px; height: 48px; border-radius: var(--radius-full); object-fit: cover; flex-shrink: 0;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 6px;">
+                <h5 style="font-size: 0.95rem; font-weight: 700; color: var(--text-primary);">${c.name}</h5>
+                <span style="font-size: 0.75rem; color: var(--text-secondary);">${c.date}</span>
+              </div>
+              <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7;">${c.text}</p>
+            </div>
+          </div>
+        `;
+      });
+      document.getElementById('comments-wrapper-section').innerHTML = commentsHtml;
+      
+      // Static Form Submission
+      const form = document.getElementById('comment-submission-form');
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const inputName = document.getElementById('comment-name').value;
+        const inputBody = document.getElementById('comment-body').value;
+        
+        // Push a new static comment
+        article.comments.push({
+          name: inputName,
+          date: "Just now",
+          avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=60&h=60&fit=crop",
+          text: inputBody
+        });
+        
+        // Re-render
+        let newCommentsHtml = `<h3 style="font-size: 1.3rem; margin-bottom: 24px; font-weight: 700; color: var(--text-primary);">Comments (${article.comments.length})</h3>`;
+        article.comments.forEach(c => {
+          newCommentsHtml += `
+            <div style="display: flex; gap: 16px; padding: 24px; background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border-color); margin-bottom: 16px;">
+              <img src="${c.avatar}" alt="${c.name}" style="width: 48px; height: 48px; border-radius: var(--radius-full); object-fit: cover; flex-shrink: 0;">
+              <div>
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 6px;">
+                  <h5 style="font-size: 0.95rem; font-weight: 700; color: var(--text-primary);">${c.name}</h5>
+                  <span style="font-size: 0.75rem; color: var(--text-secondary);">${c.date}</span>
+                </div>
+                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7;">${c.text}</p>
+              </div>
+            </div>
+          `;
+        });
+        document.getElementById('comments-wrapper-section').innerHTML = newCommentsHtml;
+        form.reset();
+      });
+    });
+  </script>
 </body>
 </html>
