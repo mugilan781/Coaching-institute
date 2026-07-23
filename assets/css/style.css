@@ -1675,6 +1675,11 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.2;
 }
 
+[dir="rtl"] .page-header-content h1 {
+  direction: ltr;
+  unicode-bidi: embed;
+}
+
 .page-header-content .breadcrumb {
   display: flex;
   align-items: center;
@@ -2486,6 +2491,10 @@ h1, h2, h3, h4, h5, h6 {
    RESPONSIVE
    ============================================ */
 @media (max-width: 1024px) {
+  .hero-arrow {
+    display: none !important;
+  }
+
   .footer-grid {
     grid-template-columns: 1fr 1fr;
     gap: 40px;
